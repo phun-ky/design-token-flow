@@ -1,0 +1,259 @@
+
+
+*,
+*:after,
+*:before
+  margin 0
+  padding 0
+  box-sizing border-box
+
+html, body
+  margin 0
+  padding 0
+  box-sizing border-box
+
+
+body
+  background-color #f8f9fe
+  background-image radial-gradient(#eaebf0 1px, #f8f9fe 1px)
+  background-size 20px 20px
+
+
+
+.container
+  height 100vh
+  width 100vw
+
+
+#svg
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100vh
+  pointer-events none
+
+
+.design-token
+  opacity 0.4
+  background-color #ffffff
+  display inline-flex
+  white-space nowrap
+  font-size 14px
+  line-height 14px
+  font-weight bold
+  color #000000
+  border-radius 1rem
+  padding 0 0.5rem
+  height 2rem
+  align-items center
+  justify-content flex-start
+  position relative
+  z-index 10
+  font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
+  box-shadow 0 3px 6px #d1d9e6
+  margin-bottom 1rem
+  &:last-of-type
+    margin-bottom 0
+
+
+
+.design-token.large
+  height 3rem
+  border-radius 1.5rem
+  padding 0 1.5rem
+  max-width 320px
+  margin-bottom 2rem
+  &:last-of-type
+    margin-bottom 0
+
+
+
+.design-token.large.font
+  height 4rem
+  border-radius 2rem
+  position relative
+  flex-direction column
+  align-items flex-start
+  padding-top 0.75rem
+
+  & code
+    margin-top 8px
+    font-weight 500
+    background-color #ecf1f5
+    border none
+    padding 4px 8px
+    border-radius 4px
+    display inline-block
+    white-space nowrap
+    color #717780
+    font-size 12px
+    line-height 12px
+    font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
+
+
+.design-token.large.color
+  height 4rem
+  border-radius 2rem
+  padding-left 4rem
+  position relative
+  flex-direction column
+  align-items flex-start
+  padding-top 0.75rem
+
+  & code
+    margin-top 8px
+    font-weight normal
+    border 1px solid #e1e1e1
+    padding 4px 8px
+    border-radius 8px
+    display inline-block
+    white-space nowrap
+    font-size 12px
+    text-transform uppercase
+    line-height 12px
+    font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
+
+
+
+
+.design-token.color
+  padding-left 1.75rem
+
+  & .drop
+    border 1px solid white
+    background-color transparent
+    background-clip padding-box
+    box-shadow 0 3px 6px #d1d9e6
+    height 1rem
+    width 1rem
+    display block
+    border-radius 100%
+    position absolute
+    top 50%
+    transform translateY(-50%)
+    left 6px
+
+
+
+.design-token.large.color .drop
+  border 2px solid white
+  background-color transparent
+  box-shadow 0 3px 6px #d1d9e6
+  height 40px
+  width 40px
+  display block
+  border-radius 100%
+  position absolute
+  top 50%
+  transform translateY(-50%)
+  left 12px
+
+
+
+.is-moveable
+  cursor pointer
+  cursor hand
+  cursor -webkit-grab
+  cursor grab
+
+
+
+
+
+.is-moving
+  user-select none
+
+
+.design-token.base
+  left 40px
+
+.container
+  display grid
+  grid-template-columns auto auto auto auto auto
+
+  & > .base,
+  & > .descendants-1,
+  & > .descendants-2,
+  & > .descendants-3,
+  & > .descendants-4
+    display flex
+    height 100%
+    flex-direction column
+    justify-content center
+    align-items flex-start
+
+  & > .descendants-1,
+  & > .descendants-2,
+  & > .descendants-3,
+  & > .descendants-4
+    align-items flex-start
+
+
+  & > :last-child
+    align-items flex-end
+
+
+  & > .descendants-1
+    justify-content center
+    & > .design-token
+      margin-bottom 2rem
+      &:last-of-type
+        margin-bottom 0
+
+
+
+
+
+.design-token.text-color
+  & .text
+    font-weight 700
+    display inline-block
+    margin-right 8px
+    margin-left 2px
+
+
+
+.design-token.light
+
+  & .text:before
+    content ""
+    position absolute
+    left 0
+    height 100%
+    width 2rem
+    background #000
+    top 0
+    border-top-left-radius 1rem
+    border-bottom-left-radius 1rem
+    z-index -1
+
+
+
+.design-token.font-size
+  &:before
+    content attr(data-value)
+    font-weight 500
+    background-color #ecf1f5
+    border none
+    margin-right 4px
+    padding 4px 4px
+    border-radius 4px
+    display inline-block
+    white-space nowrap
+    color #717780
+    font-size 12px
+    line-height 12px
+    font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
+
+
+
+
+.design-token.component
+  background-color #5366f7
+  color white
+
+
+.design-token.is-connected,
+.design-token:hover
+  opacity 1

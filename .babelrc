@@ -1,0 +1,20 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["> 5%", "last 2 firefox versions", "last 2 edge versions"]
+        },
+        "modules": false,
+        "useBuiltIns": "usage",
+        "corejs": "3.9.0"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/transform-regenerator",
+    "@babel/transform-async-to-generator"
+  ]
+}

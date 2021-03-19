@@ -11,7 +11,7 @@
   "scripts": {
     "version": "npm run build",
     "build": "rm -rf dist/ && rollup -c && gulp",
-    "dev": "rm -rf dist/ && rollup -c -w && gulp",
+    "dev": "node ./scripts/watcher.js",
     "test": "npm run build && jest --config jest.config.js",
     "coverage": "npm run build && jest --config jest.config.js --coverage",
     "commit": "npx git-cz"
@@ -39,8 +39,10 @@
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/user-event": "^12.7.1",
+    "async": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "body-parser": "^1.19.0",
     "core-js": "^3.9.0",
     "cross-env": "^7.0.2",
     "cssnano": "^4.1.10",
@@ -53,6 +55,7 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "express": "^4.17.1",
     "gulp": "^4.0.0",
     "gulp-banner": "^0.1.3",
     "gulp-postcss": "^8.0.0",
@@ -60,10 +63,16 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-stylus": "^2.7.0",
     "jest": "^26.6.3",
+    "node-watch": "^0.7.1",
+    "open": "^8.0.2",
     "prettier": "^2.0.5",
     "prettier-eslint": "^9.0.1",
     "regenerator-runtime": "^0.13.7",
+    "reload": "^3.1.1",
     "rollup": "^2.39.0",
     "rollup-plugin-terser": "^7.0.2"
+  },
+  "dependencies": {
+    "panzoom": "^9.4.1"
   }
 }

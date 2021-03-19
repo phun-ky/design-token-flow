@@ -1,5 +1,4 @@
 
-
 *,
 *:after,
 *:before
@@ -15,13 +14,14 @@ html, body
 
 body
   background-color #f8f9fe
-  background-image radial-gradient(#eaebf0 1px, #f8f9fe 1px)
+  background-image radial-gradient(#CAD4DB 1px, #F7F8FF 1px)
   background-size 20px 20px
+  overflow hidden
 
 
 
 .container
-  height 100vh
+  height calc(100vh - 6rem)
   width 100vw
 
 
@@ -32,6 +32,7 @@ body
   width 100%
   height 100vh
   pointer-events none
+  z-index 3
 
 
 .design-token
@@ -40,27 +41,33 @@ body
   display inline-flex
   white-space nowrap
   font-size 14px
-  line-height 14px
+  line-height 16px
   font-weight bold
   color #000000
   border-radius 1rem
   padding 0 0.5rem
   height 2rem
+  user-select none
   align-items center
   justify-content flex-start
   position relative
   z-index 10
   font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
-  box-shadow 0 3px 6px #d1d9e6
+  //box-shadow 0 3px 6px #d1d9e6
+  box-shadow 0px 2px 10px rgba(104, 108, 123, 0.25)
   margin-bottom 1rem
+  margin-top 0
+  &[data-ancestors]
+    &+[data-descendants]
+      margin-top 2rem
   &:last-of-type
     margin-bottom 0
 
 
 
 .design-token.large
-  height 3rem
-  border-radius 1.5rem
+  height 56px
+  border-radius 28px
   padding 0 1.5rem
   max-width 320px
   margin-bottom 2rem
@@ -80,38 +87,44 @@ body
   & code
     margin-top 8px
     font-weight 500
-    background-color #ecf1f5
+    background-color #ECF1F5
     border none
     padding 4px 8px
-    border-radius 4px
+    border-radius 6px
     display inline-block
     white-space nowrap
-    color #717780
-    font-size 12px
+    color #6F7582
+    font-size 14px
     line-height 12px
     font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
 
 
 .design-token.large.color
-  height 4rem
-  border-radius 2rem
-  padding-left 4rem
+  height 68px
+  border-radius 34px
+  padding-left 62px
   position relative
   flex-direction column
   align-items flex-start
-  padding-top 0.75rem
+  padding-top 12px
+  padding-bottom 12px
+  &[data-hex]
+    & code
+      &:before
+        content '# '
+        color #6F7582
 
   & code
     margin-top 8px
     font-weight normal
-    border 1px solid #e1e1e1
+    border 1px solid #E9EEF6
     padding 4px 8px
-    border-radius 8px
+    border-radius 4px
     display inline-block
     white-space nowrap
     font-size 12px
     text-transform uppercase
-    line-height 12px
+    line-height 14px
     font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
 
 
@@ -121,10 +134,11 @@ body
   padding-left 1.75rem
 
   & .drop
-    border 1px solid white
+    box-sizing content-box
+    border 1px solid #edeeef
     background-color transparent
     background-clip padding-box
-    box-shadow 0 3px 6px #d1d9e6
+    box-shadow inset 0 0 0 1px rgba(0,0,0,0.05), 0 3px 6px #d1d9e6
     height 1rem
     width 1rem
     display block
@@ -132,22 +146,23 @@ body
     position absolute
     top 50%
     transform translateY(-50%)
-    left 6px
+    left 7px
 
 
 
 .design-token.large.color .drop
   border 2px solid white
   background-color transparent
-  box-shadow 0 3px 6px #d1d9e6
-  height 40px
-  width 40px
+  //box-shadow 0 3px 6px #d1d9e6
+  box-shadow 0px 2px 9px rgba(64, 65, 108, 0.19646)
+  height 32px
+  width 32px
   display block
   border-radius 100%
   position absolute
   top 50%
   transform translateY(-50%)
-  left 12px
+  left 18px
 
 
 
@@ -165,33 +180,23 @@ body
   user-select none
 
 
-.design-token.base
-  left 40px
-
 .container
   display grid
-  grid-template-columns auto auto auto auto auto
+  grid-template-columns repeat(auto-fit, minmax(320px, 1fr))
+  grid-gap 2rem
 
-  & > .base,
-  & > .descendants-1,
-  & > .descendants-2,
-  & > .descendants-3,
-  & > .descendants-4
+  & > .base
     display flex
     height 100%
     flex-direction column
     justify-content center
-    align-items flex-start
-
-  & > .descendants-1,
-  & > .descendants-2,
-  & > .descendants-3,
-  & > .descendants-4
-    align-items flex-start
-
-
-  & > :last-child
-    align-items flex-end
+    align-items center
+    &:first-of-type
+      align-items flex-start
+      padding-left 3rem
+    &:last-of-type
+      align-items flex-end
+      padding-right 3rem
 
 
   & > .descendants-1
@@ -210,23 +215,11 @@ body
     font-weight 700
     display inline-block
     margin-right 8px
-    margin-left 2px
 
 
 
 .design-token.light
-
-  & .text:before
-    content ""
-    position absolute
-    left 0
-    height 100%
-    width 2rem
-    background #000
-    top 0
-    border-top-left-radius 1rem
-    border-bottom-left-radius 1rem
-    z-index -1
+  background-color #374151
 
 
 
@@ -238,11 +231,11 @@ body
     border none
     margin-right 4px
     padding 4px 4px
-    border-radius 4px
+    border-radius 6px
     display inline-block
     white-space nowrap
-    color #717780
-    font-size 12px
+    color #6F7582
+    font-size 11px
     line-height 12px
     font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important
 
@@ -257,3 +250,71 @@ body
 .design-token.is-connected,
 .design-token:hover
   opacity 1
+
+path.control
+  z-index 10
+
+
+.settings
+  position fixed
+  bottom 3rem
+  right 3rem
+  height 3rem
+  box-shadow 0px 2px 10px rgba(104, 108, 123, 0.25)
+  border-radius 6px
+  display flex
+  align-items center
+  padding 4px 8px
+
+  background-color white
+  & button
+    border none
+    box-shadow none
+    background-color transparent
+    height 2rem
+    cursor pointer
+    width 2rem
+  & .center
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 32 32' stroke-width='2'%3E%3Cg stroke-width='2' transform='translate(0, 0)'%3E%3Cpolyline points='2 10 2 2 10 2' fill='none' stroke='%23000000' stroke-linecap='square' stroke-miterlimit='10' stroke-width='2' stroke-linejoin='miter'%3E%3C/polyline%3E%3Cpolyline data-color='color-2' points='22 2 30 2 30 10' fill='none' stroke='%23000000' stroke-linecap='square' stroke-miterlimit='10' stroke-width='2' stroke-linejoin='miter'%3E%3C/polyline%3E%3Cpolyline points='30 22 30 30 22 30' fill='none' stroke='%23000000' stroke-linecap='square' stroke-miterlimit='10' stroke-width='2' stroke-linejoin='miter'%3E%3C/polyline%3E%3Cpolyline data-color='color-2' points='10 30 2 30 2 22' fill='none' stroke='%23000000' stroke-linecap='square' stroke-miterlimit='10' stroke-width='2' stroke-linejoin='miter'%3E%3C/polyline%3E%3C/g%3E%3C/svg%3E")
+    background-repeat no-repeat
+    background-size 24px 24px
+    background-position center center
+    margin-left 1rem
+    position relative
+    &:before
+      content ""
+      display block
+      width 1pt
+      height 2rem
+      background rgba(0,0,0,0.03)
+      position absolute
+      left -12px
+      top 50%
+      transform translateY(-50%)
+
+.zoomValue
+  font-family "Menlo for Powerline", "Menlo Regular for Powerline", "DejaVu Sans Mono", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+  background transparent
+  border none
+  display flex
+  font-weight 600
+  font-size 1rem
+  line-height 1rem
+  width 3rem
+  height 2rem
+  align-items center
+  justify-content center
+  text-align center
+  appearance none
+
+.zoomOut,
+.zoomIn
+  background-repeat no-repeat
+  background-position center center
+  background-size 24px 24px
+
+.zoomOut
+  background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke-width='2' viewBox='0 0 32 32'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='square' stroke-miterlimit='10' d='M23 16H9'/%3E%3C/svg%3E")
+
+.zoomIn
+  background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke-width='2' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='square' stroke-miterlimit='10'%3E%3Cpath d='M16 9v14M23 16H9'/%3E%3C/g%3E%3C/svg%3E")

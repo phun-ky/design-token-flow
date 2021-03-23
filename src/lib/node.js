@@ -14,7 +14,9 @@ export const create = ({ type = 'div', classNames = 'ph', id, textContent, attrs
   }
   if (attrs) {
     Object.keys(attrs).forEach(key => {
-      el.setAttribute(key, attrs[key]);
+      if (attrs[key]) {
+        el.setAttribute(key, attrs[key]);
+      }
     });
   }
   return el;

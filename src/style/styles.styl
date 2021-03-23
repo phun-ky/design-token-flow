@@ -13,15 +13,16 @@ html, body
 
 
 body
-  background-color #f8f9fe
+  background-color #F7F8FF
   background-image radial-gradient(#CAD4DB 1px, #F7F8FF 1px)
   background-size 20px 20px
-  overflow hidden
+  // overflow hidden
 
 
 
 .container
-  height calc(100vh - 6rem)
+  min-height 100vh
+  height 100%
   width 100vw
 
 
@@ -30,7 +31,7 @@ body
   top 0
   left 0
   width 100%
-  height 100vh
+  height 100%
   pointer-events none
   z-index 3
 
@@ -69,7 +70,7 @@ body
   height 56px
   border-radius 28px
   padding 0 1.5rem
-  max-width 320px
+  // max-width 320px
   margin-bottom 2rem
   &:last-of-type
     margin-bottom 0
@@ -108,6 +109,10 @@ body
   align-items flex-start
   padding-top 12px
   padding-bottom 12px
+  &[data-rgb],
+  &[data-color]
+    & code
+      text-transform lowercase
   &[data-hex]
     & code
       &:before
@@ -183,14 +188,18 @@ body
 .container
   display grid
   grid-template-columns repeat(auto-fit, minmax(320px, 1fr))
-  grid-gap 2rem
+  grid-gap 3rem
 
   & > .base
     display flex
     height 100%
     flex-direction column
     justify-content center
-    align-items center
+    align-items flex-start
+    padding-top 3rem
+    padding-bottom 3rem
+    padding-right 1rem
+    padding-left 1rem
     &:first-of-type
       align-items flex-start
       padding-left 3rem
@@ -217,13 +226,22 @@ body
     margin-right 8px
 
 
+.design-token.font-weight
+  & .text
+    display inline-block
+    margin-right 8px
+    margin-left 4px
+    font-size 1rem
+
+
 
 .design-token.light
   background-color #374151
 
 
 
-.design-token.font-size
+.design-token.font-size,
+.design-token.size
   &:before
     content attr(data-value)
     font-weight 500

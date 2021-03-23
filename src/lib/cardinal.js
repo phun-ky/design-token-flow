@@ -63,7 +63,7 @@ export const direction_of_element = ({ start, stop }) => {
   const { x1, y1, x2, y2 } = get_coords_pair_from_objects(start, stop);
   const _angle = angle(x1, y1, x2, y2);
   const _direction = cardinal_direction(_angle);
-  console.log(`\`${start.id}\` is ${_direction} of \`${stop.id}\` with angle: \`${_angle}\``);
+  // console.log(`\`${start.id}\` is ${_direction} of \`${stop.id}\` with angle: \`${_angle}\``);
   return _direction;
 };
 

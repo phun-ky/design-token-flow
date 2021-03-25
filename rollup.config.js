@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
+import json from '@rollup/plugin-json';
 
 export default [
   // browser-friendly UMD build
@@ -22,6 +23,7 @@ export default [
     },
 
     plugins: [
+      json(),
       nodeResolve(),
       commonjs({
         include: 'node_modules/**'
@@ -58,6 +60,7 @@ export default [
       { file: pkg.module, assetFileNames: '[name][extname]', exports: 'named', plugins: [terser()], format: 'es' }
     ],
     plugins: [
+      json(),
       nodeResolve(),
       commonjs({
         include: 'node_modules/**'

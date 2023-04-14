@@ -5,6 +5,8 @@ import panzoom from 'panzoom';
 import { uniqueID } from './lib/helpers';
 import * as cardinal from './lib/cardinal';
 import * as node from './lib/node';
+import { RawDesignTokenType} from './types';
+import {RawTokensInterface} from './interfaces';
 
 import DesignToken from './design-token';
 
@@ -12,13 +14,13 @@ import tokens from './tokens.json';
 
 // console.log(tokens);
 
-const DTF = function (raw_tokens) {
+const DTF = function (this:typeof DTF, raw_tokens:RawTokensInterface) {
   this._raw_tokens = raw_tokens;
-  this._tokens = [];
+  this._tokens = <string[]>[];
   this._init();
 };
 
-DTF.prototype._process_tokens = function () {
+DTF.prototype._process_tokens = function (this:typeof DTF, ) {
   this._tokens.forEach(token => {
     // console.log(token);
     token.process();
@@ -29,11 +31,11 @@ DTF.prototype._clear_lines = function () {
   document.querySelectorAll('path:not(.original)').forEach(el => el.remove());
 };
 
-DTF.prototype._setup_tokens = function () {
+DTF.prototype._setup_tokens = function (this:typeof DTF, ) {
   if (this._raw_tokens) {
-    const _tokens_array = [];
+    const _tokens_array = <RawDesignTokenType[]>[];
     const _grouped_tokens = {};
-    Object.keys(this._raw_tokens).forEach(token => {
+    Object.keys(this._raw_tokens).forEach((token:string) => {
       _tokens_array.push(this._raw_tokens[token]);
 
       // const _design_token = new DesignToken(this._raw_tokens[token]);
@@ -61,7 +63,7 @@ DTF.prototype._setup_tokens = function () {
       ['font-family', 'size-spacing']
     ];
 
-    const _customized_grouping = [];
+    const _customized_grouping = <any[]>[];
 
     _custom_grouping_ordering.forEach((custom_group, i) => {
       custom_group.forEach(group => {
@@ -73,9 +75,9 @@ DTF.prototype._setup_tokens = function () {
       });
     });
 
-    _customized_grouping.forEach(group => {
+    _customized_grouping.forEach((group:[]) => {
       const _base = node.create({ type: 'div', classNames: `base ${group}` });
-      group.forEach(token => {
+      group.forEach((token) => {
         const _design_token = new DesignToken(token);
         _base.appendChild(_design_token.el);
         this._tokens.push(_design_token);
@@ -95,13 +97,13 @@ DTF.prototype._init = function () {
   var raf;
   window.addEventListener(
     'resize',
-    function () {
+    function (this:typeof DTF) {
       // If there's a timer, cancel it
       if (raf) {
         window.cancelAnimationFrame(raf);
       }
       raf = window.requestAnimationFrame(
-        function () {
+        function (this:typeof DTF) {
           this._clear_lines();
           this._connect_tokens();
         }.bind(this)
@@ -262,157 +264,3 @@ requestAnimationFrame(function () {
   draw._clear_lines();
   draw._connect_tokens();
 });
-
-let raf;
-
-const position_and_draw = () => {
-  draw._clear_lines();
-  draw._connect_tokens();
-  setTranslate(currentX, currentY, dragItem);
-
-  raf = null;
-};
-var dragItem;
-var container = document.querySelector('.container');
-
-var currentX;
-var currentY;
-var initialX;
-var initialY;
-var xOffset = 0;
-var yOffset = 0;
-
-container.addEventListener('pointerdown', userPressed, { passive: true });
-
-function userPressed(e) {
-  dragItem = e.target;
-  if (dragItem.classList.contains('is-moveable')) {
-    container.addEventListener('pointerup', userReleased, { passive: true });
-    container.addEventListener('pointercancel', userReleased, { passive: true });
-    container.addEventListener('pointermove', userMoved, { passive: true });
-    initialX = e.clientX - xOffset;
-    initialY = e.clientY - yOffset;
-  }
-}
-
-function userReleased() {
-  container.removeEventListener('pointerup', userReleased, { passive: true });
-  container.removeEventListener('pointercancel', userReleased, { passive: true });
-  container.removeEventListener('pointermove', userMoved, { passive: true });
-  initialX = currentX;
-  initialY = currentY;
-
-  if (raf) {
-    cancelAnimationFrame(raf);
-    raf = null;
-  }
-  dragItem.classList.remove('is-moving');
-}
-
-function userMoved(e) {
-  dragItem.classList.add('is-moving');
-  if (!raf) {
-    currentX = e.clientX - initialX;
-    currentY = e.clientY - initialY;
-
-    xOffset = currentX;
-    yOffset = currentY;
-    raf = requestAnimationFrame(position_and_draw);
-  }
-}
-
-function setTranslate(xPos, yPos, el) {
-  el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0)';
-}
-
-const pan = panzoom(document.getElementById('scene'), {
-  bounds: true,
-  boundsPadding: 0.1,
-  maxZoom: 3,
-  minZoom: 0.1,
-  transformOrigin: { x: 0.5, y: 0.5 },
-  beforeWheel: function (e) {
-    // allow wheel-zoom only if altKey is down. Otherwise - ignore
-    var shouldIgnore = !e.shiftKey;
-    return shouldIgnore;
-  },
-  beforeMouseDown: function (e) {
-    // allow mouse-down panning only if altKey is down. Otherwise - ignore
-    var shouldIgnore = !e.altKey;
-    return shouldIgnore;
-  }
-});
-
-const zoomLevels = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
-let currentZoomLevel = zoomLevels[4];
-const text = document.querySelector('.zoomValue');
-
-const setText = input => {
-  text.textContent = `${input}%`;
-};
-
-const zoom = () => {
-  const isSmooth = false;
-  const scale = currentZoomLevel;
-  if (scale) {
-    const transform = pan.getTransform();
-    const deltaX = transform.x;
-    const deltaY = transform.y;
-    const offsetX = scale + deltaX;
-    const offsetY = scale + deltaY;
-
-    if (isSmooth) {
-      pan.zoom(0, 0, scale);
-    } else {
-      pan.zoomAbs(offsetX, offsetY, scale);
-    }
-  }
-};
-
-const zoomIn = () => {
-  const idx = zoomLevels.indexOf(currentZoomLevel);
-
-  // If next element exists
-  if (typeof zoomLevels[idx + 1] !== 'undefined') {
-    currentZoomLevel = zoomLevels[idx + 1];
-  }
-
-  if (currentZoomLevel === 1) {
-    pan.moveTo(0, 0);
-    pan.zoomAbs(0, 0, 1);
-  } else {
-    zoom();
-  }
-  setText(currentZoomLevel * 100);
-};
-
-const zoomOut = () => {
-  const idx = zoomLevels.indexOf(currentZoomLevel);
-
-  //if previous element exists
-  if (typeof zoomLevels[idx - 1] !== 'undefined') {
-    currentZoomLevel = zoomLevels[idx - 1];
-  }
-
-  if (currentZoomLevel === 1) {
-    pan.moveTo(0, 0);
-    pan.zoomAbs(0, 0, 1);
-  } else {
-    zoom();
-  }
-
-  setText(currentZoomLevel * 100);
-};
-
-function resetZoom() {
-  pan.moveTo(0, 0);
-  pan.zoomAbs(0, 0, 1);
-}
-const center_button_el = document.querySelector('.center');
-center_button_el.addEventListener('click', resetZoom);
-
-const zoomOut_button_el = document.querySelector('.zoomOut');
-zoomOut_button_el.addEventListener('click', zoomOut);
-
-const zoomIn_button_el = document.querySelector('.zoomIn');
-zoomIn_button_el.addEventListener('click', zoomIn);

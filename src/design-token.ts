@@ -6,7 +6,7 @@ import * as node from './lib/node';
 import * as styles from './lib/styles';
 import * as classnames from './lib/classnames';
 
-const DesignToken = function (token) {
+const DesignToken = function (this:typeof DesignToken, token) {
   this._init(token);
 };
 //

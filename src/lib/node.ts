@@ -2,8 +2,17 @@
 'use strict';
 
 import * as classnames from './classnames';
-
-export const create = ({ type = 'div', classNames = 'ph', id, textContent, attrs }) => {
+type NodeCreateType = {
+  type:string;
+  classNames?: string;
+  id?:string;
+  textContent?:string;
+  attrs?:{
+    [key: string]: string
+  }
+}
+export const create = (props:NodeCreateType) => {
+  const { type = 'div', classNames = 'ph', id, textContent, attrs } = props;
   const el = document.createElement(type);
   classnames.set(el, classNames);
   if (id) {

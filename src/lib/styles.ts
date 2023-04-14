@@ -10,8 +10,10 @@ export const add = (el, styles) => {
     (styles && Object.keys(styles).length === 0 && styles.constructor === Object)
   )
     return;
-  if (typeof styles === 'string' || Array.isArray(styles)) {
-    styles.forEach(style => (el.style[style.key] = style.value));
+  if (typeof styles === 'string') {
+    el.style = styles;;
+  } else if (Array.isArray(styles)) {
+    styles.forEach((style) => (el.style[style.key] = style.value));
   } else {
     Object.keys(styles).forEach(key => (el.style[key] = styles[key]));
   }

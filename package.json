@@ -1,104 +1,129 @@
 {
   "name": "@phun-ky/design-token-flow",
   "version": "0.1.0",
+  "description": "Design token relations",
+  "main": "dist/design-token-flow.js",
+  "module": "dist/design-token-flow.esm.js",
+  "types": "dist/design-token-flow.d.ts",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Design token relations",
-  "main": "./dist/dtf.cjs.js",
-  "module": "./dist/dtf.esm.js",
-  "browser": "./dist/dtf.umd.js",
   "scripts": {
-    "version": "npm run build",
-    "build": "rm -rf dist/ && rollup -c && gulp",
-    "dev": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "stylus": "rm -rf ./dist/*.css ./dist/*.css.map && stylus ./src/style/styles.styl -o ./dist/styles.css",
-    "postcss": "rm -rf ./dist/styles.min.css && postcss ./dist/styles.css.css -o styles.min.css",
+    "test": "glob -c \"node --import tsx --import global-jsdom/register --test --no-warnings\" \"./src/**/__tests__/**/*.[jt]s\"",
+    "pretest-ci": "rm -rf coverage && mkdir -p coverage",
+    "test-ci": "glob -c \"node --import tsx --import global-jsdom/register --test --no-warnings --experimental-test-coverage --test-reporter=cobertura --test-reporter-destination=coverage/cobertura-coverage.xml --test-reporter=spec --test-reporter-destination=stdout\" \"./src/**/__tests__/**/*.[jt]s\"",
+    "rollup": "rollup -c",
+    "prerollup:dev": "npm run clean && npm run styles",
+    "rollup:dev": "rollup -c -w",
+    "clean": "rm -rf dist dts",
+    "build": "npm run clean && npm run rollup && npm run styles",
+    "styles": "npm run stylus && npm run postcss",
+    "stylus": "rm -rf ./dist/design-token-flow.css && stylus ./src/styles/index.styl -o ./dist/design-token-flow.css",
+    "postcss": "rm -rf ./dist/design-token-flow.min.css && postcss ./dist/design-token-flow.css -o  ./dist/design-token-flow.min.css",
+    "dev": "npx browser-sync start --server 'dev' --files 'dist' --ss 'dist'",
+    "docs:gen": "node ./node_modules/.bin/typedoc --entryPoints src --entryPointStrategy expand --gitRevision main --githubPages false --plugin typedoc-plugin-markdown --tsconfig tsconfig.json --hideInPageTOC --out api --readme none",
+    "style:lint": "./node_modules/.bin/eslint -c ./.eslintrc --max-warnings=0 src --ignore-path .gitignore ",
+    "style:format": "prettier-eslint --config .prettierrc --eslint-config-path $PWD/.eslintrc --list-different --write \"./src/**/*.ts\"",
+    "style:code": "npx putout src",
     "commit": "npx git-cz",
-    "release": "npx standard-version"
+    "release": "release-it"
   },
+  "files": [
+    "/dist/design-token-flow.esm.js",
+    "/dist/design-token-flow.esm.js.map",
+    "/dist/design-token-flow.js",
+    "/dist/design-token-flow.js.map",
+    "/dist/design-token-flow.min.css",
+    "/dist/design-token-flow.css",
+    "/dist/design-token-flow.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phun-ky/design-token-flow.git"
   },
+  "keywords": [
+    "html",
+    "css",
+    "design",
+    "design system",
+    "javascript",
+    "spec",
+    "inspect",
+    "annotation",
+    "annotate",
+    "pin",
+    "specifications",
+    "anatomy",
+    "dissection",
+    "dissect",
+    "documentation",
+    "information",
+    "specification",
+    "specs",
+    "html-elements",
+    "inspect",
+    "spacing",
+    "design-token-flow",
+    "a11y",
+    "accessibility"
+  ],
   "author": "Alexander Vassbotn Røyne-Helgesen <alexander@phun-ky.net>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/phun-ky/design-token-flow/issues"
   },
-  "standard-version": {
-    "scripts": {
-      "prerelease": "npm run build && git add .",
-      "posttag": "git push --follow-tags origin master && npm publish"
-    },
-    "types": [
-      {
-        "type": "chore",
-        "section": "Tasks",
-        "hidden": true
-      },
-      {
-        "type": "docs",
-        "section": "Documentation"
-      },
-      {
-        "type": "feat",
-        "section": "Feature"
-      },
-      {
-        "type": "fix",
-        "section": "Bug"
-      },
-      {
-        "type": "perf",
-        "section": "Performance change"
-      },
-      {
-        "type": "refactor",
-        "section": "Refactoring"
-      },
-      {
-        "type": "release",
-        "section": "Create a release commit",
-        "hidden": true
-      },
-      {
-        "type": "style",
-        "section": "Markup, white-space, formatting, missing semi-colons...",
-        "hidden": true
-      },
-      {
-        "type": "test",
-        "section": "Adding missing tests",
-        "hidden": true
-      }
-    ]
-  },
   "homepage": "https://github.com/phun-ky/design-token-flow#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.1.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-compat": "^3.13.0",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jest": "^24.4.2",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.4.1",
-    "prettier-eslint": "^13.0.0",
-    "rollup-plugin-dts": "^4.0.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.31.1",
+    "@release-it/conventional-changelog": "^8.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.0.1",
+    "cobertura": "^1.0.1",
+    "cssnano": "^6.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-compat": "^4.2.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "git-cz": "^4.9.0",
+    "glob": "^10.3.10",
+    "global-jsdom": "^24.0.0",
+    "jsdom": "^24.0.0",
+    "postcss": "^8.3.0",
+    "postcss-cli": "^8.3.1",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0",
+    "prettier-eslint-cli": "^8.0.1",
+    "putout": "^35.1.0",
+    "quibble": "^0.9.1",
+    "release-it": "^17.1.1",
+    "rollup": "^4.12.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "stylus": "^0.62.0",
+    "ts-node": "^10.9.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.4"
+    "tsx": "^4.7.1",
+    "typedoc": "^0.25.8",
+    "typedoc-plugin-frontmatter": "^0.0.2",
+    "typedoc-plugin-markdown": "^3.17.1",
+    "typedoc-plugin-mdn-links": "^3.1.16",
+    "typedoc-plugin-no-inherit": "^1.4.0",
+    "typedoc-plugin-rename-defaults": "^0.7.0",
+    "typescript": "^5.0.0"
   },
-  "dependencies": {
-    "network-information-types": "^0.1.1",
-    "panzoom": "^9.4.1"
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
+  },
+  "engines": {
+    "node": ">=21.7.1",
+    "npm": ">=10.8.2"
   }
 }

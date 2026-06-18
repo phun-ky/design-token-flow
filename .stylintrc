@@ -23,7 +23,6 @@
   "placeholders": false,
   "prefixVarsWithDollar": "always",
   "quotePref": false,
-  "reporter": "stylint-stylish",
   "semicolons": "never",
   "stackedProperties": "never",
   "trailingWhitespace": "never",

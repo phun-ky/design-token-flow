@@ -1,0 +1,269 @@
+:root
+  --dtf-font-family ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif
+  --dtf-font-family-code 'Menlo for Powerline', 'Menlo Regular for Powerline', 'DejaVu Sans Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+  --dtf-token-font-size 12px
+  --dtf-token-line-height 120%
+  --dtf-token-depth-z-index 10
+  --dtf-token-spacing-stack 0
+  --dtf-token-height 2rem
+  --dtf-token-spacing-inset-horizontal 0.5rem
+  --dtf-token-spacing-inset-vertical 0
+  --dtf-token-border-radius 1rem
+  --dtf-token-spacing-gap 4px
+  --dtf-token-font-weight 600
+  --dtf-token-code-font-weigth 600
+  --dtf-token-code-font-size 11px
+  --dtf-token-code-line-height 110%
+  --dtf-token-code-spacing-inset-horizontal 8px
+  --dtf-token-code-spacing-inset-vertical 4px
+  --dtf-token-code-border-radius 8px
+  --dtf-token-text-font-size 1rem
+
+:root
+  --dtf-color-background #262831
+  --dtf-legend-color #E4E4E7
+  --dtf-color-text #9FA8AD
+  --dtf-color-text-accent #E4E4E7
+  --dtf-design-token-color-background-light var(--dtf-color-background)
+  --dtf-design-token-color-light var(--dtf-color-text-accent)
+  --dtf-design-token-color-background-dark #FFFFFF
+  --dtf-design-token-color-dark #000000
+  --dtf-design-token-code-color #9FA8AD
+  --dtf-design-token-code-color-background #383b49
+  --dtf-design-token-box-shadow 0px 2px 10px rgba(0, 0, 0, 0.05)
+  --dtf-design-token-drop-box-shadow 0px 2px 9px 0px rgba(64, 65, 108, 0.2)
+  --dtf-code-color #DEE1E7
+  --dtf-drop-border-color #E4E4E7
+
+
+:root.theme--light
+  --dtf-design-token-color-background-light #181A22
+  --dtf-design-token-color-light #FFFFFF
+  --dtf-design-token-color-background-dark var(--dtf-color-background)
+  --dtf-design-token-color-dark var(--dtf-color-text-accent)
+  --dtf-design-token-code-color #9FA8AD
+  --dtf-design-token-code-color-background #ECF1F5
+  --dtf-design-token-box-shadow 0px 2px 10px rgba(104, 108, 123, 0.24)
+  --dtf-design-token-drop-box-shadow 0px 2px 9px 0px rgba(64, 65, 108, 0.2)
+  --dtf-color-text #454444
+  --dtf-color-text-accent #000000
+  --dtf-color-background #FFFFFF
+  --dtf-legend-color #DEE1E7
+  --dtf-code-color #6F7582
+  --dtf-drop-border-color #FFFFFF
+
+
+.design-token
+  transition color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+  background-color var(--dtf-color-background)
+  font-size var(--dtf-token-font-size)
+  line-height var(--dtf-token-line-height)
+  font-weight var(--dtf-token-font-weight)
+  color var(--dtf-color-text-accent)
+  border-radius var(--dtf-token-border-radius)
+  padding var(--dtf-token-spacing-inset-vertical) var(--dtf-token-spacing-inset-horizontal)
+  height var(--dtf-token-height)
+  z-index var(--dtf-token-depth-z-index)
+  font-family var(--dtf-font-family-code)
+  box-shadow var(--dtf-design-token-box-shadow)
+  margin var(--dtf-token-spacing-stack)
+  display inline-flex
+  white-space nowrap
+  flex-grow 0
+  flex-shrink 0
+  user-select none
+  align-items center
+  justify-content flex-start
+  position relative
+
+
+.design-token
+  &:has(code)
+    grid-gap var(--dtf-token-spacing-gap) var(--dtf-token-spacing-gap)
+
+
+.design-token
+  & code
+    padding var(--dtf-token-code-spacing-inset-vertical) var(--dtf-token-code-spacing-inset-horizontal)
+    border-radius var(--dtf-token-code-border-radius)
+    color var(--dtf-design-token-code-color)
+    background-color var(--dtf-design-token-code-color-background)
+    font-size var(--dtf-token-code-font-size)
+    line-height var(--dtf-token-code-line-height)
+    font-weight var(--dtf-token-code-font-weigth)
+    font-family var(--dtf-font-family-code)
+    border none
+    display inline-block
+    white-space nowrap
+
+
+.design-token
+  &.light
+    background-color var(--dtf-design-token-color-background-light)
+    color var(--dtf-design-token-color-light)
+
+
+.design-token
+  &.dark
+    background-color var(--dtf-design-token-color-background-dark)
+    color var(--dtf-design-token-color-dark)
+
+
+.design-token.font,
+.design-token.color.base,
+.design-token.shadow
+  --dtf-token-height 4rem
+  --dtf-token-border-radius 2.5rem
+  --dtf-token-spacing-inset-horizontal 1.5rem
+  height var(--dtf-token-height)
+  border-radius var(--dtf-token-border-radius)
+  position relative
+  flex-direction column
+  align-items flex-start
+  justify-content center
+  padding-right var(--dtf-token-spacing-inset-horizontal)
+
+
+.design-token.font
+  padding-left var(--dtf-token-spacing-inset-horizontal)
+
+
+.design-token.color.base
+  padding-left 4rem
+
+  & .drop
+    left 1rem
+    height 2rem
+    width 2rem
+    border 2pt solid var(--dtf-drop-border-color)
+
+
+.design-token.color.base
+  &[data-hex],
+  &[data-rgb],
+  &[data-color]
+    & code
+      color var(--dtf-code-color)
+      background-color transparent
+      font-size var(--dtf-token-font-size)
+      line-height var(--dtf-token-line-height)
+      padding-left 0.5rem
+      border-radius 4px
+      border 1pt solid var(--dtf-legend-color)
+
+
+.design-token.color.base
+  &[data-rgb],
+  &[data-color]
+    & code
+      text-transform lowercase
+
+
+.design-token.color.base
+  &[data-hex]
+    & code
+      text-transform uppercase
+
+
+.design-token.color
+  padding-left 2rem
+
+  & .drop
+    box-sizing content-box
+    border 1pt solid var(--dtf-drop-border-color)
+    background-color transparent
+    background-clip padding-box
+    box-shadow var(--dtf-design-token-drop-box-shadow)
+    height 1rem
+    width 1rem
+    display block
+    border-radius 100%
+    position absolute
+    top 50%
+    transform translateY(-50%)
+    left .5rem
+
+
+.design-token.text-color
+  & .text
+    font-weight 700
+    display inline-block
+    margin-right 0.5rem
+    margin-left 0
+    font-size 1rem
+    font-family var(--dtf-font-family)
+
+
+.design-token.font-weight
+  & .text
+    display inline-block
+    margin-right 0.5rem
+    margin-left 0
+    font-size 1rem
+    font-family var(--dtf-font-family)
+
+
+.design-token.border-radius
+  & .radius
+    box-sizing content-box
+    border-color var(--dtf-legend-color)
+    border-bottom-width 2pt
+    border-right-width 2pt
+    border-bottom-style solid
+    border-right-style solid
+    background-color transparent
+    background-clip padding-box
+    height 0.875rem
+    width 0.875rem
+    margin-right 0.5rem
+    display inline-block
+
+
+.design-token.border-width
+  & .width
+    box-sizing content-box
+    background-color transparent
+    background-clip padding-box
+    width 0.875rem
+    background-color var(--dtf-legend-color)
+    margin-right 0.5rem
+    display inline-block
+
+
+.design-token.shadow
+  & code
+    margin-left 1.5rem
+
+    &::before
+      content ""
+      box-sizing content-box
+      border 1pt solid var(--dtf-legend-color)
+      background-color transparent
+      background-clip padding-box
+      height 1rem
+      width 1rem
+      display block
+      position absolute
+      top auto
+      left 1.5rem
+      transform translateY(-3.5px)
+
+
+.design-token.font-size,
+.design-token.size,
+.design-token.border-width,
+.design-token.border-radius
+  &:before
+    content attr(data-value)
+    border none
+    margin-right 0.5rem
+    padding var(--dtf-token-code-spacing-inset-vertical) var(--dtf-token-code-spacing-inset-horizontal)
+    border-radius var(--dtf-token-code-border-radius)
+    display inline-block
+    white-space nowrap
+    color var(--dtf-design-token-code-color)
+    background-color var(--dtf-design-token-code-color-background)
+    font-size var(--dtf-token-code-font-size)
+    line-height var(--dtf-token-code-line-height)
+    font-weight var(--dtf-token-code-font-weigth)
+    font-family var(--dtf-font-family-code)

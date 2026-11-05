@@ -3,11 +3,9 @@
     "target": "ES2022",
     "module": "esnext",
     "lib": ["ES2022", "dom", "dom.iterable"],
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dts",
     "moduleResolution": "bundler",
+    "types": ["node"],
+    "noEmit": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": false,
@@ -16,12 +14,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "scripts",
-    "dts",
-    "**/__tests__/**"
-  ]
+  "include": ["src", "dev", "vite.config.ts"]
 }

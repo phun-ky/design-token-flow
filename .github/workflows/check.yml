@@ -45,10 +45,9 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '>=21.7.1'
+          node-version: 24
       - name: Install dependencies
-        run: | # Install and link dependencies
-          npm i
+        run: npm ci
       - name: Build # Build all packages
         run: npm run build
       - name: Test
@@ -57,15 +56,18 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: phun-ky/speccer
+          slug: phun-ky/design-token-flow
   notify:
     name: Notify failed check
     needs: check
     if: failure()
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
+      # GITHUB_TOKEN: secrets are empty on Dependabot PRs, and only issues are written here
       - uses: jayqi/failed-build-issue-action@v1.2
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
 

@@ -24,8 +24,11 @@ export { getFontFaces } from './utils/font-faces';
 
 export {
   FONT_WEIGHT_KEYWORDS,
+  validateProperties,
   validateTokenValue
 } from './utils/validate-token';
+
+export type { TokenReference } from './utils/validate-token';
 
 export type { DesignTokenFontFace } from './utils/font-faces';
 

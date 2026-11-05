@@ -310,12 +310,92 @@ const CHECKS: Record<string, Check> = {
   })
 };
 
+/** A reference in a token's value to a whole token, found while resolving it */
+export interface TokenReference {
+  /** Where the reference is, such as `$value` or `$value.width` */
+  field: string;
+  /** The referenced token's name */
+  name: string;
+  /** The referenced token's `$type` */
+  $type: string;
+}
+
+const SHADOW_PARTS = {
+  color: 'color',
+  offsetX: 'dimension',
+  offsetY: 'dimension',
+  blur: 'dimension',
+  spread: 'dimension'
+};
+const fieldsOf = (prefix: string, parts: Record<string, string>) =>
+  Object.fromEntries(
+    Object.entries(parts).map(([part, type]) => [`${prefix}.${part}`, type])
+  );
+/**
+ * The token `$type` a reference must have, per composite part, as the spec
+ * words it ("a valid dimension value or a reference to a dimension token").
+ * List items are written `[]`. A whole `$value` may reference a token of the
+ * same `$type`.
+ */
+const REFERENCE_TYPES: Record<string, Record<string, string>> = {
+  strokeStyle: { '$value.dashArray[]': 'dimension' },
+  border: fieldsOf('$value', {
+    color: 'color',
+    width: 'dimension',
+    style: 'strokeStyle'
+  }),
+  transition: fieldsOf('$value', {
+    duration: 'duration',
+    delay: 'duration',
+    timingFunction: 'cubicBezier'
+  }),
+  shadow: {
+    '$value[]': 'shadow',
+    ...fieldsOf('$value', SHADOW_PARTS),
+    ...fieldsOf('$value[]', SHADOW_PARTS)
+  },
+  gradient: {
+    '$value[]': 'gradient',
+    ...fieldsOf('$value[]', { color: 'color', position: 'number' })
+  },
+  typography: fieldsOf('$value', {
+    fontFamily: 'fontFamily',
+    fontSize: 'dimension',
+    fontWeight: 'fontWeight',
+    letterSpacing: 'dimension',
+    lineHeight: 'number'
+  })
+};
+const checkReference = (
+  $type: string,
+  { field, name, $type: referencedType }: TokenReference,
+  fail: Fail
+): void => {
+  const expected =
+    field === '$value'
+      ? $type
+      : REFERENCE_TYPES[$type]?.[field.replace(/\[\d+\]/g, '[]')];
+  const target = `{${name}} (a ${referencedType} token)`;
+
+  if (!expected) fail(TypeError, field, 'a value, not a reference', target);
+
+  if (referencedType !== expected)
+    fail(
+      TypeError,
+      field,
+      `a ${expected} or a reference to a ${expected} token`,
+      target
+    );
+};
+
 /**
  * Throws when a resolved value doesn't match its `$type`.
  *
  * @param {string} name The token's name, such as `color.cta`, for the message
  * @param {string} $type The token's resolved `$type`
  * @param {unknown} value The token's resolved value (aliases replaced)
+ * @param {TokenReference[]} [references] References to whole tokens in the value,
+ *   each checked for the token `$type` the spec allows where it is
  * @throws {TypeError} When the type is not a string, or a field has the wrong shape
  * @throws {RangeError} When the type is unknown, or a field is out of range
  * @example
@@ -327,7 +407,8 @@ const CHECKS: Record<string, Check> = {
 export const validateTokenValue = (
   name: string,
   $type: unknown,
-  value: unknown
+  value: unknown,
+  references: TokenReference[] = []
 ): void => {
   const fail: Fail = (ErrorType, field, expected, got) => {
     throw new ErrorType(
@@ -349,5 +430,49 @@ export const validateTokenValue = (
       $type
     );
 
+  references.forEach((reference) =>
+    checkReference($type as string, reference, fail)
+  );
   (check as Check)(value, '$value', fail);
+};
+
+/**
+ * Throws when a token's or group's own properties have the wrong type:
+ * `$description` must be a string, `$deprecated` true, false or a string,
+ * `$extensions` an object, and a group's `$type` one of the spec's types.
+ * (A token's `$type` is checked with its value.)
+ *
+ * @param {'token' | 'group'} kind Whether `node` is a token or a group
+ * @param {string} name Its name, such as `color.base`; empty for the root
+ * @param {Record<string, unknown>} node The token or group
+ * @throws {TypeError} When a property has the wrong type
+ * @throws {RangeError} When a group's `$type` is not one of the spec's types
+ */
+export const validateProperties = (
+  kind: 'token' | 'group',
+  name: string,
+  node: Record<string, unknown>
+): void => {
+  const fail: Fail = (ErrorType, field, expected, got) => {
+    throw new ErrorType(
+      `Invalid ${kind} ${name ? `"${name}"` : '(the root)'}: ${field} must be ${expected}, got ${show(got)}`
+    );
+  };
+  const { $description, $deprecated, $extensions, $type } = node;
+
+  if ($description !== undefined && typeof $description !== 'string')
+    fail(TypeError, '$description', 'a string', $description);
+
+  if (
+    $deprecated !== undefined &&
+    typeof $deprecated !== 'boolean' &&
+    typeof $deprecated !== 'string'
+  )
+    fail(TypeError, '$deprecated', 'true, false or a string', $deprecated);
+
+  if ($extensions !== undefined && !isObject($extensions))
+    fail(TypeError, '$extensions', 'an object', $extensions);
+
+  if (kind === 'group' && $type !== undefined)
+    oneOf($type, '$type', fail, Object.keys(CHECKS));
 };

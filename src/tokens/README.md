@@ -12,17 +12,18 @@ This folder is meant to become its own npm package. Until then, it lives here so
 
 ## Public API
 
-| Export                                                    | What it does                                                                                                                                |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flattenTokens(doc)`                                      | Flattens a token document into tokens with resolved `$type`, value, aliases and relations; throws on a value that doesn't match its `$type` |
-| `validateTokenValue(name, $type, value)`                  | The check `flattenTokens` runs per token: `TypeError` for a wrong shape, `RangeError` for out of range                                      |
-| `renderDesignToken(token, options?)`                      | HTML string for one pill                                                                                                                    |
-| `createDesignTokenElement(token, options?)`               | The same pill as an `HTMLElement`                                                                                                           |
-| `getDesignTokenKind(token)`                               | Which pill variant a token renders as                                                                                                       |
-| `toCssValue(token)` and `colorToCss`, `dimensionToCss`, … | Token value to CSS value                                                                                                                    |
-| `getFontFaces(tokens)`                                    | Font faces (family, `src` and descriptors) that `fontFamily` tokens describe                                                                |
-| `DTF_EXTENSION_KEY`, `getExtension(token)`                | This tool's `$extensions` data                                                                                                              |
-| Types                                                     | `DTCGDocument`, `FlatDesignToken`, every `$type` value shape                                                                                |
+| Export                                                    | What it does                                                                                                                                                             |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `flattenTokens(doc)`                                      | Flattens a token document into tokens with resolved `$type`, value, aliases and relations; throws on a value that doesn't match its `$type`                              |
+| `validateTokenValue(name, $type, value, references?)`     | The check `flattenTokens` runs per token: `TypeError` for a wrong shape or a reference to a token of the wrong `$type`, `RangeError` for out of range                    |
+| `validateProperties(kind, name, node)`                    | The check `flattenTokens` runs per token and group: `$description` a string, `$deprecated` a boolean or string, `$extensions` an object, a group's `$type` from the spec |
+| `renderDesignToken(token, options?)`                      | HTML string for one pill                                                                                                                                                 |
+| `createDesignTokenElement(token, options?)`               | The same pill as an `HTMLElement`                                                                                                                                        |
+| `getDesignTokenKind(token)`                               | Which pill variant a token renders as                                                                                                                                    |
+| `toCssValue(token)` and `colorToCss`, `dimensionToCss`, … | Token value to CSS value                                                                                                                                                 |
+| `getFontFaces(tokens)`                                    | Font faces (family, `src` and descriptors) that `fontFamily` tokens describe                                                                                             |
+| `DTF_EXTENSION_KEY`, `getExtension(token)`                | This tool's `$extensions` data                                                                                                                                           |
+| Types                                                     | `DTCGDocument`, `FlatDesignToken`, every `$type` value shape                                                                                                             |
 
 Styles: [`styles/design-token.css`](./styles/design-token.css), themed with `--dtf-*` custom properties and `:root.theme--light`.
 

@@ -23,7 +23,10 @@ import { waitForFrame } from './wait';
  * await add(element, styles);
  * ```
  */
-export const add = async (el: HTMLElement, styles: object | { key: string; value: string }[]): Promise<void> => {
+export const add = async (
+  el: HTMLElement,
+  styles: object | { key: string; value: string }[]
+): Promise<void> => {
   if (
     !el ||
     !styles ||

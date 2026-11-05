@@ -32,8 +32,8 @@ export const set = (el: HTMLElement, cls: string, avoid = 'noop') => {
   cls
     .trim()
     .split(' ')
-    .filter(cl => cl !== avoid)
-    .forEach(cl => el.classList.add(cl));
+    .filter((cl) => cl !== avoid)
+    .forEach((cl) => el.classList.add(cl));
 };
 
 /**
@@ -58,8 +58,8 @@ export const toggle = (el: HTMLElement, cls: string, avoid = 'noop') => {
   cls
     .trim()
     .split(' ')
-    .filter(cl => cl !== avoid)
-    .forEach(cl => el.classList.toggle(cl));
+    .filter((cl) => cl !== avoid)
+    .forEach((cl) => el.classList.toggle(cl));
 };
 
 /**
@@ -84,8 +84,8 @@ export const remove = (el: HTMLElement, cls: string, avoid = 'noop') => {
   cls
     .trim()
     .split(' ')
-    .filter(cl => cl !== avoid)
-    .forEach(cl => el.classList.remove(cl));
+    .filter((cl) => cl !== avoid)
+    .forEach((cl) => el.classList.remove(cl));
 };
 
 /**
@@ -106,19 +106,22 @@ export const remove = (el: HTMLElement, cls: string, avoid = 'noop') => {
  * console.log(classNames); // Example output: 'class1 class2'
  * ```
  */
-export const cx = (cls: DTFClassNamesFirstArgType, cls_obj?: DTFClassNamesSecondArgType): string => {
+export const cx = (
+  cls: DTFClassNamesFirstArgType,
+  cls_obj?: DTFClassNamesSecondArgType
+): string => {
   if (!cls) return '';
 
   if (!cls_obj && isNotString(cls))
     return Object.keys(cls)
-      .filter(classname => cls[classname])
+      .filter((classname) => cls[classname])
       .join(' ')
       .trim();
 
   return `${(cls as string).trim()} ${
     cls_obj
       ? Object.keys(cls_obj)
-          .filter(classname => cls_obj[classname])
+          .filter((classname) => cls_obj[classname])
           .join(' ')
       : ''
   }`.trim();

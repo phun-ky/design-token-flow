@@ -1,13 +1,44 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  - package-ecosystem: 'npm'
+    directory: '/'
+    # Minor and patch updates rarely break anything, so they come in one PR.
+    # Majors are not grouped: each gets its own PR, so one blocked major does
+    # not hold back the others
+    groups:
+      minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - 'minor'
+          - 'patch'
     schedule:
       interval: 'weekly'
+    # Only propose versions published at least two weeks ago: a compromised
+    # release is usually caught within days. Security updates still open at once
+    cooldown:
+      default-days: 14
+    labels:
+      - 'mindless: 📦 dependencies'
     commit-message:
       prefix: 'chore: 🤖 '
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-type: direct
+
+  # Actions are pinned to commit SHAs; this keeps the pins and their version
+  # comments up to date
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    groups:
+      actions:
+        patterns:
+          - '*'
+    schedule:
+      interval: 'weekly'
+    # Same two-week cooldown as npm, for the same reason
+    cooldown:
+      default-days: 14
+    labels:
+      - 'mindless: 📦 dependencies'
+    commit-message:
+      prefix: 'ci: 🎡 '

@@ -1,6 +1,17 @@
-import { DTCGBorderValue, DTCGColorValue, DTCGDimensionValue, DTCGFontFamilyValue, FlatDesignToken } from '../types/tokens';
+import {
+  DTCGBorderValue,
+  DTCGColorValue,
+  DTCGDimensionValue,
+  DTCGFontFamilyValue,
+  FlatDesignToken
+} from '../types/tokens';
 
-import { colorToHex, fontFamilyToCss, getExtension, toCssValue } from './design-tokens';
+import {
+  colorToHex,
+  fontFamilyToCss,
+  getExtension,
+  toCssValue
+} from './design-tokens';
 import { light_or_dark } from './light-or-dark';
 
 /**
@@ -37,7 +48,11 @@ const KINDS: DesignTokenKind[] = [
 /**
  * What the renderer needs: a flattened token (see `flattenTokens`). Only `id`, `$type` and the resolved `value` are required.
  */
-export type RenderableDesignToken = Pick<FlatDesignToken, 'id' | '$type' | 'value'> & Partial<FlatDesignToken>;
+export type RenderableDesignToken = Pick<
+  FlatDesignToken,
+  'id' | '$type' | 'value'
+> &
+  Partial<FlatDesignToken>;
 
 export interface RenderDesignTokenOptions {
   /** Prefix shown before the token id in the pill. Defaults to `$` */
@@ -46,14 +61,9 @@ export interface RenderDesignTokenOptions {
 
 type AttrValue = string | number | boolean | null | undefined;
 
-const HTML_ESCAPES: Record<string, string> = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  '\'': '&#39;'
-};
-const escapeHTML = (value: AttrValue): string => String(value ?? '').replace(/[&<>"']/g, (char) => HTML_ESCAPES[char]);
+// Each of & < > " ' becomes a numeric character reference, e.g. & is &#38;
+const escapeHTML = (value: AttrValue): string =>
+  String(value ?? '').replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
 const isSet = (value: AttrValue): value is string | number | true =>
   value !== null && value !== undefined && value !== '' && value !== false;
 const toAttrs = (attrs: Record<string, AttrValue>): string =>
@@ -66,7 +76,11 @@ const toStyle = (styles: Record<string, AttrValue>): string =>
     .filter(([, value]) => isSet(value))
     .map(([key, value]) => `${key}: ${value}`)
     .join('; ');
-const span = (className: string, styles: Record<string, AttrValue> = {}, content = ''): string =>
+const span = (
+  className: string,
+  styles: Record<string, AttrValue> = {},
+  content = ''
+): string =>
   `<span${toAttrs({ class: className, style: toStyle(styles) })}>${content}</span>`;
 const code = (value: AttrValue): string => `<code>${escapeHTML(value)}</code>`;
 
@@ -84,7 +98,9 @@ const code = (value: AttrValue): string => `<code>${escapeHTML(value)}</code>`;
  * // => 'font-size'
  * ```
  */
-export const getDesignTokenKind = (token: RenderableDesignToken): DesignTokenKind => {
+export const getDesignTokenKind = (
+  token: RenderableDesignToken
+): DesignTokenKind => {
   const override = getExtension(token).kind as DesignTokenKind | undefined;
 
   if (override && KINDS.includes(override)) return override;
@@ -100,9 +116,11 @@ export const getDesignTokenKind = (token: RenderableDesignToken): DesignTokenKin
     case 'dimension':
       if (has('font', 'font-size', 'fontSize')) return 'font-size';
 
-      if (has('radius', 'border-radius', 'borderRadius')) return 'border-radius';
+      if (has('radius', 'border-radius', 'borderRadius'))
+        return 'border-radius';
 
-      if (has('border-width', 'borderWidth') || (has('border') && has('width'))) return 'border-width';
+      if (has('border-width', 'borderWidth') || (has('border') && has('width')))
+        return 'border-width';
 
       return 'size';
     case 'fontFamily':
@@ -145,7 +163,10 @@ const getLightness = (color: DTCGColorValue): 'light' | 'dark' | undefined => {
  * // => '<span class="design-token color base" id="color-blue" ...><span class="drop" style="background-color: #0054f0"></span>$color-blue<code>#0054f0</code></span>'
  * ```
  */
-export const renderDesignToken = (token: RenderableDesignToken, options: RenderDesignTokenOptions = {}): string => {
+export const renderDesignToken = (
+  token: RenderableDesignToken,
+  options: RenderDesignTokenOptions = {}
+): string => {
   const { prefix = '$' } = options;
   const kind = getDesignTokenKind(token);
   const label = escapeHTML(`${prefix}${token.id}`);
@@ -161,7 +182,8 @@ export const renderDesignToken = (token: RenderableDesignToken, options: RenderD
   switch (kind) {
     case 'color-base': {
       classNames.push('color', 'base');
-      content = span('drop', { 'background-color': css }) + label + code(hex ?? css);
+      content =
+        span('drop', { 'background-color': css }) + label + code(hex ?? css);
       break;
     }
     case 'color': {
@@ -189,7 +211,8 @@ export const renderDesignToken = (token: RenderableDesignToken, options: RenderD
     }
     case 'font-weight': {
       const extension = getExtension(token);
-      const family = extension['font-family'] as DTCGFontFamilyValue | undefined;
+      const family = extension['font-family'] as
+        DTCGFontFamilyValue | undefined;
       const variable = extension.variable === true;
 
       classNames.push('font-weight');
@@ -218,7 +241,10 @@ export const renderDesignToken = (token: RenderableDesignToken, options: RenderD
     case 'border-width': {
       const isBorder = token.$type === 'border';
       const width = isBorder
-        ? toCssValue({ $type: 'dimension', value: (token.value as DTCGBorderValue).width as DTCGDimensionValue })
+        ? toCssValue({
+            $type: 'dimension',
+            value: (token.value as DTCGBorderValue).width as DTCGDimensionValue
+          })
         : css;
 
       // The full value badge is drawn by CSS from `data-value`
@@ -264,7 +290,10 @@ export const renderDesignToken = (token: RenderableDesignToken, options: RenderD
  * @param {RenderDesignTokenOptions} [options] - Render options
  * @returns {HTMLElement} The design token element
  */
-export const createDesignTokenElement = (token: RenderableDesignToken, options?: RenderDesignTokenOptions): HTMLElement => {
+export const createDesignTokenElement = (
+  token: RenderableDesignToken,
+  options?: RenderDesignTokenOptions
+): HTMLElement => {
   const template = document.createElement('template');
 
   template.innerHTML = renderDesignToken(token, options);

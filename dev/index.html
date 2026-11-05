@@ -7,9 +7,14 @@
     <script>
       // Apply the saved (or system) theme before the first paint, see src/app/theme.ts
       try {
-        const theme = localStorage.getItem('dtf-theme') ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        const theme =
+          localStorage.getItem('dtf-theme') ??
+          (matchMedia('(prefers-color-scheme: light)').matches
+            ? 'light'
+            : 'dark');
 
-        if (theme === 'light') document.documentElement.classList.add('theme--light');
+        if (theme === 'light')
+          document.documentElement.classList.add('theme--light');
       } catch {}
     </script>
   </head>

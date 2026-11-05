@@ -4,7 +4,11 @@
     "$description": "One token per supported pill variant, plus a few color spaces",
     "palette": {
       "blue": {
-        "$value": { "colorSpace": "srgb", "components": [0, 0.3294, 0.9412], "hex": "#0054f0" },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0, 0.3294, 0.9412],
+          "hex": "#0054f0"
+        },
         "$description": "sRGB with a hex fallback"
       },
       "coral": {
@@ -20,7 +24,11 @@
         "$description": "Display P3"
       },
       "ink": {
-        "$value": { "colorSpace": "srgb", "components": [0.1, 0.1, 0.12], "alpha": 0.9 },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.1, 0.1, 0.12],
+          "alpha": 0.9
+        },
         "$description": "sRGB with alpha"
       },
       "paper": {
@@ -28,13 +36,19 @@
       }
     },
     "accent": {
-      "$root": { "$value": "{color.palette.blue}", "$description": "A $root token: the group itself has a value" },
+      "$root": {
+        "$value": "{color.palette.blue}",
+        "$description": "A $root token: the group itself has a value"
+      },
       "hover": { "$value": "{color.palette.coral}" }
     },
     "text": {
       "body": { "$value": "{color.palette.ink}" },
       "inverse": { "$value": "{color.palette.paper}" },
-      "link": { "$value": { "$ref": "#/color/accent/$root/$value" }, "$description": "JSON Pointer reference" }
+      "link": {
+        "$value": { "$ref": "#/color/accent/$root/$value" },
+        "$description": "JSON Pointer reference"
+      }
     }
   },
   "size": {
@@ -46,7 +60,10 @@
     "spacing": {
       "sm": { "$value": { "value": 4, "unit": "px" } },
       "md": { "$value": { "value": 0.5, "unit": "rem" } },
-      "legacy": { "$value": { "value": 5, "unit": "px" }, "$deprecated": "Use {size.spacing.md}" }
+      "legacy": {
+        "$value": { "value": 5, "unit": "px" },
+        "$deprecated": "Use {size.spacing.md}"
+      }
     }
   },
   "border": {
@@ -65,14 +82,21 @@
       "dashed": { "$value": "dashed" },
       "dotted-round": {
         "$value": {
-          "dashArray": [{ "value": 0.5, "unit": "rem" }, { "value": 0.25, "unit": "rem" }],
+          "dashArray": [
+            { "value": 0.5, "unit": "rem" },
+            { "value": 0.25, "unit": "rem" }
+          ],
           "lineCap": "round"
         }
       }
     },
     "focus": {
       "$type": "border",
-      "$value": { "color": "{color.accent.$root}", "width": "{border.width.thick}", "style": "{border.style.dashed}" }
+      "$value": {
+        "color": "{color.accent.$root}",
+        "width": "{border.width.thick}",
+        "style": "{border.style.dashed}"
+      }
     }
   },
   "font": {
@@ -88,7 +112,10 @@
       "variable-wide": {
         "$value": 650,
         "$extensions": {
-          "net.phun-ky.design-token-flow": { "variable": true, "font-family": ["system-ui", "sans-serif"] }
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": ["system-ui", "sans-serif"]
+          }
         }
       }
     },
@@ -101,14 +128,22 @@
     "raised": {
       "$value": [
         {
-          "color": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.12 },
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.12
+          },
           "offsetX": { "value": 0, "unit": "px" },
           "offsetY": { "value": 1, "unit": "px" },
           "blur": { "value": 2, "unit": "px" },
           "spread": { "value": 0, "unit": "px" }
         },
         {
-          "color": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.08 },
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.08
+          },
           "offsetX": { "value": 0, "unit": "px" },
           "offsetY": { "value": 4, "unit": "px" },
           "blur": { "value": 12, "unit": "px" },

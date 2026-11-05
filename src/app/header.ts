@@ -8,22 +8,53 @@ const SUN =
 const MOON =
   '<svg class="app-theme-switch-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
 
+/** The site's pages, in menu order. */
+export const PAGES = [
+  { id: 'flow', label: 'Flow', href: './index.html' },
+  { id: 'playground', label: 'Playground', href: './playground.html' }
+] as const;
+
+export type PageId = (typeof PAGES)[number]['id'];
+
+/**
+ * Which page a path belongs to. The site can be served from any sub path, so
+ * only the last segment counts; anything that is not the playground is the
+ * flow view (including `/` and `/index.html`).
+ *
+ * @param {string} pathname A URL path, such as `location.pathname`
+ * @returns {PageId} The page's id
+ */
+export const getPageId = (pathname: string): PageId => {
+  const last = pathname.slice(pathname.lastIndexOf('/') + 1);
+
+  return /^playground(\.html)?$/.test(last) ? 'playground' : 'flow';
+};
+
 /**
  * Adds the global header to the top of the page: the site title and the menu,
- * which for now only holds the light/dark switch.
+ * with a link to each page and the light/dark switch.
  *
+ * @param {string} [pathname] The current path, to mark the current page
  * @returns {HTMLElement} The header element
  */
-export const mountHeader = (): HTMLElement => {
+export const mountHeader = (
+  pathname: string = location.pathname
+): HTMLElement => {
+  const current = getPageId(pathname);
+  const links = PAGES.map(
+    ({ id, label, href }) =>
+      `<a class="app-header-link" href="${href}"${id === current ? ' aria-current="page"' : ''}>${label}</a>`
+  ).join('');
   const header = document.createElement('header');
 
   header.className = 'app-header';
   header.innerHTML = `
     <a class="app-header-title" href="./index.html">
       <span class="app-header-logo">${LOGO}</span>
-      <span>Design Token Flow</span>
+      <span class="app-header-name">Design Token Flow</span>
     </a>
     <nav class="app-header-menu" aria-label="Site">
+      <div class="app-header-links">${links}</div>
       <button type="button" class="app-theme-switch" role="switch" aria-label="Dark theme">
         <span class="app-theme-switch-knob">${SUN}${MOON}</span>
       </button>

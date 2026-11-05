@@ -6,14 +6,17 @@ on:
     types: [opened]
 jobs:
   run:
+    # Dependabot's pull_request token is read-only, so assigning fails there
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
     steps:
-    - name: 'Auto-assign issue'
-      uses: pozil/auto-assign-issue@v1
-      with:
+      # v4 handles pull requests as well as issues (v1 failed on every pull request)
+      - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@d6e511896e5f1d2408e74db74416647d8ff80c8c # v4.1.0
+        with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: phun-ky
           numOfAssignee: 1

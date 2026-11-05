@@ -9,6 +9,7 @@ import bundledTokens from '../src/assets/data/design-tokens.tokens.json';
 import {
   createDesignTokenElement,
   DTCGDocument,
+  fitWrappedValues,
   FlatDesignToken,
   flattenTokens,
   getDesignTokenKind,
@@ -48,6 +49,8 @@ const arclace = new Arclace({
 const listEl = document.createElement('div');
 
 groupsEl.append(listEl);
+// Fonts change the widths of wrapped values once they have loaded
+document.fonts.addEventListener('loadingdone', () => fitWrappedValues(listEl));
 
 let tokens: FlatDesignToken[] = [];
 let selectedId: string | null = null;
@@ -142,6 +145,8 @@ const render = () => {
       return section;
     })
   );
+  // Wrapped values as wide as their widest line, not the pill's maximum
+  fitWrappedValues(listEl);
 
   highlight(selectedId);
 };

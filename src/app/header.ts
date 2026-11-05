@@ -8,10 +8,13 @@ const SUN =
 const MOON =
   '<svg class="app-theme-switch-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
 
-/** The site's pages, in menu order. */
+/**
+ * The site's pages, in menu order. Links leave out `.html`: GitHub Pages, the
+ * Vite dev server and `vite preview` all serve `playground.html` at `playground`.
+ */
 export const PAGES = [
-  { id: 'flow', label: 'Flow', href: './index.html' },
-  { id: 'playground', label: 'Playground', href: './playground.html' }
+  { id: 'flow', label: 'Flow', href: './' },
+  { id: 'playground', label: 'Playground', href: './playground' }
 ] as const;
 
 export type PageId = (typeof PAGES)[number]['id'];
@@ -19,7 +22,8 @@ export type PageId = (typeof PAGES)[number]['id'];
 /**
  * Which page a path belongs to. The site can be served from any sub path, so
  * only the last segment counts; anything that is not the playground is the
- * flow view (including `/` and `/index.html`).
+ * flow view (including `/` and `/index.html`). Both `playground` and
+ * `playground.html` are the playground.
  *
  * @param {string} pathname A URL path, such as `location.pathname`
  * @returns {PageId} The page's id
@@ -49,7 +53,7 @@ export const mountHeader = (
 
   header.className = 'app-header';
   header.innerHTML = `
-    <a class="app-header-title" href="./index.html">
+    <a class="app-header-title" href="./">
       <span class="app-header-logo">${LOGO}</span>
       <span class="app-header-name">Design Token Flow</span>
     </a>

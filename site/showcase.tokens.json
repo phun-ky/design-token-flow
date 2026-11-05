@@ -102,8 +102,36 @@
   "font": {
     "family": {
       "$type": "fontFamily",
-      "sans": { "$value": ["Inter", "system-ui", "sans-serif"] },
-      "mono": { "$value": "ui-monospace" }
+      "sans": {
+        "$value": ["IBM Plex Sans", "Arial", "sans-serif"],
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": { "woff2": "./fonts/IBMPlexSans-Regular.woff2" },
+            "font-face": { "weight": "400" }
+          }
+        }
+      },
+      "sans-variable": {
+        "$value": ["IBM Plex Sans Var", "Arial", "sans-serif"],
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": { "woff2": "./fonts/IBM Plex Sans Var-Roman.woff2" },
+            "font-face": { "weight": "100 700" }
+          }
+        }
+      },
+      "mono": {
+        "$value": [
+          "Menlo for Powerline",
+          "Menlo Regular for Powerline",
+          "DejaVu Sans Mono",
+          "Consolas",
+          "Monaco",
+          "Andale Mono",
+          "Ubuntu Mono",
+          "monospace"
+        ]
+      }
     },
     "weight": {
       "$type": "fontWeight",
@@ -114,7 +142,7 @@
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["system-ui", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       }

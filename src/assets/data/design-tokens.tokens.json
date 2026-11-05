@@ -2242,322 +2242,162 @@
   "asset": {
     "font": {
       "$type": "fontFamily",
-      "ifsans-variable": {
+      "ibm-plex-sans-variable": {
         "name": {
-          "$value": "If Sans"
+          "$value": "IBM Plex Sans Var",
+          "$description": "Variable, weights 100 to 700"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Variable.eot",
-              "otf": "./fonts/IfSans-Variable.otf",
-              "ttf": "./fonts/IfSans-Variable.ttf",
-              "woff": "./fonts/IfSans-Variable.woff",
-              "woff2": "./fonts/IfSans-Variable.woff2"
+              "woff2": "./fonts/IBM Plex Sans Var-Roman.woff2",
+              "woff": "./fonts/IBM Plex Sans Var-Roman.woff",
+              "ttf": "./fonts/IBM Plex Sans Var-Roman.ttf"
             }
           }
         }
       },
-      "ifsans-variable-italic": {
+      "ibm-plex-sans-variable-italic": {
         "name": {
-          "$value": "If Sans Italic"
+          "$value": "IBM Plex Sans Var Italic",
+          "$description": "Variable, weights 100 to 700"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-VariableItalic.eot",
-              "otf": "./fonts/IfSans-VariableItalic.otf",
-              "ttf": "./fonts/IfSans-VariableItalic.ttf",
-              "woff": "./fonts/IfSans-VariableItalic.woff",
-              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+              "woff2": "./fonts/IBM Plex Sans Var-Italic.woff2",
+              "woff": "./fonts/IBM Plex Sans Var-Italic.woff",
+              "ttf": "./fonts/IBM Plex Sans Var-Italic.ttf"
             }
           }
         }
       },
-      "ifsans-regular": {
+      "ibm-plex-sans-regular": {
         "name": {
-          "$value": "If Sans"
+          "$value": "IBM Plex Sans"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Regular.eot",
-              "otf": "./fonts/IfSans-Regular.otf",
-              "ttf": "./fonts/IfSans-Regular.ttf",
-              "woff": "./fonts/IfSans-Regular.woff",
-              "woff2": "./fonts/IfSans-Regular.woff2"
+              "woff2": "./fonts/IBMPlexSans-Regular.woff2",
+              "woff": "./fonts/IBMPlexSans-Regular.woff"
             }
           }
         }
       },
-      "ifsans-thin": {
+      "ibm-plex-sans-thin": {
         "name": {
-          "$value": "If Sans Thin"
+          "$value": "IBM Plex Sans Thin"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Thin.eot",
-              "otf": "./fonts/IfSans-Thin.otf",
-              "ttf": "./fonts/IfSans-Thin.ttf",
-              "woff": "./fonts/IfSans-Thin.woff",
-              "woff2": "./fonts/IfSans-Thin.woff2"
+              "woff2": "./fonts/IBMPlexSans-Thin.woff2",
+              "woff": "./fonts/IBMPlexSans-Thin.woff"
             }
           }
         }
       },
-      "ifsans-light": {
+      "ibm-plex-sans-light": {
         "name": {
-          "$value": "If Sans Light"
+          "$value": "IBM Plex Sans Light"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Light.eot",
-              "otf": "./fonts/IfSans-Light.otf",
-              "ttf": "./fonts/IfSans-Light.ttf",
-              "woff": "./fonts/IfSans-Light.woff",
-              "woff2": "./fonts/IfSans-Light.woff2"
+              "woff2": "./fonts/IBMPlexSans-Light.woff2",
+              "woff": "./fonts/IBMPlexSans-Light.woff"
             }
           }
         }
       },
-      "ifsans-medium": {
+      "ibm-plex-sans-medium": {
         "name": {
-          "$value": "If Sans Medium"
+          "$value": "IBM Plex Sans Medium"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Medium.eot",
-              "otf": "./fonts/IfSans-Medium.otf",
-              "ttf": "./fonts/IfSans-Medium.ttf",
-              "woff": "./fonts/IfSans-Medium.woff",
-              "woff2": "./fonts/IfSans-Medium.woff2"
+              "woff2": "./fonts/IBMPlexSans-Medium.woff2",
+              "woff": "./fonts/IBMPlexSans-Medium.woff"
             }
           }
         }
       },
-      "ifsans-bold": {
+      "ibm-plex-sans-bold": {
         "name": {
-          "$value": "If Sans Bold"
+          "$value": "IBM Plex Sans Bold"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Bold.eot",
-              "otf": "./fonts/IfSans-Bold.otf",
-              "ttf": "./fonts/IfSans-Bold.ttf",
-              "woff": "./fonts/IfSans-Bold.woff",
-              "woff2": "./fonts/IfSans-Bold.woff2"
+              "woff2": "./fonts/IBMPlexSans-Bold.woff2",
+              "woff": "./fonts/IBMPlexSans-Bold.woff"
             }
           }
         }
       },
-      "ifsans-regular-italic": {
+      "ibm-plex-sans-regular-italic": {
         "name": {
-          "$value": "If Sans Italic"
+          "$value": "IBM Plex Sans Italic"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-Italic.eot",
-              "otf": "./fonts/IfSans-Italic.otf",
-              "ttf": "./fonts/IfSans-Italic.ttf",
-              "woff": "./fonts/IfSans-Italic.woff",
-              "woff2": "./fonts/IfSans-Italic.woff2"
+              "woff2": "./fonts/IBMPlexSans-Italic.woff2",
+              "woff": "./fonts/IBMPlexSans-Italic.woff"
             }
           }
         }
       },
-      "ifsans-thin-italic": {
+      "ibm-plex-sans-thin-italic": {
         "name": {
-          "$value": "If Sans Thin Italic"
+          "$value": "IBM Plex Sans Thin Italic"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-ThinItalic.eot",
-              "otf": "./fonts/IfSans-ThinItalic.otf",
-              "ttf": "./fonts/IfSans-ThinItalic.ttf",
-              "woff": "./fonts/IfSans-ThinItalic.woff",
-              "woff2": "./fonts/IfSans-ThinItalic.woff2"
+              "woff2": "./fonts/IBMPlexSans-ThinItalic.woff2",
+              "woff": "./fonts/IBMPlexSans-ThinItalic.woff"
             }
           }
         }
       },
-      "ifsans-light-italic": {
+      "ibm-plex-sans-light-italic": {
         "name": {
-          "$value": "If Sans Light Italic"
+          "$value": "IBM Plex Sans Light Italic"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-LightItalic.eot",
-              "otf": "./fonts/IfSans-LightItalic.otf",
-              "ttf": "./fonts/IfSans-LightItalic.ttf",
-              "woff": "./fonts/IfSans-LightItalic.woff",
-              "woff2": "./fonts/IfSans-LightItalic.woff2"
+              "woff2": "./fonts/IBMPlexSans-LightItalic.woff2",
+              "woff": "./fonts/IBMPlexSans-LightItalic.woff"
             }
           }
         }
       },
-      "ifsans-medium-italic": {
+      "ibm-plex-sans-medium-italic": {
         "name": {
-          "$value": "If Sans Medium Italic"
+          "$value": "IBM Plex Sans Medium Italic"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-MediumItalic.eot",
-              "otf": "./fonts/IfSans-MediumItalic.otf",
-              "ttf": "./fonts/IfSans-MediumItalic.ttf",
-              "woff": "./fonts/IfSans-MediumItalic.woff",
-              "woff2": "./fonts/IfSans-MediumItalic.woff2"
+              "woff2": "./fonts/IBMPlexSans-MediumItalic.woff2",
+              "woff": "./fonts/IBMPlexSans-MediumItalic.woff"
             }
           }
         }
       },
-      "ifsans-bold-italic": {
+      "ibm-plex-sans-bold-italic": {
         "name": {
-          "$value": "If Sans Bold Italic"
+          "$value": "IBM Plex Sans Bold Italic"
         },
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "files": {
-              "eot": "./fonts/IfSans-BoldItalic.eot",
-              "otf": "./fonts/IfSans-BoldItalic.otf",
-              "ttf": "./fonts/IfSans-BoldItalic.ttf",
-              "woff": "./fonts/IfSans-BoldItalic.woff",
-              "woff2": "./fonts/IfSans-BoldItalic.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-thin": {
-        "name": {
-          "$value": "If Sans Thin"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-Variable.eot",
-              "otf": "./fonts/IfSans-Variable.otf",
-              "ttf": "./fonts/IfSans-Variable.ttf",
-              "woff": "./fonts/IfSans-Variable.woff",
-              "woff2": "./fonts/IfSans-Variable.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-light": {
-        "name": {
-          "$value": "If Sans Light"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-Variable.eot",
-              "otf": "./fonts/IfSans-Variable.otf",
-              "ttf": "./fonts/IfSans-Variable.ttf",
-              "woff": "./fonts/IfSans-Variable.woff",
-              "woff2": "./fonts/IfSans-Variable.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-medium": {
-        "name": {
-          "$value": "If Sans Medium"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-Variable.eot",
-              "otf": "./fonts/IfSans-Variable.otf",
-              "ttf": "./fonts/IfSans-Variable.ttf",
-              "woff": "./fonts/IfSans-Variable.woff",
-              "woff2": "./fonts/IfSans-Variable.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-bold": {
-        "name": {
-          "$value": "If Sans Bold"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-Variable.eot",
-              "otf": "./fonts/IfSans-Variable.otf",
-              "ttf": "./fonts/IfSans-Variable.ttf",
-              "woff": "./fonts/IfSans-Variable.woff",
-              "woff2": "./fonts/IfSans-Variable.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-thin-italic": {
-        "name": {
-          "$value": "If Sans Thin Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-VariableItalic.eot",
-              "otf": "./fonts/IfSans-VariableItalic.otf",
-              "ttf": "./fonts/IfSans-VariableItalic.ttf",
-              "woff": "./fonts/IfSans-VariableItalic.woff",
-              "woff2": "./fonts/IfSans-VariableItalic.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-light-italic": {
-        "name": {
-          "$value": "If Sans Light Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-VariableItalic.eot",
-              "otf": "./fonts/IfSans-VariableItalic.otf",
-              "ttf": "./fonts/IfSans-VariableItalic.ttf",
-              "woff": "./fonts/IfSans-VariableItalic.woff",
-              "woff2": "./fonts/IfSans-VariableItalic.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-medium-italic": {
-        "name": {
-          "$value": "If Sans Medium Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-VariableItalic.eot",
-              "otf": "./fonts/IfSans-VariableItalic.otf",
-              "ttf": "./fonts/IfSans-VariableItalic.ttf",
-              "woff": "./fonts/IfSans-VariableItalic.woff",
-              "woff2": "./fonts/IfSans-VariableItalic.woff2"
-            }
-          }
-        }
-      },
-      "ifsans-variable-bold-italic": {
-        "name": {
-          "$value": "If Sans Bold Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "eot": "./fonts/IfSans-VariableItalic.eot",
-              "otf": "./fonts/IfSans-VariableItalic.otf",
-              "ttf": "./fonts/IfSans-VariableItalic.ttf",
-              "woff": "./fonts/IfSans-VariableItalic.woff",
-              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+              "woff2": "./fonts/IBMPlexSans-BoldItalic.woff2",
+              "woff": "./fonts/IBMPlexSans-BoldItalic.woff"
             }
           }
         }
@@ -2566,156 +2406,119 @@
   },
   "font": {
     "weight": {
-      "36": {
-        "$value": 36,
+      "$type": "fontWeight",
+      "100": {
+        "$value": 100,
+        "$description": "Thin",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "40": {
-        "$value": 40,
+      "200": {
+        "$value": 200,
+        "$description": "ExtraLight",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "45": {
-        "$value": 45,
+      "300": {
+        "$value": 300,
+        "$description": "Light",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "48": {
-        "$value": 48,
+      "400": {
+        "$value": 400,
+        "$description": "Regular",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "50": {
-        "$value": 50,
+      "450": {
+        "$value": 450,
+        "$description": "Text",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "54": {
-        "$value": 54,
+      "500": {
+        "$value": 500,
+        "$description": "Medium",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "64": {
-        "$value": 64,
+      "600": {
+        "$value": 600,
+        "$description": "SemiBold",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
       },
-      "70": {
-        "$value": 70,
+      "700": {
+        "$value": 700,
+        "$description": "Bold",
         "$extensions": {
           "net.phun-ky.design-token-flow": {
             "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
+            "font-family": ["IBM Plex Sans Var", "Arial", "sans-serif"]
           }
         }
-      },
-      "78": {
-        "$value": 78,
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
-          }
-        }
-      },
-      "82": {
-        "$value": 82,
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
-          }
-        }
-      },
-      "85": {
-        "$value": 85,
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
-          }
-        }
-      },
-      "104": {
-        "$value": 104,
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
-          }
-        }
-      },
-      "126": {
-        "$value": 126,
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "variable": true,
-            "font-family": ["If Sans", "Arial", "sans-serif"]
-          }
-        }
-      },
-      "$type": "fontWeight"
+      }
     },
     "family": {
       "$type": "fontFamily",
       "sans-thin": {
-        "$value": "{asset.font.ifsans-thin.name}"
+        "$value": "{asset.font.ibm-plex-sans-thin.name}"
       },
       "sans-light": {
-        "$value": "{asset.font.ifsans-light.name}"
+        "$value": "{asset.font.ibm-plex-sans-light.name}"
       },
       "sans": {
-        "$value": "{asset.font.ifsans-regular.name}"
+        "$value": "{asset.font.ibm-plex-sans-regular.name}"
       },
       "sans-medium": {
-        "$value": "{asset.font.ifsans-medium.name}"
+        "$value": "{asset.font.ibm-plex-sans-medium.name}"
       },
       "sans-bold": {
-        "$value": "{asset.font.ifsans-bold.name}"
+        "$value": "{asset.font.ibm-plex-sans-bold.name}"
       },
       "sans-thin-italic": {
-        "$value": "{asset.font.ifsans-thin-italic.name}"
+        "$value": "{asset.font.ibm-plex-sans-thin-italic.name}"
       },
       "sans-light-italic": {
-        "$value": "{asset.font.ifsans-light-italic.name}"
+        "$value": "{asset.font.ibm-plex-sans-light-italic.name}"
       },
       "sans-italic": {
-        "$value": "{asset.font.ifsans-regular-italic.name}"
+        "$value": "{asset.font.ibm-plex-sans-regular-italic.name}"
       },
       "sans-medium-italic": {
-        "$value": "{asset.font.ifsans-medium-italic.name}"
+        "$value": "{asset.font.ibm-plex-sans-medium-italic.name}"
       },
       "sans-bold-italic": {
-        "$value": "{asset.font.ifsans-bold-italic.name}"
+        "$value": "{asset.font.ibm-plex-sans-bold-italic.name}"
       }
     }
   }

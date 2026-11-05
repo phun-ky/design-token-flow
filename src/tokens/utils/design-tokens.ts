@@ -17,7 +17,12 @@ import {
   FlatDesignToken
 } from '../types/tokens';
 
-import { FONT_WEIGHT_KEYWORDS, validateTokenValue } from './validate-token';
+import {
+  FONT_WEIGHT_KEYWORDS,
+  TokenReference,
+  validateProperties,
+  validateTokenValue
+} from './validate-token';
 
 /** Vendor key for this tool's data in `$extensions` (reverse domain notation, per spec) */
 export const DTF_EXTENSION_KEY = 'net.phun-ky.design-token-flow';
@@ -133,6 +138,9 @@ const collect = (
   entries: RawEntry[]
 ): void => {
   const resolved = extendGroup(doc, group, [path.join('.')]);
+
+  validateProperties('group', path.join('.'), resolved);
+
   const type = (resolved.$type as DTCGType | undefined) ?? groupType;
   const deprecated =
     (resolved.$deprecated as boolean | string | undefined) ?? groupDeprecated;
@@ -155,6 +163,8 @@ const collect = (
           `"${childPath.join('.')}" has a $value and children, which is invalid`
         );
       }
+
+      validateProperties('token', childPath.join('.'), child);
 
       entries.push({
         path: childPath,
@@ -221,13 +231,17 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
 
     let referencedType: DTCGType | undefined;
 
-    const resolveValue = (value: unknown, isWholeValue = false): unknown => {
+    // References to whole tokens, by the field they are in, to check their $type
+    const references: TokenReference[] = [];
+    const resolveValue = (value: unknown, field = '$value'): unknown => {
+      const isWholeValue = field === '$value';
       const alias = parseAlias(value);
 
       if (alias) {
         const target = resolveToken(alias, nextStack);
 
         ancestors.add(target.id);
+        references.push({ field, name: target.name, $type: target.$type });
 
         if (isWholeValue) referencedType = target.$type;
 
@@ -243,26 +257,37 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
 
         ancestors.add(target.id);
 
-        if (isWholeValue && segments.length === valueIndex + 1)
-          referencedType = target.$type;
+        // A pointer to the token or its whole $value references the token; a
+        // pointer into its value (such as one color component) is checked by shape
+        if (valueIndex === -1 || segments.length === valueIndex + 1) {
+          references.push({ field, name: target.name, $type: target.$type });
+
+          if (isWholeValue) referencedType = target.$type;
+        }
 
         return valueIndex === -1
           ? target.value
           : getAt(target.value, segments.slice(valueIndex + 1));
       }
 
-      if (Array.isArray(value)) return value.map((item) => resolveValue(item));
+      if (Array.isArray(value))
+        return value.map((item, index) =>
+          resolveValue(item, `${field}[${index}]`)
+        );
 
       if (isObject(value)) {
         return Object.fromEntries(
-          Object.entries(value).map(([key, item]) => [key, resolveValue(item)])
+          Object.entries(value).map(([key, item]) => [
+            key,
+            resolveValue(item, `${field}.${key}`)
+          ])
         );
       }
 
       return value;
     };
     const { token, path, groupType, groupDeprecated } = entry;
-    const value = resolveValue(token.$value, true);
+    const value = resolveValue(token.$value);
     const $type = token.$type ?? referencedType ?? groupType;
 
     if (!$type)
@@ -271,7 +296,7 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
       );
 
     // The resolved value, aliases included, must match its $type
-    validateTokenValue(name, $type, value);
+    validateTokenValue(name, $type, value, references);
 
     const $deprecated = token.$deprecated ?? groupDeprecated;
     const flat: FlatDesignToken = {

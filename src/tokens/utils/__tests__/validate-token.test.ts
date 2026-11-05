@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import type { DTCGDocument } from '../../types/tokens';
 import { flattenTokens, fontFamilyToCss } from '../design-tokens';
 import { validateTokenValue } from '../validate-token';
 
@@ -345,5 +346,211 @@ describe('fontFamilyToCss escaping', () => {
       fontFamilyToCss(['a"b\\c', 'd\ne;\tf', 'sans-serif']),
       '"a\\"b\\\\c", "d\\a e;\\9 f", sans-serif'
     );
+  });
+});
+
+describe('flattenTokens checks the $type of referenced tokens', () => {
+  const base = {
+    color: { $type: 'color', blue: { $value: srgb() } },
+    size: {
+      $type: 'dimension',
+      thin: { $value: px() },
+      body: { $value: px(1, 'rem') }
+    },
+    line: { $type: 'number', body: { $value: 1.5 } },
+    font: {
+      family: { $type: 'fontFamily', sans: { $value: 'IBM Plex Sans' } },
+      weight: { $type: 'fontWeight', regular: { $value: 400 } }
+    },
+    style: { $type: 'strokeStyle', solid: { $value: 'solid' } },
+    shadow: { $type: 'shadow', soft: { $value: shadow } }
+  };
+  const flatten = (extra: Record<string, unknown>) =>
+    flattenTokens({ ...base, ...extra } as Parameters<typeof flattenTokens>[0]);
+
+  it('accepts references to the type each part allows', () => {
+    const tokens = flatten({
+      border: {
+        $type: 'border',
+        thin: {
+          $value: {
+            color: '{color.blue}',
+            width: { $ref: '#/size/thin/$value' },
+            style: '{style.solid}'
+          }
+        }
+      },
+      type: {
+        $type: 'typography',
+        body: {
+          $value: {
+            fontFamily: '{font.family.sans}',
+            fontSize: '{size.body}',
+            fontWeight: '{font.weight.regular}',
+            letterSpacing: '{size.thin}',
+            lineHeight: '{line.body}'
+          }
+        }
+      },
+      layered: {
+        $type: 'shadow',
+        $value: ['{shadow.soft}', { ...shadow, color: '{color.blue}' }]
+      },
+      dashes: {
+        $type: 'strokeStyle',
+        $value: { dashArray: ['{size.thin}', px(2)], lineCap: 'round' }
+      },
+      // A pointer to the token itself, without /$value, references it too
+      accent: { $type: 'color', $value: { $ref: '#/color/blue' } },
+      // A pointer into a value is no token reference; its shape is checked
+      green: {
+        $type: 'number',
+        $value: { $ref: '#/color/blue/$value/components/1' }
+      }
+    });
+
+    // 8 base tokens and the 6 above
+    assert.equal(tokens.length, 14);
+  });
+
+  it('rejects a part that references a token of another type', () => {
+    assert.throws(
+      () =>
+        flatten({
+          type: {
+            $type: 'typography',
+            body: {
+              $value: {
+                fontFamily: '{font.family.sans}',
+                fontSize: '{size.body}',
+                fontWeight: 400,
+                letterSpacing: '{size.thin}',
+                // A number, but from a fontWeight token
+                lineHeight: '{font.weight.regular}'
+              }
+            }
+          }
+        }),
+      {
+        name: 'TypeError',
+        message:
+          'Invalid token "type.body" (typography): $value.lineHeight must be a number or a reference to a number token, got "{font.weight.regular} (a fontWeight token)"'
+      }
+    );
+    assert.throws(
+      () =>
+        flatten({
+          dashes: {
+            $type: 'strokeStyle',
+            $value: { dashArray: ['{line.body}'], lineCap: 'round' }
+          }
+        }),
+      {
+        name: 'TypeError',
+        message:
+          /\$value\.dashArray\[0\] must be a dimension or a reference to a dimension token/
+      }
+    );
+    assert.throws(
+      () =>
+        flatten({
+          layered: { $type: 'shadow', $value: ['{color.blue}'] }
+        }),
+      {
+        name: 'TypeError',
+        message:
+          /\$value\[0\] must be a shadow or a reference to a shadow token/
+      }
+    );
+  });
+
+  it('rejects a token whose $type differs from the token it aliases', () => {
+    assert.throws(
+      () =>
+        flatten({
+          ratio: { $type: 'number', $value: '{font.weight.regular}' }
+        }),
+      {
+        name: 'TypeError',
+        message:
+          'Invalid token "ratio" (number): $value must be a number or a reference to a number token, got "{font.weight.regular} (a fontWeight token)"'
+      }
+    );
+  });
+
+  it('rejects a reference where the spec allows only a value', () => {
+    assert.throws(
+      () =>
+        flatten({
+          odd: {
+            $type: 'color',
+            $value: { colorSpace: 'srgb', components: ['{line.body}', 0, 0] }
+          }
+        }),
+      {
+        name: 'TypeError',
+        message:
+          /"odd" \(color\): \$value\.components\[0\] must be a value, not a reference, got "\{line\.body\} \(a number token\)"/
+      }
+    );
+  });
+});
+
+describe('flattenTokens checks token and group properties', () => {
+  const token = { $type: 'number', $value: 1 };
+
+  it('accepts the property types the spec allows', () => {
+    assert.doesNotThrow(() =>
+      flattenTokens({
+        $description: 'Root',
+        $extensions: { 'org.example': {} },
+        group: {
+          $type: 'number',
+          $deprecated: 'Use other',
+          a: { ...token, $description: 'A', $deprecated: false },
+          b: { ...token, $deprecated: true, $extensions: {} }
+        }
+      })
+    );
+  });
+
+  it('rejects a description, deprecation or extensions of the wrong type', () => {
+    assert.throws(
+      () => flattenTokens({ group: { a: { ...token, $description: 3 } } }),
+      {
+        name: 'TypeError',
+        message: 'Invalid token "group.a": $description must be a string, got 3'
+      }
+    );
+    assert.throws(
+      () => flattenTokens({ group: { $deprecated: 1, a: token } }),
+      {
+        name: 'TypeError',
+        message:
+          'Invalid group "group": $deprecated must be true, false or a string, got 1'
+      }
+    );
+    assert.throws(
+      () => flattenTokens({ group: { a: { ...token, $extensions: [] } } }),
+      {
+        name: 'TypeError',
+        message: /"group\.a": \$extensions must be an object, got \[\]/
+      }
+    );
+  });
+
+  it("rejects a group $type that isn't in the spec", () => {
+    assert.throws(
+      () =>
+        flattenTokens({ $type: 'size', a: token } as unknown as DTCGDocument),
+      {
+        name: 'RangeError',
+        message: /^Invalid group \(the root\): \$type must be one of color, /
+      }
+    );
+    assert.throws(() => flattenTokens({ group: { $type: 7, a: token } }), {
+      name: 'TypeError',
+      message: /^Invalid group "group": \$type must be one of/
+    });
   });
 });

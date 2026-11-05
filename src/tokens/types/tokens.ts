@@ -92,6 +92,12 @@ export type DTCGFontWeightValue = number | DTCGFontWeightKeyword;
 
 export type DTCGCubicBezierValue = [number, number, number, number];
 
+/** A custom dash pattern, the object form of a stroke style */
+export interface DTCGStrokeStyleObject {
+  dashArray: DTCGOrRef<DTCGDimensionValue>[];
+  lineCap: 'round' | 'butt' | 'square';
+}
+
 export type DTCGStrokeStyleValue =
   | 'solid'
   | 'dashed'
@@ -101,10 +107,7 @@ export type DTCGStrokeStyleValue =
   | 'ridge'
   | 'outset'
   | 'inset'
-  | {
-      dashArray: DTCGOrRef<DTCGDimensionValue>[];
-      lineCap: 'round' | 'butt' | 'square';
-    };
+  | DTCGStrokeStyleObject;
 
 export interface DTCGBorderValue {
   color: DTCGOrRef<DTCGColorValue>;
@@ -182,7 +185,13 @@ export interface DTCGToken extends DTCGCommon {
 export interface DTCGGroup extends DTCGCommon {
   $extends?: DTCGAlias | DTCGReference;
   $root?: DTCGToken;
-  [name: string]: DTCGToken | DTCGGroup | DTCGCommon[keyof DTCGCommon] | DTCGAlias | DTCGReference | undefined;
+  [name: string]:
+    | DTCGToken
+    | DTCGGroup
+    | DTCGCommon[keyof DTCGCommon]
+    | DTCGAlias
+    | DTCGReference
+    | undefined;
 }
 
 /** A complete design token file (`*.tokens.json`) */

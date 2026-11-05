@@ -3,9 +3,16 @@ import { describe, it } from 'node:test';
 
 import { DTCGDocument } from '../../types/tokens';
 import { DTF_EXTENSION_KEY, flattenTokens } from '../design-tokens';
-import { createDesignTokenElement, getDesignTokenKind, renderDesignToken } from '../render-design-token';
+import {
+  createDesignTokenElement,
+  getDesignTokenKind,
+  renderDesignToken
+} from '../render-design-token';
 
-const srgb = (r: number, g: number, b: number) => ({ colorSpace: 'srgb', components: [r / 255, g / 255, b / 255] });
+const srgb = (r: number, g: number, b: number) => ({
+  colorSpace: 'srgb',
+  components: [r / 255, g / 255, b / 255]
+});
 const tokens = flattenTokens({
   color: {
     $type: 'color',
@@ -14,7 +21,9 @@ const tokens = flattenTokens({
       beige: { '100': { $value: srgb(250, 249, 247) } },
       brown: { '100': { $value: srgb(110, 98, 94) } }
     },
-    accent: { blue: { $value: '{color.base.blue.100}', $description: 'Accent' } },
+    accent: {
+      blue: { $value: '{color.base.blue.100}', $description: 'Accent' }
+    },
     cta: { $value: '{color.accent.blue}' },
     text: {
       'lightest-beige': { $value: '{color.base.beige.100}' },
@@ -32,17 +41,25 @@ const tokens = flattenTokens({
     width: { large: { $value: { value: 8, unit: 'px' } } },
     focus: {
       $type: 'border',
-      $value: { color: '{color.cta}', width: '{border.width.large}', style: 'dashed' }
+      $value: {
+        color: '{color.cta}',
+        width: '{border.width.large}',
+        style: 'dashed'
+      }
     }
   },
   font: {
-    family: { sans: { $type: 'fontFamily', $value: ['If Sans', 'Arial', 'sans-serif'] } },
+    family: {
+      sans: { $type: 'fontFamily', $value: ['If Sans', 'Arial', 'sans-serif'] }
+    },
     weight: {
       $type: 'fontWeight',
       'semi-bold': { $value: 'semi-bold' },
       '36': {
         $value: 36,
-        $extensions: { [DTF_EXTENSION_KEY]: { variable: true, 'font-family': ['If Sans'] } }
+        $extensions: {
+          [DTF_EXTENSION_KEY]: { variable: true, 'font-family': ['If Sans'] }
+        }
       }
     }
   },
@@ -58,10 +75,19 @@ const tokens = flattenTokens({
       }
     }
   },
-  motion: { fast: { $type: 'duration', $value: { value: 150, unit: 'ms' }, $deprecated: true } },
+  motion: {
+    fast: {
+      $type: 'duration',
+      $value: { value: 150, unit: 'ms' },
+      $deprecated: true
+    }
+  },
   forced: {
     $type: 'dimension',
-    gap: { $value: { value: 1, unit: 'rem' }, $extensions: { [DTF_EXTENSION_KEY]: { kind: 'generic' } } }
+    gap: {
+      $value: { value: 1, unit: 'rem' },
+      $extensions: { [DTF_EXTENSION_KEY]: { kind: 'generic' } }
+    }
   }
 } as unknown as DTCGDocument);
 const byId = Object.fromEntries(tokens.map((token) => [token.id, token]));
@@ -85,7 +111,9 @@ describe('getDesignTokenKind', () => {
       'forced-gap': 'generic'
     };
 
-    Object.entries(expected).forEach(([id, kind]) => assert.equal(getDesignTokenKind(byId[id]), kind, id));
+    Object.entries(expected).forEach(([id, kind]) =>
+      assert.equal(getDesignTokenKind(byId[id]), kind, id)
+    );
   });
 });
 
@@ -96,7 +124,10 @@ describe('renderDesignToken', () => {
     assert.equal(pill.className, 'design-token color base');
     assert.equal(pill.dataset.hex, '#0054f0');
     assert.equal(pill.dataset.descendants, 'color-accent-blue');
-    assert.equal((pill.querySelector('.drop') as HTMLElement).style.backgroundColor, 'rgb(0, 84, 240)');
+    assert.equal(
+      (pill.querySelector('.drop') as HTMLElement).style.backgroundColor,
+      'rgb(0, 84, 240)'
+    );
     assert.equal(pill.textContent, '$color-base-blue-100#0054f0');
   });
 
@@ -123,29 +154,53 @@ describe('renderDesignToken', () => {
   });
 
   it('renders font family, font size and size tokens', () => {
-    assert.equal(el('font-family-sans').querySelector('code')?.textContent, '"If Sans", "Arial", sans-serif');
+    assert.equal(
+      el('font-family-sans').querySelector('code')?.textContent,
+      '"If Sans", "Arial", sans-serif'
+    );
     assert.equal(el('size-font-14').className, 'design-token font-size');
     assert.equal(el('size-font-14').dataset.value, '0.875rem');
     assert.equal(el('size-spacing-4').className, 'design-token size');
   });
 
   it('renders keyword and variable font weights', () => {
-    const keyword = el('font-weight-semi-bold').querySelector('.text') as HTMLElement;
+    const keyword = el('font-weight-semi-bold').querySelector(
+      '.text'
+    ) as HTMLElement;
     const variable = el('font-weight-36').querySelector('.text') as HTMLElement;
 
     assert.equal(keyword.style.fontWeight, '600');
     assert.equal(variable.style.fontWeight, 'normal');
-    assert.equal(variable.getAttribute('style')?.includes('font-variation-settings: "wght" 36'), true);
+    assert.equal(
+      variable
+        .getAttribute('style')
+        ?.includes('font-variation-settings: "wght" 36'),
+      true
+    );
   });
 
   it('renders shadow, border radius, border width and border tokens', () => {
-    assert.equal(el('shadow-medium').querySelector('code')?.textContent, '0px 0px 10px 0px rgb(51 51 51 / 0.2)');
-    assert.equal((el('border-radius-medium').querySelector('.radius') as HTMLElement).style.borderBottomRightRadius, '6px');
-    assert.equal((el('border-width-large').querySelector('.width') as HTMLElement).style.height, '8px');
+    assert.equal(
+      el('shadow-medium').querySelector('code')?.textContent,
+      '0px 0px 10px 0px rgb(51 51 51 / 0.2)'
+    );
+    assert.equal(
+      (el('border-radius-medium').querySelector('.radius') as HTMLElement).style
+        .borderBottomRightRadius,
+      '6px'
+    );
+    assert.equal(
+      (el('border-width-large').querySelector('.width') as HTMLElement).style
+        .height,
+      '8px'
+    );
 
     const border = el('border-focus');
 
-    assert.equal((border.querySelector('.width') as HTMLElement).style.height, '8px');
+    assert.equal(
+      (border.querySelector('.width') as HTMLElement).style.height,
+      '8px'
+    );
     assert.equal(border.dataset.value, '8px dashed #0054f0');
     assert.equal(border.querySelector('code'), null);
     assert.equal(border.dataset.ancestors, 'color-cta,border-width-large');
@@ -160,7 +215,11 @@ describe('renderDesignToken', () => {
   });
 
   it('supports a custom prefix', () => {
-    assert.equal(createDesignTokenElement(byId['size-spacing-4'], { prefix: '--' }).textContent, '--size-spacing-4');
+    assert.equal(
+      createDesignTokenElement(byId['size-spacing-4'], { prefix: '--' })
+        .textContent,
+      '--size-spacing-4'
+    );
   });
 
   it('escapes values', () => {

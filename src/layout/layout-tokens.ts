@@ -34,10 +34,14 @@ export interface TokenLayout {
 }
 
 const groupKeyOf = (token: FlatDesignToken): string =>
-  token.path.slice(0, Math.max(1, Math.min(2, token.path.length - 1))).join('/');
+  token.path
+    .slice(0, Math.max(1, Math.min(2, token.path.length - 1)))
+    .join('/');
 const unique = <T>(items: T[]): T[] => [...new Set(items)];
 const mean = (values: number[]): number =>
-  values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
+  values.length
+    ? values.reduce((sum, value) => sum + value, 0) / values.length
+    : 0;
 
 /**
  * Lays tokens out by inheritance.
@@ -59,9 +63,12 @@ export const layoutTokens = (tokens: FlatDesignToken[]): TokenLayout => {
   const byId = new Map(tokens.map((token) => [token.id, token]));
   const order = new Map(tokens.map((token, index) => [token.id, index]));
   const ancestorsOf = (token: FlatDesignToken) =>
-    token.ancestors.filter((id) => byId.has(id)).map((id) => byId.get(id) as FlatDesignToken);
+    token.ancestors
+      .filter((id) => byId.has(id))
+      .map((id) => byId.get(id) as FlatDesignToken);
   const isConnected = (token: FlatDesignToken) =>
-    ancestorsOf(token).length > 0 || token.descendants.some((id) => byId.has(id));
+    ancestorsOf(token).length > 0 ||
+    token.descendants.some((id) => byId.has(id));
   // Union-find over tokens: every alias joins the two tokens' trees
   const parent = new Map(tokens.map((token) => [token.id, token.id]));
   const find = (id: string): string => {
@@ -76,7 +83,11 @@ export const layoutTokens = (tokens: FlatDesignToken[]): TokenLayout => {
     return top;
   };
 
-  tokens.forEach((token) => ancestorsOf(token).forEach((ancestor) => parent.set(find(ancestor.id), find(token.id))));
+  tokens.forEach((token) =>
+    ancestorsOf(token).forEach((ancestor) =>
+      parent.set(find(ancestor.id), find(token.id))
+    )
+  );
 
   const depths = new Map<string, number>();
   const depthOf = (token: FlatDesignToken): number => {
@@ -85,14 +96,18 @@ export const layoutTokens = (tokens: FlatDesignToken[]): TokenLayout => {
     if (cached !== undefined) return cached;
 
     const ancestors = ancestorsOf(token);
-    const depth = ancestors.length ? 1 + Math.max(...ancestors.map(depthOf)) : 0;
+    const depth = ancestors.length
+      ? 1 + Math.max(...ancestors.map(depthOf))
+      : 0;
 
     depths.set(token.id, depth);
 
     return depth;
   };
   const connected = tokens.filter(isConnected);
-  const columnCount = connected.length ? 1 + Math.max(...connected.map(depthOf)) : 0;
+  const columnCount = connected.length
+    ? 1 + Math.max(...connected.map(depthOf))
+    : 0;
   const trees = new Map<string, FlatDesignToken[]>();
 
   connected.forEach((token) => {
@@ -104,20 +119,32 @@ export const layoutTokens = (tokens: FlatDesignToken[]): TokenLayout => {
   const flow: FlowLane[] = [...trees.values()]
     .map((tree) => {
       const values = tree.filter((token) => depthOf(token) === 0);
-      const byDepth: FlatDesignToken[][] = Array.from({ length: columnCount }, () => []);
+      const byDepth: FlatDesignToken[][] = Array.from(
+        { length: columnCount },
+        () => []
+      );
       const positions = new Map<string, number>();
 
       tree.forEach((token) => byDepth[depthOf(token)].push(token));
       byDepth.forEach((column, depth) => {
         if (depth > 0) {
           const barycenter = (token: FlatDesignToken) =>
-            mean(ancestorsOf(token).map((ancestor) => positions.get(ancestor.id) ?? 0));
+            mean(
+              ancestorsOf(token).map(
+                (ancestor) => positions.get(ancestor.id) ?? 0
+              )
+            );
 
           column.sort((a, b) => barycenter(a) - barycenter(b));
         }
 
         // Normalised positions (0-1), so columns of different lengths can be compared
-        column.forEach((token, index) => positions.set(token.id, column.length > 1 ? index / (column.length - 1) : 0.5));
+        column.forEach((token, index) =>
+          positions.set(
+            token.id,
+            column.length > 1 ? index / (column.length - 1) : 0.5
+          )
+        );
       });
 
       return {
@@ -140,12 +167,18 @@ export const layoutTokens = (tokens: FlatDesignToken[]): TokenLayout => {
     });
 
   const looseKeys = [...groups.keys()];
-  const loose: LooseLane[] = unique(looseKeys.map((key) => key.split('/')[0])).map((category) => ({
+  const loose: LooseLane[] = unique(
+    looseKeys.map((key) => key.split('/')[0])
+  ).map((category) => ({
     key: category,
     label: category,
     groups: looseKeys
       .filter((key) => key.split('/')[0] === category)
-      .map((key) => ({ key, label: key.split('/').join(' / '), tokens: groups.get(key) as FlatDesignToken[] }))
+      .map((key) => ({
+        key,
+        label: key.split('/').join(' / '),
+        tokens: groups.get(key) as FlatDesignToken[]
+      }))
   }));
 
   return { columnCount, flow, loose };

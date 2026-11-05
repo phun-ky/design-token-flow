@@ -20,8 +20,16 @@ export {
   toCssValue
 } from './utils/design-tokens';
 
-export { createDesignTokenElement, getDesignTokenKind, renderDesignToken } from './utils/render-design-token';
+export {
+  createDesignTokenElement,
+  getDesignTokenKind,
+  renderDesignToken
+} from './utils/render-design-token';
 
-export type { DesignTokenKind, RenderableDesignToken, RenderDesignTokenOptions } from './utils/render-design-token';
+export type {
+  DesignTokenKind,
+  RenderableDesignToken,
+  RenderDesignTokenOptions
+} from './utils/render-design-token';
 
 export type * from './types/tokens';

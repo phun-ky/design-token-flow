@@ -2,14 +2,14 @@
 
 Design Token Flow is a static website: the code in this repository is built into
 plain HTML, CSS and JavaScript that show design tokens and how they relate.
-There is no server, no account and no database. It is not deployed yet; it will
-be deployed to GitHub Pages on every merge to `main`
-([#16](https://github.com/phun-ky/design-token-flow/issues/16)).
+There is no server, no account and no database. Every merge to `main` is
+deployed to GitHub Pages, at <https://phun-ky.net/design-token-flow/>.
 
 ## Supported Versions
 
-Only `main` is supported, and the live site once it is deployed. There are no
-releases or versions to upgrade: a fix is in as soon as it is merged.
+Only `main` is supported, and the live site built from it. There are no
+releases or versions to upgrade: a fix is live as soon as it is merged and
+deployed.
 
 | Code                                          | Supported |
 | --------------------------------------------- | --------- |
@@ -35,9 +35,9 @@ security problem.
 3. **Fix:** a fix is developed against a draft GitHub security advisory and
    merged. The aim is a fix within 30 days for serious issues, and sooner when
    the problem can be exploited through a link.
-4. **Disclosure:** the advisory is published once the fix is merged (and
-   deployed, once the site is). There is normally no CVE, since there is nothing
-   for anyone else to update. Please keep the issue private until then.
+4. **Disclosure:** the advisory is published once the fix is merged and
+   deployed. There is normally no CVE, since there is nothing for anyone else to
+   update. Please keep the issue private until then.
 5. **Credit:** reporters are credited in the advisory, unless they ask to stay
    anonymous.
 
@@ -52,9 +52,11 @@ What you can rely on:
   kept in `localStorage` (`dtf-theme`). The pill playground keeps the chosen
   preset and the token JSON you edit there (`dtf-demo`). Nothing else is stored.
 - **Nothing is loaded from other hosts.** Fonts are the system's, and scripts
-  and styles come from the site itself. This was checked with a browser network
-  log of every page; an automated check in CI is planned
+  and styles come from the site itself. The Content Security Policy below
+  enforces this in the browser; an automated check in CI is also planned
   ([#19](https://github.com/phun-ky/design-token-flow/issues/19)).
+- **No referrer is sent.** Each page has `<meta name="referrer"
+content="no-referrer">`.
 - **Token values can't run code.** Every value rendered into the page is escaped
   for HTML first (see
   [`render-design-token.ts`](src/tokens/utils/render-design-token.ts) and its
@@ -63,13 +65,40 @@ What you can rely on:
 What you can't rely on yet:
 
 - **Token values are not validated as CSS.** A token file can add CSS
-  declarations to a token's `style` attribute, for example a background image
-  from another host. This matters only for token files you don't control, such
-  as JSON pasted into the playground; it can't run script
+  declarations to a token's `style` attribute and change how its pill looks.
+  It can't run script, and the Content Security Policy stops it loading
+  anything, such as a background image from another host. This matters only
+  for token files you don't control, such as JSON pasted into the playground
   ([#31](https://github.com/phun-ky/design-token-flow/issues/31)).
-- **No Content Security Policy.** It comes with the deploy, as a `<meta>`
-  policy, since GitHub Pages can't send response headers
-  ([#16](https://github.com/phun-ky/design-token-flow/issues/16)).
+- **Protections that need response headers.** GitHub Pages can't be configured
+  to send headers, and some protections can't be set from a `<meta>` tag: the
+  site can be framed by other sites (`frame-ancestors`), there is no
+  `X-Content-Type-Options`, no HSTS for the custom domain (HTTP does redirect to
+  HTTPS), and no reporting of policy violations. The site has no account, form
+  or action to trick someone into, which limits what framing could do.
+
+## Content Security Policy
+
+Every built page carries this policy as a `<meta http-equiv>` tag, right after
+`<meta charset>` (added by
+[`src/build/security-meta.ts`](src/build/security-meta.ts)):
+
+```text
+default-src 'none'; script-src 'self' 'sha256-…'; style-src 'self';
+style-src-attr 'unsafe-inline'; img-src 'self'; base-uri 'none';
+form-action 'none'
+```
+
+- **Scripts** come only from the site. The one inline script, which applies the
+  saved theme before the first paint, is allowed by its SHA-256 hash, computed
+  at build time from the page itself, so it can't go stale.
+- **Styles** come only from the site. `style` attributes are allowed because the
+  pills set their swatch colours with them.
+- **Everything else** is blocked, including images, fonts, connections and
+  frames from any host, and `<base>` and form targets.
+
+The policy is added only to the build. `npm run dev` runs without it, since Vite
+injects styles there.
 
 ## Dependencies
 

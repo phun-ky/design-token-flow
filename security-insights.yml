@@ -9,7 +9,7 @@ header:
 
 project:
   name: Design Token Flow
-  homepage: https://github.com/phun-ky/design-token-flow
+  homepage: https://phun-ky.net/design-token-flow/
   roadmap: https://github.com/phun-ky/design-token-flow/milestones
   funding: https://github.com/sponsors/phun-ky
   administrators:
@@ -22,8 +22,8 @@ project:
     - name: design-token-flow
       url: https://github.com/phun-ky/design-token-flow
       comment: |
-        The website's source. Not deployed yet; it will be deployed to GitHub
-        Pages on every merge to main.
+        The website's source. Every merge to main is deployed to GitHub
+        Pages, at https://phun-ky.net/design-token-flow/.
   vulnerability-reporting:
     reports-accepted: true
     bug-bounty-available: false

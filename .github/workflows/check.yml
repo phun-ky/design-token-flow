@@ -48,10 +48,51 @@ jobs:
           slug: phun-ky/design-token-flow
           files: ./coverage/lcov.info
 
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: check
+    # Only main is deployed: every merge, or a manual run on main
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    # Pages write and the OIDC token deploy-pages needs, on this job only
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # One deploy at a time; a newer merge waits instead of cancelling one midway
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # No npm cache: what is deployed is installed fresh from the lockfile
+      - name: Setup Node.js environment
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm ci
+      - name: Build # Adds the Content Security Policy to each page
+        run: npm run build
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./dist
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
   notify:
     name: Notify failed check
-    needs: check
-    # Only for main; a failing pull request already shows its failed check
+    needs: [check, deploy]
+    # Only for main (a failed check or deploy); a failing pull request already
+    # shows its failed check
     if: failure() && github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     permissions:

@@ -460,7 +460,7 @@ const shadowToCss = (shadow: DTCGShadowObject): string =>
  * Converts a resolved token value to a CSS value.
  *
  * @param {Pick<FlatDesignToken, '$type' | 'value'>} token - A flattened token
- * @returns {string} The CSS value, e.g. `#0054f0`, `0.875rem`, `"If Sans", Arial, sans-serif`
+ * @returns {string} The CSS value, e.g. `#0054f0`, `0.875rem`, `"IBM Plex Sans", Arial, sans-serif`
  */
 export const toCssValue = ({
   $type,

@@ -51,15 +51,21 @@ const tokens = flattenTokens({
   },
   font: {
     family: {
-      sans: { $type: 'fontFamily', $value: ['If Sans', 'Arial', 'sans-serif'] }
+      sans: {
+        $type: 'fontFamily',
+        $value: ['IBM Plex Sans', 'Arial', 'sans-serif']
+      }
     },
     weight: {
       $type: 'fontWeight',
       'semi-bold': { $value: 'semi-bold' },
-      '36': {
-        $value: 36,
+      '450': {
+        $value: 450,
         $extensions: {
-          [DTF_EXTENSION_KEY]: { variable: true, 'font-family': ['If Sans'] }
+          [DTF_EXTENSION_KEY]: {
+            variable: true,
+            'font-family': ['IBM Plex Sans Var']
+          }
         }
       }
     }
@@ -106,7 +112,7 @@ describe('getDesignTokenKind', () => {
       'border-width-large': 'border-width',
       'border-focus': 'border-width',
       'font-family-sans': 'font',
-      'font-weight-36': 'font-weight',
+      'font-weight-450': 'font-weight',
       'shadow-medium': 'shadow',
       'motion-fast': 'generic',
       'forced-gap': 'generic'
@@ -157,7 +163,7 @@ describe('renderDesignToken', () => {
   it('renders font family, font size and size tokens', () => {
     assert.equal(
       el('font-family-sans').querySelector('code')?.textContent,
-      '"If Sans", "Arial", sans-serif'
+      '"IBM Plex Sans", "Arial", sans-serif'
     );
     assert.equal(el('size-font-14').className, 'design-token font-size');
     assert.equal(el('size-font-14').dataset.value, '0.875rem');
@@ -168,16 +174,19 @@ describe('renderDesignToken', () => {
     const keyword = el('font-weight-semi-bold').querySelector(
       '.text'
     ) as HTMLElement;
-    const variable = el('font-weight-36').querySelector('.text') as HTMLElement;
+    const variable = el('font-weight-450').querySelector(
+      '.text'
+    ) as HTMLElement;
 
     assert.equal(keyword.style.fontWeight, '600');
     assert.equal(variable.style.fontWeight, 'normal');
     assert.equal(
       variable
         .getAttribute('style')
-        ?.includes('font-variation-settings: "wght" 36'),
+        ?.includes('font-variation-settings: "wght" 450'),
       true
     );
+    assert.equal(variable.style.fontFamily, '"IBM Plex Sans Var"');
   });
 
   it('renders shadow, border radius, border width and border tokens', () => {

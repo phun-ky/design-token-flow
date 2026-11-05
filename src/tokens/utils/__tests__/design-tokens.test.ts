@@ -160,8 +160,8 @@ describe('CSS conversion', () => {
 
   it('converts font families and other types', () => {
     assert.equal(
-      fontFamilyToCss(['If Sans', 'Arial', 'sans-serif']),
-      '"If Sans", "Arial", sans-serif'
+      fontFamilyToCss(['IBM Plex Sans', 'Arial', 'sans-serif']),
+      '"IBM Plex Sans", "Arial", sans-serif'
     );
     assert.equal(
       toCssValue({ $type: 'fontWeight', value: 'semi-bold' }),

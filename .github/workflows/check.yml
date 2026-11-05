@@ -52,6 +52,8 @@ jobs:
         run: npm run lint -- --max-warnings=0
       - name: Format
         run: npm run format:check
+      - name: Typecheck # Source and tests
+        run: npm run typecheck
       - name: Build # Build all packages
         run: npm run build
       - name: Test

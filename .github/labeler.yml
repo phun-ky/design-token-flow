@@ -1,3 +1,4 @@
+# Labels from changed files: rules only for files this repository has
 'section: workflows':
   - any:
       - changed-files:
@@ -8,66 +9,58 @@
       - changed-files:
           - any-glob-to-any-file:
               - '*'
+'section: tests':
+  - any:
+      - changed-files:
+          - any-glob-to-any-file:
+              - '**/__tests__/**'
 'experience: developer':
   - any:
       - changed-files:
           - any-glob-to-any-file:
+              - '.browserslistrc'
               - '.editorconfig'
-              - '.eslintignore'
-              - '.eslintrc.json'
-              - '.eslintrc.js'
               - '.gitignore'
-              - '.release-it.json'
-              - '.renovate.json'
-              - '.npmrc'
               - '.prettierrc'
-              - 'tslint.json'
+              - '.prettierignore'
+              - 'eslint.config.js'
+              - 'tsconfig*.json'
+              - 'vite.config.ts'
+'experience: visual':
+  - any:
+      - changed-files:
+          - any-glob-to-any-file:
+              - '**/*.styl'
+              - '**/*.css'
 'context: github':
   - any:
       - changed-files:
           - any-glob-to-any-file:
               - .github/**
-'context: docker':
-  - any:
-      - changed-files:
-          - any-glob-to-any-file:
-              - Dockerfile
 'context: npm':
   - any:
       - changed-files:
           - any-glob-to-any-file:
-              - '.npmrc'
-'context: rollup':
-  - any:
-      - changed-files:
-          - any-glob-to-any-file:
-              - 'rollup.config.js'
-              - 'rollup.config.mjs'
-              - 'rollup.*.config.js'
-              - 'rollup.*.config.mjs'
-'mindless: docs':
-  - any:
-      - head-branch: ['^docs', 'docs']
-      - changed-files:
-          - any-glob-to-any-file:
-              - '**/*.md'
-'mindless: dependencies':
+              - 'package.json'
+'mindless: 📦 dependencies':
   - any:
       - changed-files:
           - any-glob-to-any-file:
               - 'package-lock.json'
-              - 'yarn.lock'
+'mindless: ✏️ docs':
+  - any:
+      - head-branch: ['^docs/']
+      - changed-files:
+          - any-glob-to-any-file:
+              - '**/*.md'
 
-# Add '✨ feature' label to any PR where the head branch name starts with `feat` or has a `feat` section in the name
+# Labels from the branch name, anchored to the prefix and its slash, so
+# docs/fix-typo is not labelled as a bug
 '✨ feature':
-  - head-branch: ['^feat', 'feat']
-'problems: bug':
-  - head-branch: ['^fix', 'fix']
-'mindless: chore':
-  - head-branch: ['^chore', 'chore']
-'improvements: enhancement':
-  - head-branch: ['^improvements', 'improvements']
-
-# Add 'release' label to any PR that is opened against the `main` branch
-release:
-  - base-branch: 'main'
+  - head-branch: ['^feat/']
+'problems: 🐛 bug':
+  - head-branch: ['^fix/']
+'mindless: 🤖 chore':
+  - head-branch: ['^chore/']
+'improvements: 💡 enhancement':
+  - head-branch: ['^improvements/']

@@ -1,15 +1,23 @@
-name: "Pull Request Labeler"
+name: 'Pull Request Labeler'
 on:
-- pull_request_target
+  - pull_request_target
+
+# Read-only by default; jobs ask for what they need
+permissions:
+  contents: read
 
 jobs:
   labeler:
+    # Runs on pull_request_target, so it never checks out or runs code from the
+    # pull request: the labeler reads .github/labeler.yml from the base branch
+    # through the API, with the job's own token
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - id: label-the-PR
-      uses: actions/labeler@v5
-      with:
-        sync-labels: true
+      - id: label-the-PR
+        uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0
+        with:
+          sync-labels: true
+          configuration-path: '.github/labeler.yml'

@@ -30,7 +30,6 @@
   - any:
       - changed-files:
           - any-glob-to-any-file:
-              - '**/*.styl'
               - '**/*.css'
 'context: github':
   - any:

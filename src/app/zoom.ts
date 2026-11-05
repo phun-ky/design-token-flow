@@ -15,11 +15,15 @@ interface Size {
   height: number;
 }
 
+/**
+ * Zoom levels are relative to 100%, the scale at which the content fills the
+ * page's width (see `fitWidthState`): from 10% to 400% of it.
+ */
 export const MIN_SCALE = 0.1;
 
 export const MAX_SCALE = 4;
 
-/** The levels the − and + buttons step through */
+/** The levels the − and + buttons step through, relative to 100% */
 export const ZOOM_STEPS = [
   0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4
 ];
@@ -29,13 +33,15 @@ export const clampScale = (scale: number): number =>
 
 /**
  * Zooms to `scale`, keeping the content under `point` (viewport coordinates) in place.
+ * The scale is kept within `MIN_SCALE` and `MAX_SCALE` times `base`, the 100% scale.
  */
 export const zoomAt = (
   state: ZoomState,
   scale: number,
-  point: Point
+  point: Point,
+  base = 1
 ): ZoomState => {
-  const next = clampScale(scale);
+  const next = clampScale(scale / base) * base;
   const ratio = next / state.scale;
 
   return {
@@ -89,8 +95,22 @@ export const fitState = (
   };
 };
 
+/**
+ * The state at which `content` fills the width of `viewport`, top aligned: the
+ * 100% zoom level. Content narrower than the viewport is not enlarged.
+ */
+export const fitWidthState = (content: Size, viewport: Size): ZoomState => {
+  if (content.width <= 0) return { scale: 1, x: 0, y: 0 };
+
+  const scale = Math.min(1, viewport.width / content.width);
+
+  return { scale, x: (viewport.width - content.width * scale) / 2, y: 0 };
+};
+
 export interface ZoomController {
   readonly state: ZoomState;
+  /** The zoom level shown, relative to 100% (the page's width) */
+  readonly level: number;
   zoomIn(): void;
   zoomOut(): void;
   reset(): void;
@@ -100,25 +120,44 @@ export interface ZoomController {
 /**
  * Makes `content` a zoomable, pannable canvas inside `viewport`:
  *
+ * - it starts at 100%: the content fills the viewport's width
  * - wheel zooms around the pointer, with Shift around the center of the viewport
  * - dragging pans
+ * - while the view is untouched (as loaded, or reset), it fits the width again
+ *   when the content or viewport changes size, such as when fonts load or the
+ *   window is resized; otherwise only the level changes
  *
  * @param {HTMLElement} viewport - The visible area, clipping the content
  * @param {HTMLElement} content - The element that is scaled and moved
- * @param {(state: ZoomState) => void} [onChange] - Called after every change
+ * @param {(state: ZoomState, level: number) => void} [onChange] - Called after every change
  * @returns {ZoomController} Methods for the zoom buttons
  */
 export const createZoom = (
   viewport: HTMLElement,
   content: HTMLElement,
-  onChange?: (state: ZoomState) => void
+  onChange?: (state: ZoomState, level: number) => void
 ): ZoomController => {
   let state: ZoomState = { scale: 1, x: 0, y: 0 };
+  // The 100% scale, and whether the view is still the fitted width
+  let base = 1;
+  let untouched = true;
 
-  const apply = (next: ZoomState) => {
+  const apply = (next: ZoomState, touched = true) => {
     state = next;
+    untouched = !touched;
     content.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
-    onChange?.(state);
+    onChange?.(state, state.scale / base);
+  };
+  const widthState = () =>
+    fitWidthState(
+      { width: content.offsetWidth, height: content.offsetHeight },
+      { width: viewport.clientWidth, height: viewport.clientHeight }
+    );
+  const fitWidth = () => {
+    const next = widthState();
+
+    base = next.scale;
+    apply(next, false);
   };
   const center = (): Point => ({
     x: viewport.clientWidth / 2,
@@ -138,7 +177,12 @@ export const createZoom = (
         : { x: event.clientX - rect.left, y: event.clientY - rect.top };
 
       apply(
-        zoomAt(state, state.scale * wheelFactor(delta, event.deltaMode), point)
+        zoomAt(
+          state,
+          state.scale * wheelFactor(delta, event.deltaMode),
+          point,
+          base
+        )
       );
     },
     { passive: false }
@@ -173,15 +217,40 @@ export const createZoom = (
   viewport.addEventListener('pointerup', endDrag);
   viewport.addEventListener('pointercancel', endDrag);
 
-  apply(state);
+  // Fonts loading change the content's size, and a resized window the
+  // viewport's; either changes the scale that fills the width
+  const observer = new ResizeObserver(() => {
+    if (untouched) return fitWidth();
+
+    base = widthState().scale;
+    onChange?.(state, state.scale / base);
+  });
+
+  observer.observe(content);
+  observer.observe(viewport);
+
+  fitWidth();
+
+  const step = (direction: 1 | -1) =>
+    apply(
+      zoomAt(
+        state,
+        stepScale(state.scale / base, direction) * base,
+        center(),
+        base
+      )
+    );
 
   return {
     get state() {
       return state;
     },
-    zoomIn: () => apply(zoomAt(state, stepScale(state.scale, 1), center())),
-    zoomOut: () => apply(zoomAt(state, stepScale(state.scale, -1), center())),
-    reset: () => apply(zoomAt(state, 1, center())),
+    get level() {
+      return state.scale / base;
+    },
+    zoomIn: () => step(1),
+    zoomOut: () => step(-1),
+    reset: fitWidth,
     fit: () =>
       apply(
         fitState(
@@ -201,15 +270,17 @@ const icon = (name: keyof typeof ICONS) =>
   `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">${ICONS[name]}</g></svg>`;
 
 /**
- * Adds the zoom pane (bottom right): zoom out, the zoom level (click to reset to 100%),
- * zoom in, and fit to the viewport.
+ * Adds the zoom pane (bottom right): zoom out, the zoom level (click to reset to 100%,
+ * the page's width), zoom in, and fit to the viewport.
  *
- * @param {(onChange: (state: ZoomState) => void) => ZoomController} connect - Creates the
- *   zoom controller with the pane's update function
+ * @param {(onChange: (state: ZoomState, level: number) => void) => ZoomController} connect -
+ *   Creates the zoom controller with the pane's update function
  * @returns {HTMLElement} The pane
  */
 export const mountZoomControls = (
-  connect: (onChange: (state: ZoomState) => void) => ZoomController
+  connect: (
+    onChange: (state: ZoomState, level: number) => void
+  ) => ZoomController
 ): HTMLElement => {
   const pane = document.createElement('div');
 
@@ -218,18 +289,21 @@ export const mountZoomControls = (
   pane.setAttribute('aria-label', 'Zoom');
   pane.innerHTML = `
     <button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out">${icon('out')}</button>
-    <button type="button" data-zoom="reset" class="zoom-value" title="Reset to 100%">100%</button>
+    <button type="button" data-zoom="reset" class="zoom-value" title="Reset to 100%, the page's width">100%</button>
     <button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in">${icon('in')}</button>
     <span class="zoom-divider" aria-hidden="true"></span>
     <button type="button" data-zoom="fit" aria-label="Fit to screen" title="Fit to screen">${icon('fit')}</button>
   `;
 
   const value = pane.querySelector('.zoom-value') as HTMLButtonElement;
-  const controller = connect((state) => {
-    const percent = `${Math.round(state.scale * 100)}%`;
+  const controller = connect((_state, level) => {
+    const percent = `${Math.round(level * 100)}%`;
 
     value.textContent = percent;
-    value.setAttribute('aria-label', `Zoom level ${percent}, reset to 100%`);
+    value.setAttribute(
+      'aria-label',
+      `Zoom level ${percent}, reset to 100%, the page's width`
+    );
   });
   const actions = {
     out: controller.zoomOut,

@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 
 import {
   fitState,
+  fitWidthState,
   MAX_SCALE,
   MIN_SCALE,
   stepScale,
@@ -40,6 +41,18 @@ describe('zoom', () => {
     );
   });
 
+  it('clamps relative to the 100% scale', () => {
+    const state = { scale: 0.5, x: 0, y: 0 };
+
+    // With 100% at 0.5, the limits are 10% and 400% of that
+    assert.equal(
+      zoomAt(state, 100, { x: 0, y: 0 }, 0.5).scale,
+      MAX_SCALE * 0.5
+    );
+    assert.equal(zoomAt(state, 0, { x: 0, y: 0 }, 0.5).scale, MIN_SCALE * 0.5);
+    assert.equal(zoomAt(state, 1, { x: 0, y: 0 }, 0.5).scale, 1);
+  });
+
   it('steps through the zoom levels', () => {
     assert.equal(stepScale(1, 1), 1.1);
     assert.equal(stepScale(1, -1), 0.9);
@@ -54,6 +67,27 @@ describe('zoom', () => {
     assert.ok(wheelFactor(100) < 1);
     // A wheel notch in lines (Firefox) zooms about as much as one in pixels
     assert.ok(Math.abs(wheelFactor(3, 1) - wheelFactor(100, 0)) < 0.01);
+  });
+
+  it('fills the width of the viewport at 100%, top aligned', () => {
+    assert.deepEqual(
+      fitWidthState(
+        { width: 2000, height: 3000 },
+        { width: 1000, height: 600 }
+      ),
+      { scale: 0.5, x: 0, y: 0 }
+    );
+  });
+
+  it("doesn't enlarge content narrower than the viewport", () => {
+    assert.deepEqual(
+      fitWidthState({ width: 800, height: 300 }, { width: 1000, height: 600 }),
+      { scale: 1, x: 100, y: 0 }
+    );
+    assert.deepEqual(
+      fitWidthState({ width: 0, height: 0 }, { width: 1000, height: 600 }),
+      { scale: 1, x: 0, y: 0 }
+    );
   });
 
   it('fits and centers the content', () => {

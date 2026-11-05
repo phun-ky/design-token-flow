@@ -1,0 +1,99 @@
+name: Deploy
+
+# Deploys main to GitHub Pages once Checks has passed for it, and on a manual
+# run on main. Kept apart from check.yml, which holds no write permissions.
+on:
+  workflow_run:
+    workflows: ['Checks']
+    types: [completed]
+    branches: ['main']
+  workflow_dispatch:
+
+# Read-only by default; the deploy job asks for what it needs
+permissions:
+  contents: read
+
+# One deploy at a time; a newer one waits instead of cancelling one midway
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    # Checks passed for a push to main in this repository, or a manual run on main
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    # Pages write and the OIDC token deploy-pages needs, on this job only
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # main itself, never a ref taken from the triggering run
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      # Deploy only what the checks passed: if main has moved on, the newer
+      # commit's own Checks run deploys it
+      - name: Check that main is the commit the checks passed
+        id: current
+        env:
+          CHECKED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ -z "$CHECKED_SHA" ] || [ "$(git rev-parse HEAD)" = "$CHECKED_SHA" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::main is now $(git rev-parse --short HEAD), not ${CHECKED_SHA:0:7}; its own Checks run deploys it"
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+      # No npm cache: what is deployed is installed fresh from the lockfile
+      - name: Setup Node.js environment
+        if: steps.current.outputs.deploy == 'true'
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Install dependencies
+        if: steps.current.outputs.deploy == 'true'
+        run: npm ci
+      - name: Build # Adds the Content Security Policy to each page
+        if: steps.current.outputs.deploy == 'true'
+        run: npm run build
+      # One artifact per run attempt: re-running a failed deploy uploads again,
+      # and deploy-pages refuses a run with two artifacts of the same name
+      - name: Upload the site
+        if: steps.current.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./dist
+          name: github-pages-${{ github.run_attempt }}
+      - name: Deploy
+        id: deployment
+        if: steps.current.outputs.deploy == 'true'
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
+
+  notify:
+    name: Notify failed deploy
+    needs: deploy
+    if: failure()
+    runs-on: ubuntu-24.04
+    permissions:
+      issues: write
+    steps:
+      - uses: drivendataorg/failed-build-issue-action@940568ce50eeef3f31a920614cefcc6102d2f930 # v1.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          label-name: 'problems: 💔 build failed'
+          # The label exists; don't recreate it under another name
+          create-label: false

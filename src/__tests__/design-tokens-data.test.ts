@@ -56,4 +56,32 @@ describe('bundled token file', () => {
       { display: 'swap', weight: '100 700' }
     );
   });
+
+  it('parses the playground showcase, every $type included', () => {
+    const tokens = flattenTokens(
+      JSON.parse(
+        readFileSync(
+          new URL('../../site/showcase.tokens.json', import.meta.url),
+          'utf8'
+        )
+      )
+    );
+
+    assert.equal(tokens.length, 42);
+    assert.deepEqual([...new Set(tokens.map((token) => token.$type))].sort(), [
+      'border',
+      'color',
+      'cubicBezier',
+      'dimension',
+      'duration',
+      'fontFamily',
+      'fontWeight',
+      'gradient',
+      'number',
+      'shadow',
+      'strokeStyle',
+      'transition',
+      'typography'
+    ]);
+  });
 });

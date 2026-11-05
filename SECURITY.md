@@ -104,13 +104,12 @@ only the accepted exception below.
 | ------------------------------------------------------------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249) | `minimatch` 10 (moderate) | Development only, through ESLint, typescript-eslint and eslint-plugin-import-x, which all require `minimatch` 10 even at their latest versions. The fix is `minimatch` 11, which removes `makeRe` and makes ESLint crash on start. The denial of service needs crafted glob patterns; the only patterns here are the repository's own lint configuration. | ESLint, typescript-eslint and eslint-plugin-import-x accept `minimatch` 11, at the latest by 2027-02-03 (90 days) |
 
-Two other development-only advisories are fixed with `overrides` in
-`package.json`, because the packages that pull them in still require the
-vulnerable range at their latest versions: `glob` 14 under `stylus`
-([GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)) and
-`katex` 0.18 under `micromark-extension-math`
+One other development-only advisory is fixed with an override in
+`package.json`, because the package that pulls it in still requires the
+vulnerable range at its latest version: `katex` 0.18 under
+`micromark-extension-math`
 ([GHSA-238p-pmpm-9mq7](https://github.com/advisories/GHSA-238p-pmpm-9mq7)).
-Remove each override once its parent allows the fixed version.
+Remove the override once `micromark-extension-math` allows the fixed version.
 
 ## Code Scanning
 

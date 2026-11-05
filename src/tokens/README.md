@@ -22,7 +22,7 @@ This folder is meant to become its own npm package. Until then, it lives here so
 | `DTF_EXTENSION_KEY`, `getExtension(token)`                | This tool's `$extensions` data                                                            |
 | Types                                                     | `DTCGDocument`, `FlatDesignToken`, every `$type` value shape                              |
 
-Styles: [`styles/design-token.styl`](./styles/design-token.styl), themed with `--dtf-*` custom properties and `:root.theme--light`.
+Styles: [`styles/design-token.css`](./styles/design-token.css), themed with `--dtf-*` custom properties and `:root.theme--light`.
 
 ## Extracting into a package
 

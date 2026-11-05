@@ -2,35 +2,35 @@ header:
   schema-version: 2.2.0
   last-updated: '2026-11-05'
   last-reviewed: '2026-11-05'
-  url: https://raw.githubusercontent.com/phun-ky/design-token-flow/main/security-insights.yml
+  url: https://raw.githubusercontent.com/phun-ky/site-design-token-flow/main/security-insights.yml
   comment: |
     Security information for the Design Token Flow website, in the OpenSSF
     Security Insights format. Keep it in step with SECURITY.md.
 
 project:
   name: Design Token Flow
-  homepage: https://phun-ky.net/design-token-flow/
-  roadmap: https://github.com/phun-ky/design-token-flow/milestones
+  homepage: https://phun-ky.net/site-design-token-flow/
+  roadmap: https://github.com/phun-ky/site-design-token-flow/milestones
   funding: https://github.com/sponsors/phun-ky
   administrators:
     - name: Alexander Vassbotn Røyne-Helgesen
       social: https://github.com/phun-ky
       primary: true
   documentation:
-    support-policy: https://github.com/phun-ky/design-token-flow/blob/main/SECURITY.md#supported-versions
+    support-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md#supported-versions
   repositories:
-    - name: design-token-flow
-      url: https://github.com/phun-ky/design-token-flow
+    - name: site-design-token-flow
+      url: https://github.com/phun-ky/site-design-token-flow
       comment: |
         The website's source. Every merge to main is deployed to GitHub
-        Pages, at https://phun-ky.net/design-token-flow/.
+        Pages, at https://phun-ky.net/site-design-token-flow/.
   vulnerability-reporting:
     reports-accepted: true
     bug-bounty-available: false
-    policy: https://github.com/phun-ky/design-token-flow/blob/main/SECURITY.md
+    policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md
     comment: |
       Report privately with GitHub's private vulnerability reporting
-      (https://github.com/phun-ky/design-token-flow/security/advisories/new)
+      (https://github.com/phun-ky/site-design-token-flow/security/advisories/new)
       or by email to the contact below.
     contact:
       name: Design Token Flow security contact
@@ -38,7 +38,7 @@ project:
       primary: true
 
 repository:
-  url: https://github.com/phun-ky/design-token-flow
+  url: https://github.com/phun-ky/site-design-token-flow
   status: active
   accepts-change-request: true
   accepts-automated-change-request: true
@@ -48,15 +48,15 @@ repository:
       social: https://github.com/phun-ky
       primary: true
   documentation:
-    security-policy: https://github.com/phun-ky/design-token-flow/blob/main/SECURITY.md
-    dependency-management-policy: https://github.com/phun-ky/design-token-flow/blob/main/SECURITY.md#dependencies
+    security-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md
+    dependency-management-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md#dependencies
   license:
-    url: https://github.com/phun-ky/design-token-flow/blob/main/LICENSE
+    url: https://github.com/phun-ky/site-design-token-flow/blob/main/LICENSE
     expression: MIT
   security:
     assessments:
       self:
-        evidence: https://github.com/phun-ky/design-token-flow/blob/main/SECURITY.md#security-expectations
+        evidence: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md#security-expectations
         date: '2026-11-05'
         comment: |
           The security expectations in SECURITY.md list what the site

@@ -2,7 +2,7 @@
 
 A site that shows design tokens and how they relate: every token is drawn as a "pill", and lines connect each token to the tokens it references.
 
-**Live:** <https://phun-ky.net/design-token-flow/>, deployed to GitHub Pages on every merge to `main`.
+**Live:** <https://phun-ky.net/site-design-token-flow/>, deployed to GitHub Pages on every merge to `main`.
 
 > [!IMPORTANT]
 > The npm package `@phun-ky/design-token-flow` is deprecated and will not be updated. Its only usable feature, creating design token elements, will be published as its own package.

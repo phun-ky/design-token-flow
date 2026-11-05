@@ -1,5 +1,5 @@
 {
-  "name": "@phun-ky/design-token-flow",
+  "name": "site-design-token-flow",
   "private": true,
   "version": "0.1.0",
   "description": "Design token relations",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phun-ky/design-token-flow.git"
+    "url": "git+https://github.com/phun-ky/site-design-token-flow.git"
   },
   "keywords": [
     "html",
@@ -53,9 +53,9 @@
   "author": "Alexander Vassbotn Røyne-Helgesen <alexander@phun-ky.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/phun-ky/design-token-flow/issues"
+    "url": "https://github.com/phun-ky/site-design-token-flow/issues"
   },
-  "homepage": "https://github.com/phun-ky/design-token-flow#readme",
+  "homepage": "https://github.com/phun-ky/site-design-token-flow#readme",
   "devDependencies": {
     "@types/node": "^24.19.2",
     "eslint": "^10.13.0",

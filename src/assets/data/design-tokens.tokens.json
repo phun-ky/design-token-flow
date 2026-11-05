@@ -2245,14 +2245,15 @@
       "ibm-plex-sans-variable": {
         "name": {
           "$value": "IBM Plex Sans Var",
-          "$description": "Variable, weights 100 to 700"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBM Plex Sans Var-Roman.woff2",
-              "woff": "./fonts/IBM Plex Sans Var-Roman.woff",
-              "ttf": "./fonts/IBM Plex Sans Var-Roman.ttf"
+          "$description": "Variable, weights 100 to 700",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBM Plex Sans Var-Roman.woff2"
+              },
+              "font-face": {
+                "weight": "100 700"
+              }
             }
           }
         }
@@ -2260,144 +2261,171 @@
       "ibm-plex-sans-variable-italic": {
         "name": {
           "$value": "IBM Plex Sans Var Italic",
-          "$description": "Variable, weights 100 to 700"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBM Plex Sans Var-Italic.woff2",
-              "woff": "./fonts/IBM Plex Sans Var-Italic.woff",
-              "ttf": "./fonts/IBM Plex Sans Var-Italic.ttf"
+          "$description": "Variable, weights 100 to 700",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBM Plex Sans Var-Italic.woff2"
+              },
+              "font-face": {
+                "weight": "100 700",
+                "style": "italic"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-regular": {
         "name": {
-          "$value": "IBM Plex Sans"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Regular.woff2",
-              "woff": "./fonts/IBMPlexSans-Regular.woff"
+          "$value": "IBM Plex Sans",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Regular.woff2"
+              },
+              "font-face": {
+                "weight": "400"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-thin": {
         "name": {
-          "$value": "IBM Plex Sans Thin"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Thin.woff2",
-              "woff": "./fonts/IBMPlexSans-Thin.woff"
+          "$value": "IBM Plex Sans Thin",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Thin.woff2"
+              },
+              "font-face": {
+                "weight": "100"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-light": {
         "name": {
-          "$value": "IBM Plex Sans Light"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Light.woff2",
-              "woff": "./fonts/IBMPlexSans-Light.woff"
+          "$value": "IBM Plex Sans Light",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Light.woff2"
+              },
+              "font-face": {
+                "weight": "300"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-medium": {
         "name": {
-          "$value": "IBM Plex Sans Medium"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Medium.woff2",
-              "woff": "./fonts/IBMPlexSans-Medium.woff"
+          "$value": "IBM Plex Sans Medium",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Medium.woff2"
+              },
+              "font-face": {
+                "weight": "500"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-bold": {
         "name": {
-          "$value": "IBM Plex Sans Bold"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Bold.woff2",
-              "woff": "./fonts/IBMPlexSans-Bold.woff"
+          "$value": "IBM Plex Sans Bold",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Bold.woff2"
+              },
+              "font-face": {
+                "weight": "700"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-regular-italic": {
         "name": {
-          "$value": "IBM Plex Sans Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-Italic.woff2",
-              "woff": "./fonts/IBMPlexSans-Italic.woff"
+          "$value": "IBM Plex Sans Italic",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-Italic.woff2"
+              },
+              "font-face": {
+                "weight": "400",
+                "style": "italic"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-thin-italic": {
         "name": {
-          "$value": "IBM Plex Sans Thin Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-ThinItalic.woff2",
-              "woff": "./fonts/IBMPlexSans-ThinItalic.woff"
+          "$value": "IBM Plex Sans Thin Italic",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-ThinItalic.woff2"
+              },
+              "font-face": {
+                "weight": "100",
+                "style": "italic"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-light-italic": {
         "name": {
-          "$value": "IBM Plex Sans Light Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-LightItalic.woff2",
-              "woff": "./fonts/IBMPlexSans-LightItalic.woff"
+          "$value": "IBM Plex Sans Light Italic",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-LightItalic.woff2"
+              },
+              "font-face": {
+                "weight": "300",
+                "style": "italic"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-medium-italic": {
         "name": {
-          "$value": "IBM Plex Sans Medium Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-MediumItalic.woff2",
-              "woff": "./fonts/IBMPlexSans-MediumItalic.woff"
+          "$value": "IBM Plex Sans Medium Italic",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-MediumItalic.woff2"
+              },
+              "font-face": {
+                "weight": "500",
+                "style": "italic"
+              }
             }
           }
         }
       },
       "ibm-plex-sans-bold-italic": {
         "name": {
-          "$value": "IBM Plex Sans Bold Italic"
-        },
-        "$extensions": {
-          "net.phun-ky.design-token-flow": {
-            "files": {
-              "woff2": "./fonts/IBMPlexSans-BoldItalic.woff2",
-              "woff": "./fonts/IBMPlexSans-BoldItalic.woff"
+          "$value": "IBM Plex Sans Bold Italic",
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "files": {
+                "woff2": "./fonts/IBMPlexSans-BoldItalic.woff2"
+              },
+              "font-face": {
+                "weight": "700",
+                "style": "italic"
+              }
             }
           }
         }

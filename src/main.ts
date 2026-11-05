@@ -2,6 +2,7 @@
 
 import { Arclace } from '@phun-ky/arclace';
 
+import { loadFonts } from './app/fonts';
 import { mountHeader } from './app/header';
 import { createZoom, mountZoomControls } from './app/zoom';
 import tokens from './assets/data/design-tokens.tokens.json';
@@ -12,7 +13,12 @@ import {
   LooseLane,
   TokenGroup
 } from './layout/layout-tokens';
-import { DTCGDocument, FlatDesignToken, flattenTokens } from './tokens';
+import {
+  DTCGDocument,
+  FlatDesignToken,
+  flattenTokens,
+  getFontFaces
+} from './tokens';
 import * as node from './utils/node';
 
 /** Column heading for an alias depth: 0 is literal values */
@@ -258,6 +264,8 @@ DTF.prototype._init = function (this: typeof DTF) {
 
 mountHeader();
 new DTF(tokens as DTCGDocument);
+// The fonts the font tokens describe; each downloads when a pill first shows it
+loadFonts(getFontFaces(flattenTokens(tokens as DTCGDocument)));
 
 // The canvas: wheel zooms around the pointer (Shift: around the center), dragging pans
 mountZoomControls((onChange) =>

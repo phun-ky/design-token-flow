@@ -122,7 +122,19 @@
   padding-right: var(--dtf-token-spacing-inset-horizontal);
 }
 .design-token.font {
-  padding-left: var(--dtf-token-spacing-inset-horizontal);
+  padding-left: 4rem;
+}
+/* The family sample: the face as it is, never a synthesized bold or italic */
+.design-token.font .text {
+  position: absolute;
+  top: 50%;
+  left: 1.25rem;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  font-weight: normal;
+  font-style: normal;
+  font-synthesis: none;
+  line-height: 1;
 }
 .design-token.color.base {
   padding-left: 4rem;

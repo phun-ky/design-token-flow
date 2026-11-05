@@ -80,7 +80,7 @@ describe('contentSecurityPolicy', () => {
   it('allows only the site itself, style attributes and the given hashes', () => {
     assert.equal(
       contentSecurityPolicy(["'sha256-abc='"]),
-      "default-src 'none'; script-src 'self' 'sha256-abc='; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'"
+      "default-src 'none'; script-src 'self' 'sha256-abc='; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'"
     );
   });
 

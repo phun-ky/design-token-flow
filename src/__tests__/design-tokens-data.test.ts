@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, it } from 'node:test';
 
-import { flattenTokens, toCssValue } from '../tokens';
+import { flattenTokens, getFontFaces, toCssValue } from '../tokens';
 
 describe('bundled token file', () => {
   it('parses as DTCG 2025.10 and resolves every token', () => {
@@ -32,6 +32,28 @@ describe('bundled token file', () => {
     );
     tokens.forEach((token) =>
       assert.doesNotThrow(() => toCssValue(token), token.name)
+    );
+
+    // Every font face a token describes, and its file in site/public/fonts
+    const faces = getFontFaces(tokens);
+
+    assert.equal(faces.length, 12);
+    faces.forEach((face) => {
+      const [, path] = /^url\("\.\/fonts\/([^"]+)"\) format\("woff2"\)$/.exec(
+        face.source
+      ) ?? [, ''];
+
+      assert.ok(path, `${face.id}: ${face.source}`);
+      assert.ok(
+        existsSync(
+          new URL(`../../site/public/fonts/${decodeURI(path)}`, import.meta.url)
+        ),
+        `${face.id}: missing ${decodeURI(path)}`
+      );
+    });
+    assert.deepEqual(
+      faces.find((face) => face.family === 'IBM Plex Sans Var')?.descriptors,
+      { display: 'swap', weight: '100 700' }
     );
   });
 });

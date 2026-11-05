@@ -165,6 +165,11 @@ describe('renderDesignToken', () => {
       el('font-family-sans').querySelector('code')?.textContent,
       '"IBM Plex Sans", "Arial", sans-serif'
     );
+    assert.equal(
+      (el('font-family-sans').querySelector('.text') as HTMLElement).style
+        .fontFamily,
+      '"IBM Plex Sans", "Arial", sans-serif'
+    );
     assert.equal(el('size-font-14').className, 'design-token font-size');
     assert.equal(el('size-font-14').dataset.value, '0.875rem');
     assert.equal(el('size-spacing-4').className, 'design-token size');
@@ -245,6 +250,10 @@ describe('renderDesignToken', () => {
     assert.equal(html.includes('<script>'), false);
     assert.equal(html.includes('<b>'), false);
     assert.equal(html.includes('<img'), false);
-    assert.equal(template.content.querySelectorAll('*').length, 2);
+    // The pill, its family sample and its code: nothing injected
+    assert.deepEqual(
+      [...template.content.querySelectorAll('*')].map((el) => el.tagName),
+      ['SPAN', 'SPAN', 'CODE']
+    );
   });
 });

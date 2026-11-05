@@ -206,7 +206,8 @@ export const renderDesignToken = (
     }
     case 'font': {
       classNames.push('font');
-      content = label + code(css);
+      // A sample in the family itself; it shows the font once it is loaded
+      content = span('text', { 'font-family': css }, 'Aa') + label + code(css);
       break;
     }
     case 'font-weight': {

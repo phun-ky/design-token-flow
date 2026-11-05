@@ -11,7 +11,7 @@ A site that shows design tokens and how they relate: every token is drawn as a "
 
 ```shell
 npm i
-npm run dev       # http://localhost:5173: flow view, and the pill playground at /playground.html
+npm run dev       # http://localhost:5173: flow view, and the pill playground at /playground
 npm test
 npm run build     # the site, in dist/
 npm run preview   # serve dist/

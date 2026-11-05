@@ -43,6 +43,13 @@ describe('mountHeader', () => {
       PAGES.map(({ label, href }) => [label, href])
     );
     assert.equal(document.body.firstElementChild, header);
+    // No link ends in .html, the title link included
+    assert.deepEqual(
+      [...header.querySelectorAll('a')]
+        .map((link) => link.getAttribute('href'))
+        .filter((href) => href?.endsWith('.html')),
+      []
+    );
   });
 
   it('marks only the current page', () => {

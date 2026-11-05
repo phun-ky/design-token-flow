@@ -19,8 +19,26 @@
     </script>
   </head>
   <body>
-    <main class="app-viewport">
-      <div class="container" id="scene"></div>
+    <main class="app-main">
+      <div class="app-page-header">
+        <h1>Token flow</h1>
+      </div>
+      <!-- The canvas: one Tab stop, the skip link's target, see src/app/zoom.ts -->
+      <div
+        class="app-viewport"
+        id="content"
+        tabindex="0"
+        role="region"
+        aria-label="Token flow canvas"
+        aria-describedby="canvas-keys"
+      >
+        <div class="container" id="scene"></div>
+      </div>
+      <p id="canvas-keys" class="visually-hidden">
+        Arrow keys pan, Shift and an arrow key pan further, plus and minus zoom,
+        0 resets to 100 percent, the page width, and F fits the flow to the
+        screen.
+      </p>
     </main>
     <script type="module">
       import '../src/styles/index.css';

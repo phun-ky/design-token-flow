@@ -107,6 +107,65 @@ export const fitWidthState = (content: Size, viewport: Size): ZoomState => {
   return { scale, x: (viewport.width - content.width * scale) / 2, y: 0 };
 };
 
+/** What a key press on the focused canvas does */
+export type CanvasKeyAction =
+  | { type: 'pan'; x: number; y: number }
+  | { type: 'zoomIn' | 'zoomOut' | 'reset' | 'fit' };
+
+/** How far an arrow key pans, in pixels on screen; with Shift */
+export const PAN_STEP = 40;
+
+export const PAN_STEP_LARGE = 200;
+
+const ARROWS: Record<string, [number, number]> = {
+  // The view moves the arrow's way, so the content moves the other way
+  ArrowLeft: [1, 0],
+  ArrowRight: [-1, 0],
+  ArrowUp: [0, 1],
+  ArrowDown: [0, -1]
+};
+const ZOOM_KEYS: Record<string, Exclude<CanvasKeyAction['type'], 'pan'>> = {
+  '+': 'zoomIn',
+  '=': 'zoomIn',
+  '-': 'zoomOut',
+  '0': 'reset',
+  f: 'fit',
+  F: 'fit'
+};
+
+/**
+ * The canvas action for a key press: arrow keys pan (further with Shift), `+`
+ * or `=` zoom in, `-` zooms out, `0` resets to 100%, `F` fits to screen. Keys
+ * with Ctrl, Cmd or Alt are left to the browser.
+ *
+ * @param {Pick<KeyboardEvent, 'key' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'altKey'>} event The key press
+ * @returns {CanvasKeyAction | null} The action, or null for any other key
+ */
+export const canvasKeyAction = (
+  event: Pick<
+    KeyboardEvent,
+    'key' | 'shiftKey' | 'ctrlKey' | 'metaKey' | 'altKey'
+  >
+): CanvasKeyAction | null => {
+  if (event.ctrlKey || event.metaKey || event.altKey) return null;
+
+  const arrow = Object.hasOwn(ARROWS, event.key)
+    ? ARROWS[event.key]
+    : undefined;
+
+  if (arrow) {
+    const step = event.shiftKey ? PAN_STEP_LARGE : PAN_STEP;
+
+    return { type: 'pan', x: arrow[0] * step, y: arrow[1] * step };
+  }
+
+  const type = Object.hasOwn(ZOOM_KEYS, event.key)
+    ? ZOOM_KEYS[event.key]
+    : undefined;
+
+  return type ? { type } : null;
+};
+
 export interface ZoomController {
   readonly state: ZoomState;
   /** The zoom level shown, relative to 100% (the page's width) */
@@ -123,6 +182,7 @@ export interface ZoomController {
  * - it starts at 100%: the content fills the viewport's width
  * - wheel zooms around the pointer, with Shift around the center of the viewport
  * - dragging pans
+ * - when the viewport has focus, the keys from `canvasKeyAction` pan and zoom
  * - while the view is untouched (as loaded, or reset), it fits the width again
  *   when the content or viewport changes size, such as when fonts load or the
  *   window is resized; otherwise only the level changes
@@ -240,6 +300,28 @@ export const createZoom = (
         base
       )
     );
+  const fit = () =>
+    apply(
+      fitState(
+        { width: content.offsetWidth, height: content.offsetHeight },
+        { width: viewport.clientWidth, height: viewport.clientHeight }
+      )
+    );
+
+  viewport.addEventListener('keydown', (event) => {
+    const action = canvasKeyAction(event);
+
+    if (!action) return;
+
+    event.preventDefault();
+
+    if (action.type === 'pan')
+      return apply({ ...state, x: state.x + action.x, y: state.y + action.y });
+
+    ({ zoomIn: () => step(1), zoomOut: () => step(-1), reset: fitWidth, fit })[
+      action.type
+    ]();
+  });
 
   return {
     get state() {
@@ -251,13 +333,7 @@ export const createZoom = (
     zoomIn: () => step(1),
     zoomOut: () => step(-1),
     reset: fitWidth,
-    fit: () =>
-      apply(
-        fitState(
-          { width: content.offsetWidth, height: content.offsetHeight },
-          { width: viewport.clientWidth, height: viewport.clientHeight }
-        )
-      )
+    fit
   };
 };
 
@@ -282,17 +358,18 @@ export const mountZoomControls = (
     onChange: (state: ZoomState, level: number) => void
   ) => ZoomController
 ): HTMLElement => {
-  const pane = document.createElement('div');
+  // A labelled landmark (complementary), holding the toolbar
+  const pane = document.createElement('aside');
 
-  pane.className = 'zoom-controls';
-  pane.setAttribute('role', 'toolbar');
   pane.setAttribute('aria-label', 'Zoom');
   pane.innerHTML = `
-    <button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out">${icon('out')}</button>
-    <button type="button" data-zoom="reset" class="zoom-value" title="Reset to 100%, the page's width">100%</button>
-    <button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in">${icon('in')}</button>
-    <span class="zoom-divider" aria-hidden="true"></span>
-    <button type="button" data-zoom="fit" aria-label="Fit to screen" title="Fit to screen">${icon('fit')}</button>
+    <div class="zoom-controls" role="toolbar" aria-label="Zoom">
+      <button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out">${icon('out')}</button>
+      <button type="button" data-zoom="reset" class="zoom-value" title="Reset to 100%, the page's width">100%</button>
+      <button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in">${icon('in')}</button>
+      <span class="zoom-divider" aria-hidden="true"></span>
+      <button type="button" data-zoom="fit" aria-label="Fit to screen" title="Fit to screen">${icon('fit')}</button>
+    </div>
   `;
 
   const value = pane.querySelector('.zoom-value') as HTMLButtonElement;

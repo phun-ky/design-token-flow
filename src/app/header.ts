@@ -35,8 +35,9 @@ export const getPageId = (pathname: string): PageId => {
 };
 
 /**
- * Adds the global header to the top of the page: the site title and the menu,
- * with a link to each page and the light/dark switch.
+ * Adds the skip link and the global header to the top of the page: the site
+ * title and the menu, with a link to each page and the light/dark switch. The
+ * skip link, the first Tab stop, goes to the page's `#content`.
  *
  * @param {string} [pathname] The current path, to mark the current page
  * @returns {HTMLElement} The header element
@@ -78,7 +79,13 @@ export const mountHeader = (
     sync();
   });
   sync();
-  document.body.prepend(header);
+
+  const skip = document.createElement('a');
+
+  skip.className = 'app-skip-link';
+  skip.href = '#content';
+  skip.textContent = 'Skip to content';
+  document.body.prepend(skip, header);
 
   return header;
 };

@@ -4,7 +4,7 @@
     "module": "esnext",
     "lib": ["ES2022", "dom", "dom.iterable"],
     "moduleResolution": "bundler",
-    "types": ["node"],
+    "types": ["node", "vite/client"],
     "noEmit": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

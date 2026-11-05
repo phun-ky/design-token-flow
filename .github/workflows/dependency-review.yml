@@ -19,3 +19,9 @@ jobs:
         with:
           fail-on-severity: high
           fail-on-scopes: runtime, development
+          # Accepted exceptions, each explained in SECURITY.md under
+          # "Accepted exceptions". Remove an entry once a fix is reachable.
+          # GHSA-g3hv-75wg-m249: minimatch 10, development only (ESLint,
+          # typescript-eslint and eslint-plugin-import-x require ^10; the
+          # fixed minimatch 11 removes makeRe, which import-x imports)
+          allow-ghsas: GHSA-g3hv-75wg-m249

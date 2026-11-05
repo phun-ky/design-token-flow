@@ -62,15 +62,18 @@ content="no-referrer">`.
   for HTML first (see
   [`render-design-token.ts`](src/tokens/utils/render-design-token.ts) and its
   tests).
+- **Token values can't add CSS.** Every value is checked against its `$type`
+  when a token file is read, as DTCG 2025.10 defines them: numbers are
+  numbers, units are `px` or `rem` (`ms` or `s` for durations), `hex` is a 6
+  digit hex color, color components are in their color space's range, and
+  keywords are from the spec's lists. A token that doesn't match is refused
+  with an error naming it and the field, so the file isn't shown, also in the
+  playground ([`validate-token.ts`](src/tokens/utils/validate-token.ts),
+  [#31](https://github.com/phun-ky/site-design-token-flow/issues/31)). Font
+  names, which are free text, are escaped for CSS.
 
 What you can't rely on yet:
 
-- **Token values are not validated as CSS.** A token file can add CSS
-  declarations to a token's `style` attribute and change how its pill looks.
-  It can't run script, and the Content Security Policy stops it loading
-  anything, such as a background image from another host. This matters only
-  for token files you don't control, such as JSON pasted into the playground
-  ([#31](https://github.com/phun-ky/site-design-token-flow/issues/31)).
 - **Protections that need response headers.** GitHub Pages can't be configured
   to send headers, and some protections can't be set from a `<meta>` tag: the
   site can be framed by other sites (`frame-ancestors`), there is no

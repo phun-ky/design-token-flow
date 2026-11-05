@@ -4,11 +4,16 @@ on:
     types: [opened]
   pull_request:
     types: [opened]
+
+# Read-only by default; the job asks for what it needs
+permissions:
+  contents: read
+
 jobs:
   run:
     # Dependabot's pull_request token is read-only, so assigning fails there
     if: github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       issues: write
       pull-requests: write

@@ -1,77 +1,66 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Checks
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: ['main']
-    paths:
-      - '.github/**'
-      - 'src/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vite.config.ts'
-      - 'tsconfig.json'
+  # No path filter on pull requests: `check` is a required status check, so it
+  # has to report on every pull request, or the pull request cannot merge
   pull_request:
     branches: ['main']
-    types: [opened, synchronize] # Workflow triggering events
-    paths:
-      - '.github/**'
-      - 'src/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vite.config.ts'
-      - 'tsconfig.json'
+    types: [opened, synchronize, reopened]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "check"
-  check:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+# Read-only by default; jobs ask for what they need
+permissions:
+  contents: read
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+jobs:
+  check:
+    runs-on: ubuntu-24.04
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0 # Checkout all branches and tags
+          persist-credentials: false
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Lint # Code and Markdown, zero warnings
         run: npm run lint -- --max-warnings=0
-      - name: Format
+      - name: Check formatting
         run: npm run format:check
-      - name: Typecheck # Source and tests
+      - name: Type-check, tests included
         run: npm run typecheck
-      - name: Build # Build all packages
-        run: npm run build
-      - name: Test
+      - name: Test # With coverage thresholds
         run: npm run test-ci
+      - name: Build
+        run: npm run build
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: phun-ky/design-token-flow
+          files: ./coverage/lcov.info
+
   notify:
     name: Notify failed check
     needs: check
-    if: failure()
-    runs-on: ubuntu-latest
+    # Only for main; a failing pull request already shows its failed check
+    if: failure() && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
     permissions:
       issues: write
     steps:
       # GITHUB_TOKEN: secrets are empty on Dependabot PRs, and only issues are written here
-      - uses: jayqi/failed-build-issue-action@v1.2
+      - uses: drivendataorg/failed-build-issue-action@940568ce50eeef3f31a920614cefcc6102d2f930 # v1.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          label-name: 'problems: 💔 build failed'
+          # The label exists; don't recreate it under another name
+          create-label: false

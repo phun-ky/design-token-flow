@@ -1,4 +1,4 @@
-import '../src/styles/index.styl';
+import '../src/styles/index.css';
 import './playground.css';
 
 import { Arclace } from '@phun-ky/arclace';

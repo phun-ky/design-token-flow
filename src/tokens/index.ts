@@ -3,7 +3,7 @@
  *
  * This folder is self-contained and will be extracted into its own npm package.
  * The app imports it only through this file, and nothing in here imports app code.
- * Styles: `./styles/design-token.styl`.
+ * Styles: `./styles/design-token.css`.
  */
 export {
   DTF_EXTENSION_KEY,

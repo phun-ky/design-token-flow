@@ -1,5 +1,11 @@
 # Design Token Flow
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](https://commitizen.github.io/cz-cli/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://makeapullrequest.com)
+![issues](https://img.shields.io/github/issues/phun-ky/site-design-token-flow)
+![GitHub Repo stars](https://img.shields.io/github/stars/phun-ky/site-design-token-flow)
+[![build](https://github.com/phun-ky/site-design-token-flow/actions/workflows/check.yml/badge.svg)](https://github.com/phun-ky/site-design-token-flow/actions/workflows/check.yml)
+
 A site that shows design tokens and how they relate: every token is drawn as a "pill", and lines connect each token to the tokens it references.
 
 **Live:** <https://phun-ky.net/site-design-token-flow/>, deployed to GitHub Pages on every merge to `main`.

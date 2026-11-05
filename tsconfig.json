@@ -14,5 +14,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "dev", "vite.config.ts"]
+  "include": ["src", "site", "vite.config.ts"]
 }

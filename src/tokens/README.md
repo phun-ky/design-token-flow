@@ -7,7 +7,7 @@ This folder is meant to become its own npm package. Until then, it lives here so
 ## Boundary rules
 
 - The app imports this folder only through [`index.ts`](./index.ts), plus the stylesheet in [`styles/`](./styles).
-- Nothing in here imports app code (flow view, Arclace lines, `dev/` pages, app data).
+- Nothing in here imports app code (flow view, Arclace lines, `site/` pages, app data).
 - App-only styling goes in `src/styles/`, not here.
 
 ## Public API

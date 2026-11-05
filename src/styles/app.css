@@ -93,6 +93,51 @@ body {
   align-items: center;
   margin-left: auto;
 }
+/* Page links, with a short divider between them and the theme switch */
+.app-header-links {
+  display: flex;
+  align-items: center;
+}
+.app-header-links::after {
+  content: '';
+  width: 1px;
+  height: 24px;
+  margin: 0 16px 0 8px;
+  background-color: var(--app-divider);
+}
+.app-header-link {
+  padding: 0 12px;
+  color: var(--app-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: var(--app-header-height);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.app-header-link:hover,
+.app-header-link[aria-current='page'] {
+  color: var(--app-brand);
+}
+/* Phone width: a 16px gutter, and the site name is read out but not shown */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 16px;
+  }
+  .app-header-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .app-header-link {
+    padding: 0 8px;
+  }
+  .app-header-links::after {
+    margin: 0 12px 0 4px;
+  }
+}
 /* Light/dark switch: a track with a knob showing the current theme */
 .app-theme-switch {
   position: relative;

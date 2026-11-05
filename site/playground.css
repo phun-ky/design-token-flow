@@ -67,8 +67,7 @@ h3 {
 
 select,
 input,
-textarea,
-.demo-button {
+textarea {
   font: inherit;
   color: var(--demo-text);
   background: var(--demo-bg);
@@ -77,12 +76,6 @@ textarea,
   padding: 0.375rem 0.625rem;
 }
 
-.demo-button {
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.demo-button:hover,
 select:hover {
   border-color: var(--demo-accent);
 }

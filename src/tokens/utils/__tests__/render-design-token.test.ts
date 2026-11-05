@@ -175,6 +175,20 @@ describe('renderDesignToken', () => {
     assert.equal(el('size-spacing-4').className, 'design-token size');
   });
 
+  it('splits a list value after each comma into parts that stay whole', () => {
+    const family = el('font-family-sans').querySelector('code') as HTMLElement;
+    const size = el('size-font-14').querySelector('code');
+
+    assert.deepEqual(
+      [...family.querySelectorAll('.part')].map((part) => part.textContent),
+      ['"IBM Plex Sans"', '"Arial"', 'sans-serif']
+    );
+    // The text, as copied, is the CSS value as before
+    assert.equal(family.textContent, '"IBM Plex Sans", "Arial", sans-serif');
+    // A single value has no parts
+    assert.equal(size?.querySelectorAll('.part').length ?? 0, 0);
+  });
+
   it('renders keyword and variable font weights', () => {
     const keyword = el('font-weight-semi-bold').querySelector(
       '.text'

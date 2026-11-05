@@ -82,7 +82,22 @@ const span = (
   content = ''
 ): string =>
   `<span${toAttrs({ class: className, style: toStyle(styles) })}>${content}</span>`;
-const code = (value: AttrValue): string => `<code>${escapeHTML(value)}</code>`;
+/**
+ * A value in `<code>`. A list (`a, b, c`) is split after each comma into parts
+ * that don't break themselves, so a long value wraps between font families,
+ * shadows or gradient stops, never inside one. The text is unchanged.
+ */
+const code = (value: AttrValue): string => {
+  const parts = String(value ?? '').split(', ');
+  const html =
+    parts.length > 1
+      ? parts
+          .map((part) => `<span class="part">${escapeHTML(part)}</span>`)
+          .join(', ')
+      : escapeHTML(value);
+
+  return `<code>${html}</code>`;
+};
 
 /**
  * Resolves which pill variant a token is rendered as, from its `$type` and path.

@@ -10,6 +10,8 @@
   --dtf-token-depth-z-index: 10;
   --dtf-token-spacing-stack: 0;
   --dtf-token-height: 2rem;
+  /* Wide enough for every token name on one line; long values wrap */
+  --dtf-token-max-width: 28rem;
   --dtf-token-spacing-inset-horizontal: 0.5rem;
   --dtf-token-spacing-inset-vertical: 0;
   --dtf-token-border-radius: 1rem;
@@ -68,7 +70,8 @@
   border-radius: var(--dtf-token-border-radius);
   padding: var(--dtf-token-spacing-inset-vertical)
     var(--dtf-token-spacing-inset-horizontal);
-  height: var(--dtf-token-height);
+  min-height: var(--dtf-token-height);
+  max-width: var(--dtf-token-max-width);
   z-index: var(--dtf-token-depth-z-index);
   font-family: var(--dtf-font-family-code);
   box-shadow: var(--dtf-design-token-box-shadow);
@@ -97,6 +100,11 @@
   font-family: var(--dtf-font-family-code);
   border: none;
   display: inline-block;
+  max-width: 100%;
+  /* Wraps between list parts (after a comma), each part stays whole */
+  white-space: normal;
+}
+.design-token code .part {
   white-space: nowrap;
 }
 .design-token.light {
@@ -113,7 +121,9 @@
   --dtf-token-height: 4rem;
   --dtf-token-border-radius: 2.5rem;
   --dtf-token-spacing-inset-horizontal: 1.5rem;
-  height: var(--dtf-token-height);
+  min-height: var(--dtf-token-height);
+  /* Room above and below a value that wraps onto more lines */
+  padding-block: 0.5rem;
   border-radius: var(--dtf-token-border-radius);
   position: relative;
   flex-direction: column;

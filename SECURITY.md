@@ -109,9 +109,13 @@ injects styles there.
 
 ## Dependencies
 
-**Choosing them.** The site bundles one runtime library,
+**Choosing them.** The site bundles two runtime libraries:
 [`@phun-ky/arclace`](https://www.npmjs.com/package/@phun-ky/arclace), which
-draws the lines between tokens; everything else is a development dependency. A
+draws the lines between tokens, and [`shiki`](https://shiki.style), which
+highlights code in the playground (only its core, the JavaScript regular
+expression engine and the JSON and HTML grammars, loaded after the page;
+[#76](https://github.com/phun-ky/site-design-token-flow/issues/76)).
+Everything else is a development dependency. A
 new runtime dependency is discussed in an issue first, and must be widely used,
 actively maintained and under an OSI-approved licence compatible with MIT.
 

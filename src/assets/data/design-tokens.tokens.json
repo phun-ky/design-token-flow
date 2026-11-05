@@ -1,0 +1,2866 @@
+{
+  "size": {
+    "$type": "dimension",
+    "breakpoint": {
+      "min-xxs": {
+        "$value": {
+          "value": 22.5,
+          "unit": "rem"
+        },
+        "$description": "360px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "XXS"
+          }
+        }
+      },
+      "min-xs": {
+        "$value": {
+          "value": 25,
+          "unit": "rem"
+        },
+        "$description": "400px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "ExtraSmall"
+          }
+        }
+      },
+      "min-smlr": {
+        "$value": {
+          "value": 45,
+          "unit": "rem"
+        },
+        "$description": "720px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Smaller"
+          }
+        }
+      },
+      "min-sm": {
+        "$value": {
+          "value": 60,
+          "unit": "rem"
+        },
+        "$description": "960px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Small"
+          }
+        }
+      },
+      "min-md": {
+        "$value": {
+          "value": 75,
+          "unit": "rem"
+        },
+        "$description": "1200px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Medium"
+          }
+        }
+      },
+      "min-lg": {
+        "$value": {
+          "value": 90,
+          "unit": "rem"
+        },
+        "$description": "1440px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Large"
+          }
+        }
+      },
+      "min-xl": {
+        "$value": {
+          "value": 120,
+          "unit": "rem"
+        },
+        "$description": "1920px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "ExtraLarge"
+          }
+        }
+      },
+      "min-xxl": {
+        "$value": {
+          "value": 160,
+          "unit": "rem"
+        },
+        "$description": "2560px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Xxl"
+          }
+        }
+      },
+      "min-huge": {
+        "$value": {
+          "value": 200,
+          "unit": "rem"
+        },
+        "$description": "3200px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Huge"
+          }
+        }
+      },
+      "min-huger": {
+        "$value": {
+          "value": 240,
+          "unit": "rem"
+        },
+        "$description": "3840px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Huger"
+          }
+        }
+      }
+    },
+    "font": {
+      "14": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "$description": "14 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "15": {
+        "$value": {
+          "value": 0.9375,
+          "unit": "rem"
+        },
+        "$description": "15 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "16": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "$description": "16 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "18": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "$description": "18 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "20": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        },
+        "$description": "20 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "22": {
+        "$value": {
+          "value": 1.375,
+          "unit": "rem"
+        },
+        "$description": "22 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "24": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$description": "24 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "26": {
+        "$value": {
+          "value": 1.625,
+          "unit": "rem"
+        },
+        "$description": "26 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "28": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$description": "28 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "30": {
+        "$value": {
+          "value": 1.875,
+          "unit": "rem"
+        },
+        "$description": "30 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "32": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "32 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "33": {
+        "$value": {
+          "value": 2.0625,
+          "unit": "rem"
+        },
+        "$description": "33 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "36": {
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        },
+        "$description": "36 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "38": {
+        "$value": {
+          "value": 2.375,
+          "unit": "rem"
+        },
+        "$description": "38 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "42": {
+        "$value": {
+          "value": 2.625,
+          "unit": "rem"
+        },
+        "$description": "42 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "48": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        },
+        "$description": "48 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "54": {
+        "$value": {
+          "value": 3.375,
+          "unit": "rem"
+        },
+        "$description": "54 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "56": {
+        "$value": {
+          "value": 3.5,
+          "unit": "rem"
+        },
+        "$description": "56 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "66": {
+        "$value": {
+          "value": 4.125,
+          "unit": "rem"
+        },
+        "$description": "66 pixels",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "14px": {
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "$description": "0.875rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "15px": {
+        "$value": {
+          "value": 15,
+          "unit": "px"
+        },
+        "$description": "0.9375rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "16px": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "1rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "18px": {
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        },
+        "$description": "1.125rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "20px": {
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "1.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "22px": {
+        "$value": {
+          "value": 22,
+          "unit": "px"
+        },
+        "$description": "1.375rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "24px": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "1.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "26px": {
+        "$value": {
+          "value": 26,
+          "unit": "px"
+        },
+        "$description": "1.625rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "28px": {
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "$description": "1.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "30px": {
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        },
+        "$description": "1.875rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "32px": {
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        },
+        "$description": "2rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "33px": {
+        "$value": {
+          "value": 33,
+          "unit": "px"
+        },
+        "$description": "2.0625rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "36px": {
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "2.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "38px": {
+        "$value": {
+          "value": 38,
+          "unit": "px"
+        },
+        "$description": "2.375rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "42px": {
+        "$value": {
+          "value": 42,
+          "unit": "px"
+        },
+        "$description": "2.625rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "48px": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "3rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "54px": {
+        "$value": {
+          "value": 54,
+          "unit": "px"
+        },
+        "$description": "3.375rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "56px": {
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        },
+        "$description": "3.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "66px": {
+        "$value": {
+          "value": 66,
+          "unit": "px"
+        },
+        "$description": "4.125rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      }
+    },
+    "line-height": {
+      "24": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$description": "24px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "28": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$description": "28px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "32": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "32px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "40": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "$description": "40px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "42": {
+        "$value": {
+          "value": 2.625,
+          "unit": "rem"
+        },
+        "$description": "42px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "44": {
+        "$value": {
+          "value": 2.75,
+          "unit": "rem"
+        },
+        "$description": "44px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "48": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        },
+        "$description": "48px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "52": {
+        "$value": {
+          "value": 3.25,
+          "unit": "rem"
+        },
+        "$description": "52px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "56": {
+        "$value": {
+          "value": 3.5,
+          "unit": "rem"
+        },
+        "$description": "56px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "64": {
+        "$value": {
+          "value": 4,
+          "unit": "rem"
+        },
+        "$description": "64px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "72": {
+        "$value": {
+          "value": 4.5,
+          "unit": "rem"
+        },
+        "$description": "72px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "24px": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "1.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "28px": {
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "$description": "1.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "32px": {
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        },
+        "$description": "2rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "40px": {
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "2.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "42px": {
+        "$value": {
+          "value": 42,
+          "unit": "px"
+        },
+        "$description": "2.625rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "44px": {
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "2.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "48px": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "3rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "52px": {
+        "$value": {
+          "value": 52,
+          "unit": "px"
+        },
+        "$description": "3.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "56px": {
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        },
+        "$description": "3.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "64px": {
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        },
+        "$description": "4rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "72px": {
+        "$value": {
+          "value": 72,
+          "unit": "px"
+        },
+        "$description": "4.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      }
+    },
+    "spacing": {
+      "4": {
+        "$value": {
+          "value": 0.25,
+          "unit": "rem"
+        },
+        "$description": "4px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "8": {
+        "$value": {
+          "value": 0.5,
+          "unit": "rem"
+        },
+        "$description": "8px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "12": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "$description": "12px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "16": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "$description": "16px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "20": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        },
+        "$description": "20px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "24": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$description": "24px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "28": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$description": "28px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "32": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "32px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "36": {
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        },
+        "$description": "36px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "40": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "$description": "40px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "44": {
+        "$value": {
+          "value": 2.75,
+          "unit": "rem"
+        },
+        "$description": "44px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "48": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        },
+        "$description": "48px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "52": {
+        "$value": {
+          "value": 3.25,
+          "unit": "rem"
+        },
+        "$description": "52px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "56": {
+        "$value": {
+          "value": 3.5,
+          "unit": "rem"
+        },
+        "$description": "56px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "60": {
+        "$value": {
+          "value": 3.75,
+          "unit": "rem"
+        },
+        "$description": "60px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "64": {
+        "$value": {
+          "value": 4,
+          "unit": "rem"
+        },
+        "$description": "64px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "68": {
+        "$value": {
+          "value": 4.25,
+          "unit": "rem"
+        },
+        "$description": "68px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "72": {
+        "$value": {
+          "value": 4.5,
+          "unit": "rem"
+        },
+        "$description": "72px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "76": {
+        "$value": {
+          "value": 4.75,
+          "unit": "rem"
+        },
+        "$description": "76px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "80": {
+        "$value": {
+          "value": 5,
+          "unit": "rem"
+        },
+        "$description": "80px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "84": {
+        "$value": {
+          "value": 5.25,
+          "unit": "rem"
+        },
+        "$description": "84px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "88": {
+        "$value": {
+          "value": 5.5,
+          "unit": "rem"
+        },
+        "$description": "88px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "92": {
+        "$value": {
+          "value": 5.75,
+          "unit": "rem"
+        },
+        "$description": "92px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "96": {
+        "$value": {
+          "value": 6,
+          "unit": "rem"
+        },
+        "$description": "96px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "100": {
+        "$value": {
+          "value": 6.25,
+          "unit": "rem"
+        },
+        "$description": "100px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "104": {
+        "$value": {
+          "value": 6.5,
+          "unit": "rem"
+        },
+        "$description": "104px",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "mobile"
+          }
+        }
+      },
+      "4px": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        },
+        "$description": "0.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "8px": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        },
+        "$description": "0.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "12px": {
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "0.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "16px": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "1rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "20px": {
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "1.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "24px": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "1.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "28px": {
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "$description": "1.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "32px": {
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        },
+        "$description": "2rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "36px": {
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "2.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "40px": {
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "2.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "44px": {
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "2.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "48px": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "3rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "52px": {
+        "$value": {
+          "value": 52,
+          "unit": "px"
+        },
+        "$description": "3.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "56px": {
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        },
+        "$description": "3.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "60px": {
+        "$value": {
+          "value": 60,
+          "unit": "px"
+        },
+        "$description": "3.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "64px": {
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        },
+        "$description": "4rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "68px": {
+        "$value": {
+          "value": 68,
+          "unit": "px"
+        },
+        "$description": "4.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "72px": {
+        "$value": {
+          "value": 72,
+          "unit": "px"
+        },
+        "$description": "4.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "76px": {
+        "$value": {
+          "value": 76,
+          "unit": "px"
+        },
+        "$description": "4.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "80px": {
+        "$value": {
+          "value": 80,
+          "unit": "px"
+        },
+        "$description": "5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "84px": {
+        "$value": {
+          "value": 84,
+          "unit": "px"
+        },
+        "$description": "5.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "88px": {
+        "$value": {
+          "value": 88,
+          "unit": "px"
+        },
+        "$description": "5.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "92px": {
+        "$value": {
+          "value": 92,
+          "unit": "px"
+        },
+        "$description": "5.75rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "96px": {
+        "$value": {
+          "value": 96,
+          "unit": "px"
+        },
+        "$description": "6rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "100px": {
+        "$value": {
+          "value": 100,
+          "unit": "px"
+        },
+        "$description": "6.25rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      },
+      "104px": {
+        "$value": {
+          "value": 104,
+          "unit": "px"
+        },
+        "$description": "6.5rem",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "target": "web"
+          }
+        }
+      }
+    }
+  },
+  "color": {
+    "$type": "color",
+    "background": {
+      "button": {
+        "primary": {
+          "$value": "{color.cta}"
+        }
+      },
+      "lightest-beige": {
+        "$value": "{color.base.beige.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Doctor",
+            "internal-name": "BE 5",
+            "pms": "PMS 9223 / 20%",
+            "cmykc": "5, 10, 15, 3 / 20%",
+            "cmyku": "3, 8, 14, 2 / 20%"
+          }
+        }
+      },
+      "lighter-beige": {
+        "$value": "{color.base.beige.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "The Speed Of Light",
+            "internal-name": "BE 4",
+            "pms": "PMS 9223 / 40%",
+            "cmykc": "5, 10, 15, 3 / 40%",
+            "cmyku": "3, 8, 14, 2 / 40%"
+          }
+        }
+      },
+      "light-beige": {
+        "$value": "{color.base.beige.300}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Valhallan Blizzard",
+            "internal-name": "BE 3",
+            "pms": "PMS 9223 / 60%",
+            "cmykc": "5, 10, 15, 3 / 60%",
+            "cmyku": "3, 8, 14, 2 / 60%"
+          }
+        }
+      },
+      "beige": {
+        "$value": "{color.base.beige.400}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Desert Storm",
+            "internal-name": "BE 2",
+            "pmsc": "PMS 9223 / 80%",
+            "cmykc": "5, 10, 15, 3 / 80%",
+            "cmyku": "3, 8, 14, 2 / 80%"
+          }
+        }
+      },
+      "dark-beige": {
+        "$value": "{color.base.beige.500}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Stone Harbour",
+            "internal-name": "BE 1",
+            "pms": "PMS 9223",
+            "cmykc": "5, 10, 15, 3",
+            "cmyku": "3, 8, 14, 2",
+            "ncs": "1005-Y60R",
+            "ral": "060 85 05 Champagnerosé",
+            "tcx": "12-0000 TCX"
+          }
+        }
+      }
+    },
+    "accent": {
+      "blue": {
+        "$value": "{color.base.blue.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Megaman Helmet",
+            "internal-name": "BL 1",
+            "pms": "PMS 3005",
+            "cmyk": "100,30,0,0",
+            "ncs": "S 2565-R80B",
+            "ral": "270 40 40 Zauberblau",
+            "tcx": "18-4051 TCX"
+          }
+        }
+      }
+    },
+    "base": {
+      "light-blue": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5922,
+              0.8863,
+              0.9686
+            ],
+            "hex": "#97e2f7"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Gas Giant",
+              "internal-name": "CB 3",
+              "pmsc": "PMS 291 C",
+              "pmsu": "PMS 544 U",
+              "cmykc": "35, 0, 2, 0",
+              "cmyku": "34, 3, 0, 2"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.298,
+              0.6902,
+              0.8275
+            ],
+            "hex": "#4cb0d3"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Blue Martini",
+              "internal-name": "CB 2",
+              "pmsc": "PMS 2389 C",
+              "pmsu": "PMS 2389 U",
+              "cmykc": "68, 13, 12, 0",
+              "cmyku": "63, 16, 8, 0"
+            }
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3255,
+              0.5725,
+              0.698
+            ],
+            "hex": "#5392b2"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Vanity",
+              "internal-name": "CB 1",
+              "pmsc": "PMS 2159 C",
+              "pmsu": "PMS 2149 U",
+              "cmykc": "70, 37, 18, 10",
+              "cmyku": "65, 30, 15, 5"
+            }
+          }
+        }
+      },
+      "blue": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.3294,
+              0.9412
+            ],
+            "hex": "#0054f0"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Megaman Helmet",
+              "internal-name": "BL 1",
+              "pms": "PMS 3005",
+              "cmyk": "100,30,0,0",
+              "ncs": "S 2565-R80B",
+              "ral": "270 40 40 Zauberblau",
+              "tcx": "18-4051 TCX"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.251,
+              0.502
+            ],
+            "hex": "#004080"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Bracing Blue",
+              "internal-name": "BL 1 Dark",
+              "cmyk": "100,50,0,50"
+            }
+          }
+        }
+      },
+      "beige": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9804,
+              0.9765,
+              0.9686
+            ],
+            "hex": "#faf9f7"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Doctor",
+              "internal-name": "BE 5",
+              "pms": "PMS 9223 / 20%",
+              "cmykc": "5, 10, 15, 3 / 20%",
+              "cmyku": "3, 8, 14, 2 / 20%"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9647,
+              0.9529,
+              0.9412
+            ],
+            "hex": "#f6f3f0"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "The Speed Of Light",
+              "internal-name": "BE 4",
+              "pms": "PMS 9223 / 40%",
+              "cmykc": "5, 10, 15, 3 / 40%",
+              "cmyku": "3, 8, 14, 2 / 40%"
+            }
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9451,
+              0.9255,
+              0.9098
+            ],
+            "hex": "#f1ece8"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Valhallan Blizzard",
+              "internal-name": "BE 3",
+              "pms": "PMS 9223 / 60%",
+              "cmykc": "5, 10, 15, 3 / 60%",
+              "cmyku": "3, 8, 14, 2 / 60%"
+            }
+          }
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9294,
+              0.902,
+              0.8824
+            ],
+            "hex": "#ede6e1"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Desert Storm",
+              "internal-name": "BE 2",
+              "pmsc": "PMS 9223 / 80%",
+              "cmykc": "5, 10, 15, 3 / 80%",
+              "cmyku": "3, 8, 14, 2 / 80%"
+            }
+          }
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9098,
+              0.8784,
+              0.851
+            ],
+            "hex": "#e8e0d9"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Stone Harbour",
+              "internal-name": "BE 1",
+              "pms": "PMS 9223",
+              "cmykc": "5, 10, 15, 3",
+              "cmyku": "3, 8, 14, 2",
+              "ncs": "1005-Y60R",
+              "ral": "060 85 05 Champagnerosé",
+              "tcx": "12-0000 TCX"
+            }
+          }
+        }
+      },
+      "pink": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.7882,
+              0.651
+            ],
+            "hex": "#ffc9a6"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Peach Crayon",
+              "internal-name": "CR 3",
+              "pmsc": "PMS 7520 C",
+              "pmsu": "PMS 7520 U",
+              "cmykc": "0, 20, 25, 5",
+              "cmyku": "5, 17, 31, 0"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.5216,
+              0.4118
+            ],
+            "hex": "#ff8569"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Fresh Salmon",
+              "internal-name": "CR 2",
+              "pmsc": "PMS 486 C",
+              "pmsu": "PMS 487 U",
+              "cmykc": "0, 53, 48, 0",
+              "cmyku": "0, 47, 46, 0",
+              "ncs": "S 1050-Y80R",
+              "ral": "030 70 40 Flamingorot",
+              "tcx": "16-1526 TCX"
+            }
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.502,
+              0.3608,
+              0.3608
+            ],
+            "hex": "#805c5c"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Musk Deer",
+              "internal-name": "CR 1",
+              "pmsc": "PMS 7639 C",
+              "pmsu": "PMS 4995 U",
+              "cmykc": "41, 62, 48, 7",
+              "cmyku": "0, 42, 15, 48",
+              "ncs": "S 5020-R10B",
+              "ral": "360 40 15 Rubingrau",
+              "tcx": "18-1612 TCX"
+            }
+          }
+        }
+      },
+      "green": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1294,
+              0.451,
+              0.1922
+            ],
+            "hex": "#217331"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Camarone",
+              "internal-name": "green"
+            }
+          }
+        }
+      },
+      "red": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7333,
+              0.1961,
+              0.0471
+            ],
+            "hex": "#bb320c"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Virtual Boy",
+              "internal-name": "red"
+            }
+          }
+        }
+      },
+      "brown": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4314,
+              0.3843,
+              0.3686
+            ],
+            "hex": "#6e625e"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Fozzie Bear",
+              "internal-name": "LB 1",
+              "pms": "PMS 7531",
+              "cmykc": "15, 27, 36, 51",
+              "cmyku": "14, 23, 33, 46",
+              "ncs": "6010-Y30R",
+              "ral": "060 50 10 Sandsteingrau",
+              "tcx": "18-1017 TCX"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2,
+              0.1176,
+              0.0667
+            ],
+            "hex": "#331e11"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Black Slug",
+              "internal-name": "BR 1",
+              "pms": "PMS 2322",
+              "cmykc": "32, 72, 99, 81",
+              "cmyku": "25, 70, 70, 80",
+              "ncs": "S 8010-Y50R",
+              "ral": "050 30 10 Obsidianbraun",
+              "tcx": "19-0814 TCX"
+            }
+          }
+        }
+      },
+      "teal": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7098,
+              0.9294,
+              0.9098
+            ],
+            "hex": "#b5ede8"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Spearmint Water",
+              "internal-name": "CG 3",
+              "pmsc": "PMS 7457 C",
+              "pmsu": "PMS 5523 U",
+              "cmykc": "25, 0, 13, 0",
+              "cmyku": "20, 0, 12, 0"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5294,
+              0.7804,
+              0.7294
+            ],
+            "hex": "#87c7ba"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Tranquil Teal",
+              "internal-name": "CG 2",
+              "pmsc": "PMS 564 C",
+              "pmsu": "PMS 565 U",
+              "cmykc": "53, 0, 32, 0",
+              "cmyku": "42, 0, 27, 0",
+              "ncs": "S 1030-B50G",
+              "ral": "18 80 20 Opalturkis",
+              "tcx": "14-5711 TCX"
+            }
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4196,
+              0.6,
+              0.5804
+            ],
+            "hex": "#6b9994"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Little League",
+              "internal-name": "CG 1",
+              "pmsc": "PMS 2211 C",
+              "pmsu": "PMS 5493 U",
+              "cmykc": "63, 25, 35, 5",
+              "cmyku": "47, 6, 20, 20",
+              "ncs": "S 4020-B30G",
+              "ral": "200 60 15 Waidindigo",
+              "tcx": "17-5110 TCX"
+            }
+          }
+        }
+      },
+      "yellow": {
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.8784,
+              0.5098
+            ],
+            "hex": "#ffe082"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Swedish Yellow",
+              "internal-name": "CY 3",
+              "pmsc": "PMS 7402 C",
+              "pmsu": "PMS 2001 U",
+              "cmykc": "0, 6, 53, 0",
+              "cmyku": "0, 3, 48, 0"
+            }
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9882,
+              0.7804,
+              0.3098
+            ],
+            "hex": "#fcc74f"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Go Bananas",
+              "internal-name": "CY 2",
+              "pmsc": "PMS 141 C",
+              "pmsu": "PMS 7403 U",
+              "cmykc": "0, 20, 72, 0",
+              "cmyku": "0, 14, 65, 0",
+              "ncs": "S 1050-Y10R",
+              "ral": "080 80 60 Vollgelb",
+              "tcx": "14-0846 TCX"
+            }
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6902,
+              0.5294,
+              0.349
+            ],
+            "hex": "#b08759"
+          },
+          "$extensions": {
+            "net.phun-ky.design-token-flow": {
+              "name": "Apple Cinnamon",
+              "internal-name": "CY 1",
+              "pmsc": "PMS 2317 C",
+              "pmsu": "PMS 2313 U",
+              "cmykc": "35, 48, 70, 5",
+              "cmyku": "0, 30, 54, 27",
+              "ncs": "S 4030-Y30R",
+              "ral": "060 50 30 Senfbraun",
+              "tcx": "17-1125 TCX"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "$value": "{color.accent.blue}"
+    },
+    "infographic": {
+      "dark-red": {
+        "$value": "{color.base.pink.300}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Musk Deer",
+            "internal-name": "CR 1",
+            "pmsc": "PMS 7639 C",
+            "pmsu": "PMS 4995 U",
+            "cmykc": "41, 62, 48, 7",
+            "cmyku": "0, 42, 15, 48",
+            "ncs": "S 5020-R10B",
+            "ral": "360 40 15 Rubingrau",
+            "tcx": "18-1612 TCX"
+          }
+        }
+      },
+      "red": {
+        "$value": "{color.base.pink.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Fresh Salmon",
+            "internal-name": "CR 2",
+            "pmsc": "PMS 486 C",
+            "pmsu": "PMS 487 U",
+            "cmykc": "0, 53, 48, 0",
+            "cmyku": "0, 47, 46, 0",
+            "ncs": "S 1050-Y80R",
+            "ral": "030 70 40 Flamingorot",
+            "tcx": "16-1526 TCX"
+          }
+        }
+      },
+      "light-red": {
+        "$value": "{color.base.pink.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Peach Crayon",
+            "internal-name": "CR 3",
+            "pmsc": "PMS 7520 C",
+            "pmsu": "PMS 7520 U",
+            "cmykc": "0, 20, 25, 5",
+            "cmyku": "5, 17, 31, 0"
+          }
+        }
+      },
+      "dark-yellow": {
+        "$value": "{color.base.yellow.300}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Apple Cinnamon",
+            "internal-name": "CY 1",
+            "pmsc": "PMS 2317 C",
+            "pmsu": "PMS 2313 U",
+            "cmykc": "35, 48, 70, 5",
+            "cmyku": "0, 30, 54, 27",
+            "ncs": "S 4030-Y30R",
+            "ral": "060 50 30 Senfbraun",
+            "tcx": "17-1125 TCX"
+          }
+        }
+      },
+      "yellow": {
+        "$value": "{color.base.yellow.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Go Bananas",
+            "internal-name": "CY 2",
+            "pmsc": "PMS 141 C",
+            "pmsu": "PMS 7403 U",
+            "cmykc": "0, 20, 72, 0",
+            "cmyku": "0, 14, 65, 0",
+            "ncs": "S 1050-Y10R",
+            "ral": "080 80 60 Vollgelb",
+            "tcx": "14-0846 TCX"
+          }
+        }
+      },
+      "light-yellow": {
+        "$value": "{color.base.yellow.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Swedish Yellow",
+            "internal-name": "CY 3",
+            "pmsc": "PMS 7402 C",
+            "pmsu": "PMS 2001 U",
+            "cmykc": "0, 6, 53, 0",
+            "cmyku": "0, 3, 48, 0"
+          }
+        }
+      },
+      "dark-green": {
+        "$value": "{color.base.teal.300}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Little League",
+            "internal-name": "CG 1",
+            "pmsc": "PMS 2211 C",
+            "pmsu": "PMS 5493 U",
+            "cmykc": "63, 25, 35, 5",
+            "cmyku": "47, 6, 20, 20",
+            "ncs": "S 4020-B30G",
+            "ral": "200 60 15 Waidindigo",
+            "tcx": "17-5110 TCX"
+          }
+        }
+      },
+      "green": {
+        "$value": "{color.base.teal.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Tranquil Teal",
+            "internal-name": "CG 2",
+            "pmsc": "PMS 564 C",
+            "pmsu": "PMS 565 U",
+            "cmykc": "53, 0, 32, 0",
+            "cmyku": "42, 0, 27, 0",
+            "ncs": "S 1030-B50G",
+            "ral": "18 80 20 Opalturkis",
+            "tcx": "14-5711 TCX"
+          }
+        }
+      },
+      "light-green": {
+        "$value": "{color.base.teal.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Spearmint Water",
+            "internal-name": "CG 3",
+            "pmsc": "PMS 7457 C",
+            "pmsu": "PMS 5523 U",
+            "cmykc": "25, 0, 13, 0",
+            "cmyku": "20, 0, 12, 0"
+          }
+        }
+      },
+      "dark-blue": {
+        "$value": "{color.base.light-blue.300}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Vanity",
+            "internal-name": "CB 1",
+            "pmsc": "PMS 2159 C",
+            "pmsu": "PMS 2149 U",
+            "cmykc": "70, 37, 18, 10",
+            "cmyku": "65, 30, 15, 5"
+          }
+        }
+      },
+      "blue": {
+        "$value": "{color.base.light-blue.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Blue Martini",
+            "internal-name": "CB 2",
+            "pmsc": "PMS 2389 C",
+            "pmsu": "PMS 2389 U",
+            "cmykc": "68, 13, 12, 0",
+            "cmyku": "63, 16, 8, 0"
+          }
+        }
+      },
+      "light-blue": {
+        "$value": "{color.base.light-blue.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Gas Giant",
+            "internal-name": "CB 3",
+            "pmsc": "PMS 291 C",
+            "pmsu": "PMS 544 U",
+            "cmykc": "35, 0, 2, 0",
+            "cmyku": "34, 3, 0, 2"
+          }
+        }
+      }
+    },
+    "interaction": {
+      "dark-blue": {
+        "$value": "{color.base.blue.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Bracing Blue",
+            "internal-name": "BL 1 Dark",
+            "cmyk": "100,50,0,50"
+          }
+        }
+      }
+    },
+    "status": {
+      "red": {
+        "$value": "{color.base.red.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Virtual Boy",
+            "internal-name": "red"
+          }
+        }
+      },
+      "green": {
+        "$value": "{color.base.green.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Camarone",
+            "internal-name": "green"
+          }
+        }
+      }
+    },
+    "text": {
+      "lightest-beige": {
+        "$value": "{color.base.beige.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Doctor",
+            "internal-name": "BE 5",
+            "pms": "PMS 9223 / 20%",
+            "cmykc": "5, 10, 15, 3 / 20%",
+            "cmyku": "3, 8, 14, 2 / 20%"
+          }
+        }
+      },
+      "light-brown": {
+        "$value": "{color.base.brown.100}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Fozzie Bear",
+            "internal-name": "LB 1",
+            "pms": "PMS 7531",
+            "cmykc": "15, 27, 36, 51",
+            "cmyku": "14, 23, 33, 46",
+            "ncs": "6010-Y30R",
+            "ral": "060 50 10 Sandsteingrau",
+            "tcx": "18-1017 TCX"
+          }
+        }
+      },
+      "brown": {
+        "$value": "{color.base.brown.200}",
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "name": "Black Slug",
+            "internal-name": "BR 1",
+            "pms": "PMS 2322",
+            "cmykc": "32, 72, 99, 81",
+            "cmyku": "25, 70, 70, 80",
+            "ncs": "S 8010-Y50R",
+            "ral": "050 30 10 Obsidianbraun",
+            "tcx": "19-0814 TCX"
+          }
+        }
+      }
+    }
+  },
+  "asset": {
+    "font": {
+      "$type": "fontFamily",
+      "ifsans-variable": {
+        "name": {
+          "$value": "If Sans"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Variable.eot",
+              "otf": "./fonts/IfSans-Variable.otf",
+              "ttf": "./fonts/IfSans-Variable.ttf",
+              "woff": "./fonts/IfSans-Variable.woff",
+              "woff2": "./fonts/IfSans-Variable.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-italic": {
+        "name": {
+          "$value": "If Sans Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-VariableItalic.eot",
+              "otf": "./fonts/IfSans-VariableItalic.otf",
+              "ttf": "./fonts/IfSans-VariableItalic.ttf",
+              "woff": "./fonts/IfSans-VariableItalic.woff",
+              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-regular": {
+        "name": {
+          "$value": "If Sans"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Regular.eot",
+              "otf": "./fonts/IfSans-Regular.otf",
+              "ttf": "./fonts/IfSans-Regular.ttf",
+              "woff": "./fonts/IfSans-Regular.woff",
+              "woff2": "./fonts/IfSans-Regular.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-thin": {
+        "name": {
+          "$value": "If Sans Thin"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Thin.eot",
+              "otf": "./fonts/IfSans-Thin.otf",
+              "ttf": "./fonts/IfSans-Thin.ttf",
+              "woff": "./fonts/IfSans-Thin.woff",
+              "woff2": "./fonts/IfSans-Thin.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-light": {
+        "name": {
+          "$value": "If Sans Light"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Light.eot",
+              "otf": "./fonts/IfSans-Light.otf",
+              "ttf": "./fonts/IfSans-Light.ttf",
+              "woff": "./fonts/IfSans-Light.woff",
+              "woff2": "./fonts/IfSans-Light.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-medium": {
+        "name": {
+          "$value": "If Sans Medium"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Medium.eot",
+              "otf": "./fonts/IfSans-Medium.otf",
+              "ttf": "./fonts/IfSans-Medium.ttf",
+              "woff": "./fonts/IfSans-Medium.woff",
+              "woff2": "./fonts/IfSans-Medium.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-bold": {
+        "name": {
+          "$value": "If Sans Bold"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Bold.eot",
+              "otf": "./fonts/IfSans-Bold.otf",
+              "ttf": "./fonts/IfSans-Bold.ttf",
+              "woff": "./fonts/IfSans-Bold.woff",
+              "woff2": "./fonts/IfSans-Bold.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-regular-italic": {
+        "name": {
+          "$value": "If Sans Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Italic.eot",
+              "otf": "./fonts/IfSans-Italic.otf",
+              "ttf": "./fonts/IfSans-Italic.ttf",
+              "woff": "./fonts/IfSans-Italic.woff",
+              "woff2": "./fonts/IfSans-Italic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-thin-italic": {
+        "name": {
+          "$value": "If Sans Thin Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-ThinItalic.eot",
+              "otf": "./fonts/IfSans-ThinItalic.otf",
+              "ttf": "./fonts/IfSans-ThinItalic.ttf",
+              "woff": "./fonts/IfSans-ThinItalic.woff",
+              "woff2": "./fonts/IfSans-ThinItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-light-italic": {
+        "name": {
+          "$value": "If Sans Light Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-LightItalic.eot",
+              "otf": "./fonts/IfSans-LightItalic.otf",
+              "ttf": "./fonts/IfSans-LightItalic.ttf",
+              "woff": "./fonts/IfSans-LightItalic.woff",
+              "woff2": "./fonts/IfSans-LightItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-medium-italic": {
+        "name": {
+          "$value": "If Sans Medium Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-MediumItalic.eot",
+              "otf": "./fonts/IfSans-MediumItalic.otf",
+              "ttf": "./fonts/IfSans-MediumItalic.ttf",
+              "woff": "./fonts/IfSans-MediumItalic.woff",
+              "woff2": "./fonts/IfSans-MediumItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-bold-italic": {
+        "name": {
+          "$value": "If Sans Bold Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-BoldItalic.eot",
+              "otf": "./fonts/IfSans-BoldItalic.otf",
+              "ttf": "./fonts/IfSans-BoldItalic.ttf",
+              "woff": "./fonts/IfSans-BoldItalic.woff",
+              "woff2": "./fonts/IfSans-BoldItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-thin": {
+        "name": {
+          "$value": "If Sans Thin"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Variable.eot",
+              "otf": "./fonts/IfSans-Variable.otf",
+              "ttf": "./fonts/IfSans-Variable.ttf",
+              "woff": "./fonts/IfSans-Variable.woff",
+              "woff2": "./fonts/IfSans-Variable.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-light": {
+        "name": {
+          "$value": "If Sans Light"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Variable.eot",
+              "otf": "./fonts/IfSans-Variable.otf",
+              "ttf": "./fonts/IfSans-Variable.ttf",
+              "woff": "./fonts/IfSans-Variable.woff",
+              "woff2": "./fonts/IfSans-Variable.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-medium": {
+        "name": {
+          "$value": "If Sans Medium"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Variable.eot",
+              "otf": "./fonts/IfSans-Variable.otf",
+              "ttf": "./fonts/IfSans-Variable.ttf",
+              "woff": "./fonts/IfSans-Variable.woff",
+              "woff2": "./fonts/IfSans-Variable.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-bold": {
+        "name": {
+          "$value": "If Sans Bold"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-Variable.eot",
+              "otf": "./fonts/IfSans-Variable.otf",
+              "ttf": "./fonts/IfSans-Variable.ttf",
+              "woff": "./fonts/IfSans-Variable.woff",
+              "woff2": "./fonts/IfSans-Variable.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-thin-italic": {
+        "name": {
+          "$value": "If Sans Thin Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-VariableItalic.eot",
+              "otf": "./fonts/IfSans-VariableItalic.otf",
+              "ttf": "./fonts/IfSans-VariableItalic.ttf",
+              "woff": "./fonts/IfSans-VariableItalic.woff",
+              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-light-italic": {
+        "name": {
+          "$value": "If Sans Light Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-VariableItalic.eot",
+              "otf": "./fonts/IfSans-VariableItalic.otf",
+              "ttf": "./fonts/IfSans-VariableItalic.ttf",
+              "woff": "./fonts/IfSans-VariableItalic.woff",
+              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-medium-italic": {
+        "name": {
+          "$value": "If Sans Medium Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-VariableItalic.eot",
+              "otf": "./fonts/IfSans-VariableItalic.otf",
+              "ttf": "./fonts/IfSans-VariableItalic.ttf",
+              "woff": "./fonts/IfSans-VariableItalic.woff",
+              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+            }
+          }
+        }
+      },
+      "ifsans-variable-bold-italic": {
+        "name": {
+          "$value": "If Sans Bold Italic"
+        },
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "files": {
+              "eot": "./fonts/IfSans-VariableItalic.eot",
+              "otf": "./fonts/IfSans-VariableItalic.otf",
+              "ttf": "./fonts/IfSans-VariableItalic.ttf",
+              "woff": "./fonts/IfSans-VariableItalic.woff",
+              "woff2": "./fonts/IfSans-VariableItalic.woff2"
+            }
+          }
+        }
+      }
+    }
+  },
+  "font": {
+    "weight": {
+      "36": {
+        "$value": 36,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "40": {
+        "$value": 40,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "45": {
+        "$value": 45,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "48": {
+        "$value": 48,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "50": {
+        "$value": 50,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "54": {
+        "$value": 54,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "64": {
+        "$value": 64,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "70": {
+        "$value": 70,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "78": {
+        "$value": 78,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "82": {
+        "$value": 82,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "85": {
+        "$value": 85,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "104": {
+        "$value": 104,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "126": {
+        "$value": 126,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": {
+            "variable": true,
+            "font-family": [
+              "If Sans",
+              "Arial",
+              "sans-serif"
+            ]
+          }
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "family": {
+      "$type": "fontFamily",
+      "sans-thin": {
+        "$value": "{asset.font.ifsans-thin.name}"
+      },
+      "sans-light": {
+        "$value": "{asset.font.ifsans-light.name}"
+      },
+      "sans": {
+        "$value": "{asset.font.ifsans-regular.name}"
+      },
+      "sans-medium": {
+        "$value": "{asset.font.ifsans-medium.name}"
+      },
+      "sans-bold": {
+        "$value": "{asset.font.ifsans-bold.name}"
+      },
+      "sans-thin-italic": {
+        "$value": "{asset.font.ifsans-thin-italic.name}"
+      },
+      "sans-light-italic": {
+        "$value": "{asset.font.ifsans-light-italic.name}"
+      },
+      "sans-italic": {
+        "$value": "{asset.font.ifsans-regular-italic.name}"
+      },
+      "sans-medium-italic": {
+        "$value": "{asset.font.ifsans-medium-italic.name}"
+      },
+      "sans-bold-italic": {
+        "$value": "{asset.font.ifsans-bold-italic.name}"
+      }
+    }
+  }
+}

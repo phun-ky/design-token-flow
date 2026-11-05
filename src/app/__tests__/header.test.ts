@@ -12,15 +12,18 @@ import { PAGES, getPageId, mountHeader } from '../header';
 describe('getPageId', () => {
   it('finds the playground from the last path segment', () => {
     assert.equal(getPageId('/playground.html'), 'playground');
-    assert.equal(getPageId('/design-token-flow/playground.html'), 'playground');
-    assert.equal(getPageId('/design-token-flow/playground'), 'playground');
+    assert.equal(
+      getPageId('/site-design-token-flow/playground.html'),
+      'playground'
+    );
+    assert.equal(getPageId('/site-design-token-flow/playground'), 'playground');
   });
 
   it('treats every other path as the flow view', () => {
     assert.equal(getPageId('/'), 'flow');
     assert.equal(getPageId(''), 'flow');
-    assert.equal(getPageId('/design-token-flow/'), 'flow');
-    assert.equal(getPageId('/design-token-flow/index.html'), 'flow');
+    assert.equal(getPageId('/site-design-token-flow/'), 'flow');
+    assert.equal(getPageId('/site-design-token-flow/index.html'), 'flow');
     assert.equal(getPageId('/playground.html/other'), 'flow');
     assert.equal(getPageId('/my-playground.html'), 'flow');
   });
@@ -32,7 +35,7 @@ describe('mountHeader', () => {
   });
 
   it('links every page, relative to the current folder', () => {
-    const header = mountHeader('/design-token-flow/');
+    const header = mountHeader('/site-design-token-flow/');
     const links = [...header.querySelectorAll('.app-header-link')];
 
     assert.deepEqual(
@@ -43,7 +46,7 @@ describe('mountHeader', () => {
   });
 
   it('marks only the current page', () => {
-    const header = mountHeader('/design-token-flow/playground.html');
+    const header = mountHeader('/site-design-token-flow/playground.html');
     const current = header.querySelectorAll('[aria-current="page"]');
 
     assert.equal(current.length, 1);

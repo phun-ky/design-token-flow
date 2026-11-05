@@ -3,7 +3,7 @@
 Design Token Flow is a static website: the code in this repository is built into
 plain HTML, CSS and JavaScript that show design tokens and how they relate.
 There is no server, no account and no database. Every merge to `main` is
-deployed to GitHub Pages, at <https://phun-ky.net/design-token-flow/>.
+deployed to GitHub Pages, at <https://phun-ky.net/site-design-token-flow/>.
 
 ## Supported Versions
 
@@ -22,7 +22,7 @@ and not supported.
 ## Reporting a Vulnerability
 
 Report vulnerabilities privately, either with GitHub's
-[private vulnerability reporting](https://github.com/phun-ky/design-token-flow/security/advisories/new)
+[private vulnerability reporting](https://github.com/phun-ky/site-design-token-flow/security/advisories/new)
 or by email to <security@phun-ky.net>. Please don't open a public issue for a
 security problem.
 
@@ -54,7 +54,7 @@ What you can rely on:
 - **Nothing is loaded from other hosts.** Fonts are the system's, and scripts
   and styles come from the site itself. The Content Security Policy below
   enforces this in the browser; an automated check in CI is also planned
-  ([#19](https://github.com/phun-ky/design-token-flow/issues/19)).
+  ([#19](https://github.com/phun-ky/site-design-token-flow/issues/19)).
 - **No referrer is sent.** Each page has `<meta name="referrer"
 content="no-referrer">`.
 - **Token values can't run code.** Every value rendered into the page is escaped
@@ -69,7 +69,7 @@ What you can't rely on yet:
   It can't run script, and the Content Security Policy stops it loading
   anything, such as a background image from another host. This matters only
   for token files you don't control, such as JSON pasted into the playground
-  ([#31](https://github.com/phun-ky/design-token-flow/issues/31)).
+  ([#31](https://github.com/phun-ky/site-design-token-flow/issues/31)).
 - **Protections that need response headers.** GitHub Pages can't be configured
   to send headers, and some protections can't be set from a `<meta>` tag: the
   site can be framed by other sites (`frame-ancestors`), there is no
@@ -150,4 +150,4 @@ CodeQL (GitHub's default setup) analyses every pull request and every push to
 The only secret is `CODECOV_TOKEN`, which uploads test coverage to Codecov from
 CI. Secret scanning is on; push protection, which blocks commits that contain a
 credential, is not on yet
-([#14](https://github.com/phun-ky/design-token-flow/issues/14)).
+([#14](https://github.com/phun-ky/site-design-token-flow/issues/14)).

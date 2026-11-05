@@ -1,0 +1,262 @@
+/* Page, header and theme come from src/styles/app.styl, the playground reuses its colors */
+:root {
+  --demo-bg: var(--app-bg);
+  --demo-panel: var(--app-surface);
+  --demo-border: var(--app-divider);
+  --demo-text: var(--app-text);
+  --demo-muted: var(--app-text-muted);
+  --demo-accent: var(--app-brand);
+  --demo-error: #ff8f7a;
+  --demo-code-bg: #262831;
+}
+
+:root.theme--light {
+  --demo-error: #bb320c;
+  --demo-code-bg: #f4f6fa;
+}
+
+/* The toolbar and the panels fill the window under the global header */
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-size: 14px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 1.125rem;
+  margin-right: auto;
+}
+
+h2 {
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--demo-muted);
+  margin: 1rem 0 0.5rem;
+}
+
+.demo-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--demo-panel);
+  border-bottom: 1px solid var(--demo-border);
+}
+
+.demo-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--demo-muted);
+}
+
+select,
+input,
+textarea,
+.demo-button {
+  font: inherit;
+  color: var(--demo-text);
+  background: var(--demo-bg);
+  border: 1px solid var(--demo-border);
+  border-radius: 6px;
+  padding: 0.375rem 0.625rem;
+}
+
+.demo-button {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.demo-button:hover,
+select:hover {
+  border-color: var(--demo-accent);
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+  padding: 1rem;
+}
+
+.demo-panel {
+  background: var(--demo-panel);
+  border: 1px solid var(--demo-border);
+  border-radius: 12px;
+  padding: 1rem;
+  min-height: 0;
+  overflow: auto;
+}
+
+.demo-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-editor textarea {
+  flex: 1;
+  min-height: 320px;
+  width: 100%;
+  resize: none;
+  font-family: var(--dtf-font-family-code);
+  font-size: 12px;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+.demo-error {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--demo-error);
+  color: var(--demo-error);
+  font-family: var(--dtf-font-family-code);
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+.demo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.demo-toolbar input {
+  min-width: 0;
+  flex: 0 1 240px;
+}
+
+.demo-muted {
+  color: var(--demo-muted);
+  font-weight: 400;
+}
+
+.demo-group + .demo-group {
+  margin-top: 0.5rem;
+}
+
+.tokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.25rem 0.25rem 0.75rem;
+}
+
+.tokens .design-token {
+  cursor: pointer;
+}
+
+.design-token.is-selected {
+  outline: 2px solid var(--demo-accent);
+  outline-offset: 3px;
+}
+
+.design-token.is-related {
+  outline: 2px dashed var(--demo-accent);
+  outline-offset: 3px;
+}
+
+.demo-relation {
+  color: var(--demo-accent);
+}
+
+.design-token[data-deprecated] {
+  text-decoration: line-through;
+}
+
+.demo-pill-error {
+  color: var(--demo-error);
+  font-family: var(--dtf-font-family-code);
+  font-size: 12px;
+}
+
+.demo-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.375rem 0.75rem;
+  margin: 0;
+}
+
+.demo-dl dt {
+  color: var(--demo-muted);
+}
+
+.demo-dl dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.demo-details code,
+.demo-details pre {
+  font-family: var(--dtf-font-family-code);
+  font-size: 12px;
+}
+
+.demo-details pre {
+  margin: 0;
+  padding: 0.75rem;
+  background: var(--demo-code-bg);
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 280px;
+}
+
+.demo-html {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.demo-link {
+  font: inherit;
+  font-family: var(--dtf-font-family-code);
+  font-size: 12px;
+  color: var(--demo-accent);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1100px) {
+  body {
+    height: auto;
+  }
+
+  .demo-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .demo-editor textarea {
+    min-height: 260px;
+  }
+
+  .demo-panel {
+    overflow: visible;
+    overflow-x: auto;
+  }
+}

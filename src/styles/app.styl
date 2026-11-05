@@ -1,0 +1,205 @@
+// Site chrome: page, global header, theme switch and the zoomable canvas.
+// Dark is the default, `:root.theme--light` is the light theme (set by src/app/theme.ts).
+
+:root
+  --app-header-height 64px
+  --app-bg #1B1B1F
+  --app-dot #2E2E35
+  --app-surface #202127
+  --app-text rgba(255, 255, 245, 0.86)
+  --app-text-muted rgba(235, 235, 245, 0.6)
+  --app-divider #2E2E32
+  --app-border #3C3F44
+  --app-brand #8B98FF
+  --app-hover rgba(101, 117, 133, 0.16)
+  --app-shadow 0 2px 10px rgba(0, 0, 0, 0.32)
+  --app-switch-bg rgba(101, 117, 133, 0.16)
+  --app-switch-knob #000000
+  color-scheme dark
+
+:root.theme--light
+  --app-bg #FFFFFF
+  --app-dot #CAD4DB
+  --app-surface #FFFFFF
+  --app-text rgb(60, 60, 67)
+  --app-text-muted rgba(60, 60, 67, 0.78)
+  --app-divider #E2E2E3
+  --app-border #C2C2C4
+  --app-brand #5669FD
+  --app-hover rgba(142, 150, 170, 0.14)
+  --app-shadow 0 2px 10px rgba(104, 108, 123, 0.25)
+  --app-switch-bg rgba(142, 150, 170, 0.14)
+  --app-switch-knob #FFFFFF
+  color-scheme light
+
+*,
+*::before,
+*::after
+  box-sizing border-box
+
+body
+  margin 0
+  padding-top var(--app-header-height)
+  min-height 100vh
+  background-color var(--app-bg)
+  background-image radial-gradient(var(--app-dot) 1px, transparent 0)
+  background-size 20px 20px
+  color var(--app-text)
+  font-family var(--dtf-font-family)
+
+:focus-visible
+  outline 2px solid var(--app-brand)
+  outline-offset 2px
+
+// Global header, after the VitePress style of the Arclace docs
+.app-header
+  position fixed
+  top 0
+  left 0
+  right 0
+  z-index 40
+  display flex
+  align-items center
+  gap 1.5rem
+  height var(--app-header-height)
+  padding 0 2rem
+  background-color var(--app-bg)
+  border-bottom 1px solid var(--app-divider)
+
+.app-header-title
+  display inline-flex
+  align-items center
+  gap 0.625rem
+  color var(--app-text)
+  font-size 1rem
+  font-weight 600
+  text-decoration none
+
+.app-header-logo
+  display grid
+  place-items center
+  width 28px
+  height 28px
+  border-radius 8px
+  background-color var(--app-surface)
+  box-shadow var(--app-shadow)
+  color var(--app-brand)
+
+  svg
+    width 24px
+    height 24px
+
+.app-header-menu
+  display flex
+  align-items center
+  margin-left auto
+
+// Light/dark switch: a track with a knob showing the current theme
+.app-theme-switch
+  position relative
+  flex-shrink 0
+  width 40px
+  height 22px
+  padding 0
+  border 1px solid var(--app-border)
+  border-radius 11px
+  background-color var(--app-switch-bg)
+  cursor pointer
+  transition border-color 0.25s
+
+  &:hover
+    border-color var(--app-brand)
+
+.app-theme-switch-knob
+  position absolute
+  top 1px
+  left 1px
+  display grid
+  place-items center
+  width 18px
+  height 18px
+  border-radius 50%
+  background-color var(--app-switch-knob)
+  box-shadow 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)
+  color var(--app-text-muted)
+  transition transform 0.25s
+
+  svg
+    grid-area 1 / 1
+    width 12px
+    height 12px
+
+.app-theme-switch[aria-checked="true"] .app-theme-switch-knob
+  transform translateX(18px)
+
+.app-theme-switch-moon,
+.app-theme-switch[aria-checked="true"] .app-theme-switch-sun
+  visibility hidden
+
+.app-theme-switch[aria-checked="true"] .app-theme-switch-moon
+  visibility visible
+
+// Zoomable canvas: everything under the header, panned by dragging
+.app-viewport
+  position fixed
+  top var(--app-header-height)
+  right 0
+  bottom 0
+  left 0
+  overflow hidden
+  cursor grab
+  touch-action none
+
+  &.is-panning
+    cursor grabbing
+    user-select none
+
+  > .container
+    transform-origin 0 0
+
+// Zoom pane, bottom right
+.zoom-controls
+  position fixed
+  right 1.5rem
+  bottom 1.5rem
+  z-index 40
+  display flex
+  align-items center
+  gap 2px
+  padding 4px
+  border 1px solid var(--app-divider)
+  border-radius 10px
+  background-color var(--app-surface)
+  box-shadow var(--app-shadow)
+
+  button
+    display grid
+    place-items center
+    height 32px
+    min-width 32px
+    padding 0
+    border none
+    border-radius 6px
+    background transparent
+    color var(--app-text)
+    cursor pointer
+
+    &:hover
+      background-color var(--app-hover)
+
+    svg
+      width 18px
+      height 18px
+
+  .zoom-value
+    min-width 3.5rem
+    font-family var(--dtf-font-family-code)
+    font-size 0.8125rem
+    font-weight 600
+    font-variant-numeric tabular-nums
+
+.zoom-divider
+  width 1px
+  height 20px
+  margin 0 4px
+  background-color var(--app-divider)

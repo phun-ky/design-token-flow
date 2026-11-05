@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Token Pill Playground</title>
+    <script>
+      // Apply the saved (or system) theme before the first paint, see src/app/theme.ts
+      try {
+        const theme = localStorage.getItem('dtf-theme') ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+        if (theme === 'light') document.documentElement.classList.add('theme--light');
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <header class="demo-header">
+      <h1>Token pill playground</h1>
+      <label class="demo-field">
+        <span>Tokens</span>
+        <select id="preset">
+          <option value="showcase">Showcase (every $type)</option>
+          <option value="bundled">Bundled design-tokens.tokens.json</option>
+          <option value="custom">Custom (your edits)</option>
+        </select>
+      </label>
+      <label class="demo-field">
+        <span>Prefix</span>
+        <input id="prefix" value="$" size="3" />
+      </label>
+      <a class="demo-button" href="./index.html">← Flow view</a>
+    </header>
+
+    <main class="demo-layout">
+      <section class="demo-panel demo-editor">
+        <h2>DTCG 2025.10 JSON</h2>
+        <textarea id="source" spellcheck="false" aria-label="Design tokens JSON"></textarea>
+        <p id="error" class="demo-error" role="alert" hidden></p>
+      </section>
+
+      <section class="demo-panel demo-output">
+        <div class="demo-toolbar">
+          <h2>Rendered pills <span id="count" class="demo-muted"></span></h2>
+          <input id="filter" type="search" placeholder="Filter by name or $type" aria-label="Filter tokens" />
+        </div>
+        <div id="groups"></div>
+      </section>
+
+      <aside class="demo-panel demo-details" id="details">
+        <h2>Details</h2>
+        <p class="demo-muted">Select a pill to see its token, resolved value, relations and generated HTML.</p>
+      </aside>
+    </main>
+
+    <script type="module" src="./playground.ts"></script>
+  </body>
+</html>

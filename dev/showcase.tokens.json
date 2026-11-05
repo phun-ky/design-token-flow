@@ -1,0 +1,185 @@
+{
+  "color": {
+    "$type": "color",
+    "$description": "One token per supported pill variant, plus a few color spaces",
+    "palette": {
+      "blue": {
+        "$value": { "colorSpace": "srgb", "components": [0, 0.3294, 0.9412], "hex": "#0054f0" },
+        "$description": "sRGB with a hex fallback"
+      },
+      "coral": {
+        "$value": { "colorSpace": "oklch", "components": [0.7, 0.16, 30] },
+        "$description": "OKLCH"
+      },
+      "mint": {
+        "$value": { "colorSpace": "hsl", "components": [160, 60, 45] },
+        "$description": "HSL"
+      },
+      "signal": {
+        "$value": { "colorSpace": "display-p3", "components": [1, 0.15, 0.1] },
+        "$description": "Display P3"
+      },
+      "ink": {
+        "$value": { "colorSpace": "srgb", "components": [0.1, 0.1, 0.12], "alpha": 0.9 },
+        "$description": "sRGB with alpha"
+      },
+      "paper": {
+        "$value": { "colorSpace": "srgb", "components": [0.98, 0.976, 0.969] }
+      }
+    },
+    "accent": {
+      "$root": { "$value": "{color.palette.blue}", "$description": "A $root token: the group itself has a value" },
+      "hover": { "$value": "{color.palette.coral}" }
+    },
+    "text": {
+      "body": { "$value": "{color.palette.ink}" },
+      "inverse": { "$value": "{color.palette.paper}" },
+      "link": { "$value": { "$ref": "#/color/accent/$root/$value" }, "$description": "JSON Pointer reference" }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "font": {
+      "body": { "$value": { "value": 1, "unit": "rem" } },
+      "heading": { "$value": { "value": 32, "unit": "px" } }
+    },
+    "spacing": {
+      "sm": { "$value": { "value": 4, "unit": "px" } },
+      "md": { "$value": { "value": 0.5, "unit": "rem" } },
+      "legacy": { "$value": { "value": 5, "unit": "px" }, "$deprecated": "Use {size.spacing.md}" }
+    }
+  },
+  "border": {
+    "radius": {
+      "$type": "dimension",
+      "md": { "$value": { "value": 6, "unit": "px" } },
+      "pill": { "$value": { "value": 999, "unit": "px" } }
+    },
+    "width": {
+      "$type": "dimension",
+      "thin": { "$value": { "value": 1, "unit": "px" } },
+      "thick": { "$value": { "value": 4, "unit": "px" } }
+    },
+    "style": {
+      "$type": "strokeStyle",
+      "dashed": { "$value": "dashed" },
+      "dotted-round": {
+        "$value": {
+          "dashArray": [{ "value": 0.5, "unit": "rem" }, { "value": 0.25, "unit": "rem" }],
+          "lineCap": "round"
+        }
+      }
+    },
+    "focus": {
+      "$type": "border",
+      "$value": { "color": "{color.accent.$root}", "width": "{border.width.thick}", "style": "{border.style.dashed}" }
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "system-ui", "sans-serif"] },
+      "mono": { "$value": "ui-monospace" }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": { "$value": 400 },
+      "bold": { "$value": "bold" },
+      "variable-wide": {
+        "$value": 650,
+        "$extensions": {
+          "net.phun-ky.design-token-flow": { "variable": true, "font-family": ["system-ui", "sans-serif"] }
+        }
+      }
+    },
+    "line-height": {
+      "body": { "$type": "number", "$value": 1.5 }
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "raised": {
+      "$value": [
+        {
+          "color": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.12 },
+          "offsetX": { "value": 0, "unit": "px" },
+          "offsetY": { "value": 1, "unit": "px" },
+          "blur": { "value": 2, "unit": "px" },
+          "spread": { "value": 0, "unit": "px" }
+        },
+        {
+          "color": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.08 },
+          "offsetX": { "value": 0, "unit": "px" },
+          "offsetY": { "value": 4, "unit": "px" },
+          "blur": { "value": 12, "unit": "px" },
+          "spread": { "value": 0, "unit": "px" }
+        }
+      ]
+    },
+    "inner": {
+      "$value": {
+        "color": "{color.palette.ink}",
+        "offsetX": { "value": 0, "unit": "px" },
+        "offsetY": { "value": 2, "unit": "px" },
+        "blur": { "value": 4, "unit": "px" },
+        "spread": { "value": 0, "unit": "px" },
+        "inset": true
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "fast": { "$value": { "value": 150, "unit": "ms" } },
+      "none": { "$value": { "value": 0, "unit": "ms" } }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "standard": { "$value": [0.4, 0, 0.2, 1] }
+    },
+    "transition": {
+      "fade": {
+        "$type": "transition",
+        "$value": {
+          "duration": "{motion.duration.fast}",
+          "delay": "{motion.duration.none}",
+          "timingFunction": "{motion.easing.standard}"
+        }
+      }
+    }
+  },
+  "gradient": {
+    "brand": {
+      "$type": "gradient",
+      "$value": [
+        { "color": "{color.palette.blue}", "position": 0 },
+        { "color": { "$ref": "#/color/palette/coral/$value" }, "position": 1 }
+      ]
+    }
+  },
+  "typography": {
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{size.font.body}",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": { "value": 0, "unit": "px" },
+        "lineHeight": "{font.line-height.body}"
+      }
+    }
+  },
+  "component": {
+    "button": {
+      "$type": "dimension",
+      "$description": "Base button group",
+      "padding": { "$value": "{size.spacing.md}" },
+      "radius": { "$value": "{border.radius.md}" }
+    },
+    "button-pill": {
+      "$extends": "{component.button}",
+      "$description": "Inherits padding from component.button, overrides radius",
+      "radius": { "$value": "{border.radius.pill}" }
+    }
+  }
+}

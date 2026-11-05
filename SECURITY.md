@@ -51,8 +51,9 @@ What you can rely on:
 - **Your settings stay in your browser.** The light or dark theme choice is
   kept in `localStorage` (`dtf-theme`). The pill playground keeps the chosen
   preset and the token JSON you edit there (`dtf-demo`). Nothing else is stored.
-- **Nothing is loaded from other hosts.** Fonts are the system's, and scripts
-  and styles come from the site itself. The Content Security Policy below
+- **Nothing is loaded from other hosts.** Scripts, styles and the IBM Plex
+  Sans font files the font tokens describe come from the site itself; the
+  site's own text uses the system's fonts. The Content Security Policy below
   enforces this in the browser; an automated check in CI is also planned
   ([#19](https://github.com/phun-ky/site-design-token-flow/issues/19)).
 - **No referrer is sent.** Each page has `<meta name="referrer"
@@ -85,8 +86,8 @@ Every built page carries this policy as a `<meta http-equiv>` tag, right after
 
 ```text
 default-src 'none'; script-src 'self' 'sha256-…'; style-src 'self';
-style-src-attr 'unsafe-inline'; img-src 'self'; base-uri 'none';
-form-action 'none'
+style-src-attr 'unsafe-inline'; img-src 'self'; font-src 'self';
+base-uri 'none'; form-action 'none'
 ```
 
 - **Scripts** come only from the site. The one inline script, which applies the
@@ -94,8 +95,11 @@ form-action 'none'
   at build time from the page itself, so it can't go stale.
 - **Styles** come only from the site. `style` attributes are allowed because the
   pills set their swatch colours with them.
-- **Everything else** is blocked, including images, fonts, connections and
-  frames from any host, and `<base>` and form targets.
+- **Images and fonts** come only from the site. The fonts are the files the
+  font tokens list, so a token file can't make the page fetch a font from
+  another host.
+- **Everything else** is blocked, including connections and frames from any
+  host, and `<base>` and form targets.
 
 The policy is added only to the build. `npm run dev` runs without it, since Vite
 injects styles there.
@@ -110,6 +114,16 @@ actively maintained and under an OSI-approved licence compatible with MIT.
 
 **Obtaining them.** Packages come only from the npm registry, with exact
 versions locked in `package-lock.json` and installed with `npm ci` in CI.
+
+**Vendored files.** The IBM Plex Sans `woff2` files in
+[`site/public/fonts/`](site/public/fonts/) come from `@ibm/plex-sans` 1.1.0 and
+`@ibm/plex-sans-variable` 0.2.0 on npm (tarballs checked against the registry's
+integrity hash), under the SIL Open Font License 1.1, whose text ships next to
+them. They are copied instead of installed because both packages run a
+`postinstall` script that sends usage telemetry to IBM
+([#58](https://github.com/phun-ky/site-design-token-flow/issues/58)). To update
+them, copy the `woff2` files and the licence from a newer version of those
+packages.
 
 **Tracking them.** Dependabot proposes version updates weekly and security
 updates as soon as an advisory is published.

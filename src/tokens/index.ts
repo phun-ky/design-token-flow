@@ -20,6 +20,10 @@ export {
   toCssValue
 } from './utils/design-tokens';
 
+export { getFontFaces } from './utils/font-faces';
+
+export type { DesignTokenFontFace } from './utils/font-faces';
+
 export {
   createDesignTokenElement,
   getDesignTokenKind,

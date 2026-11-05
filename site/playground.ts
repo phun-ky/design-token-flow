@@ -3,6 +3,7 @@ import './playground.css';
 
 import { Arclace } from '@phun-ky/arclace';
 
+import { loadFonts } from '../src/app/fonts';
 import { mountHeader } from '../src/app/header';
 import bundledTokens from '../src/assets/data/design-tokens.tokens.json';
 import {
@@ -11,6 +12,7 @@ import {
   FlatDesignToken,
   flattenTokens,
   getDesignTokenKind,
+  getFontFaces,
   renderDesignToken,
   toCssValue
 } from '../src/tokens';
@@ -80,6 +82,9 @@ const showError = (message?: string) => {
 const parse = () => {
   try {
     tokens = flattenTokens(JSON.parse(sourceEl.value) as DTCGDocument);
+    // Fonts the tokens describe; the Content Security Policy only allows
+    // files from the site itself
+    loadFonts(getFontFaces(tokens));
     showError();
   } catch (error) {
     tokens = [];

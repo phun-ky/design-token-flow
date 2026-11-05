@@ -19,10 +19,30 @@ This folder is meant to become its own npm package. Until then, it lives here so
 | `createDesignTokenElement(token, options?)`               | The same pill as an `HTMLElement`                                                         |
 | `getDesignTokenKind(token)`                               | Which pill variant a token renders as                                                     |
 | `toCssValue(token)` and `colorToCss`, `dimensionToCss`, … | Token value to CSS value                                                                  |
+| `getFontFaces(tokens)`                                    | Font faces (family, `src` and descriptors) that `fontFamily` tokens describe              |
 | `DTF_EXTENSION_KEY`, `getExtension(token)`                | This tool's `$extensions` data                                                            |
 | Types                                                     | `DTCGDocument`, `FlatDesignToken`, every `$type` value shape                              |
 
 Styles: [`styles/design-token.css`](./styles/design-token.css), themed with `--dtf-*` custom properties and `:root.theme--light`.
+
+### Font files in tokens
+
+A `fontFamily` token can list its font files, by format, and its `@font-face` descriptors in this tool's extension:
+
+```json
+{
+  "$type": "fontFamily",
+  "$value": "IBM Plex Sans Var",
+  "$extensions": {
+    "net.phun-ky.design-token-flow": {
+      "files": { "woff2": "./fonts/IBM Plex Sans Var-Roman.woff2" },
+      "font-face": { "weight": "100 700" }
+    }
+  }
+}
+```
+
+`getFontFaces(tokens)` turns such tokens into `{ family, source, descriptors }`, ready for `new FontFace(family, source, descriptors)` or an `@font-face` rule. Formats are tried as `woff2`, `woff`, `ttf`, `otf`, `eot`; `display` defaults to `swap`. Paths are used as given, so relative paths resolve against the page. Font family pills show an "Aa" sample in their family, which uses the font once the page has loaded it.
 
 ## Extracting into a package
 

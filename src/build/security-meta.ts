@@ -33,8 +33,9 @@ export const getInlineScripts = (html: string): string[] =>
 /**
  * The page's Content Security Policy. Everything comes from the site itself:
  * scripts (plus the hashed inline ones) and styles. `style` attributes are
- * allowed, since the pills set their swatch colours with them; nothing else
- * may load, so a token value can't fetch from another host.
+ * allowed, since the pills set their swatch colours with them. Images and
+ * fonts (the token fonts) come from the site too; nothing else may load, so a
+ * token value can't fetch from another host.
  *
  * @param {string[]} scriptHashes Hash sources of the inline scripts
  * @returns {string} The policy
@@ -46,6 +47,7 @@ export const contentSecurityPolicy = (scriptHashes: string[]): string =>
     `style-src ${keyword('self')}`,
     `style-src-attr ${keyword('unsafe-inline')}`,
     `img-src ${keyword('self')}`,
+    `font-src ${keyword('self')}`,
     `base-uri ${keyword('none')}`,
     `form-action ${keyword('none')}`
   ].join('; ');

@@ -6,7 +6,6 @@ import {
   DTCGDocument,
   DTCGDurationValue,
   DTCGFontFamilyValue,
-  DTCGFontWeightKeyword,
   DTCGFontWeightValue,
   DTCGGradientStop,
   DTCGShadowObject,
@@ -17,6 +16,8 @@ import {
   DTCGTypographyValue,
   FlatDesignToken
 } from '../types/tokens';
+
+import { FONT_WEIGHT_KEYWORDS, validateTokenValue } from './validate-token';
 
 /** Vendor key for this tool's data in `$extensions` (reverse domain notation, per spec) */
 export const DTF_EXTENSION_KEY = 'net.phun-ky.design-token-flow';
@@ -174,7 +175,9 @@ const toId = (path: string[]): string =>
  *
  * Supports group `$type` inheritance, `$root` tokens, `$extends`, `$deprecated` inheritance,
  * curly brace aliases (`{group.token}`) and JSON Pointer references (`{ "$ref": "#/group/token/$value" }`),
- * also inside composite values. Circular references, invalid names and untyped tokens throw.
+ * also inside composite values. Circular references, invalid names and untyped tokens throw,
+ * and so does a value that doesn't match its `$type` (a `TypeError` or `RangeError` naming
+ * the token and field, see `validateTokenValue`).
  *
  * @param {DTCGDocument} doc - The token document, e.g. the parsed contents of a `*.tokens.json` file
  * @returns {FlatDesignToken[]} The tokens, in document order
@@ -266,6 +269,9 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
       throw Error(
         `"${name}" has no $type: set it on the token or a parent group`
       );
+
+    // The resolved value, aliases included, must match its $type
+    validateTokenValue(name, $type, value);
 
     const $deprecated = token.$deprecated ?? groupDeprecated;
     const flat: FlatDesignToken = {
@@ -403,36 +409,29 @@ const GENERIC_FONT_FAMILIES = new Set([
   'math',
   'fangsong'
 ]);
+// Control characters in a font name; a newline would end the CSS string
+// eslint-disable-next-line no-control-regex
+const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f]/g;
+const escapeFontName = (name: string): string =>
+  name
+    .replace(/(["\\])/g, '\\$1')
+    .replace(
+      CONTROL_CHARACTERS,
+      (character) => `\\${character.charCodeAt(0).toString(16)} `
+    );
 
+/**
+ * Converts font names to a CSS `font-family` list, quoting every name that is
+ * not a generic family. Quotes, backslashes and control characters are
+ * escaped, so a name can't break out of its string, also when it comes from
+ * `$extensions` rather than a validated `$value`.
+ */
 export const fontFamilyToCss = (family: DTCGFontFamilyValue): string =>
   (Array.isArray(family) ? family : [family])
     .map((name) =>
-      GENERIC_FONT_FAMILIES.has(name)
-        ? name
-        : `"${name.replace(/(["\\])/g, '\\$1')}"`
+      GENERIC_FONT_FAMILIES.has(name) ? name : `"${escapeFontName(name)}"`
     )
     .join(', ');
-
-const FONT_WEIGHT_KEYWORDS: Record<DTCGFontWeightKeyword, number> = {
-  thin: 100,
-  hairline: 100,
-  'extra-light': 200,
-  'ultra-light': 200,
-  light: 300,
-  normal: 400,
-  regular: 400,
-  book: 400,
-  medium: 500,
-  'semi-bold': 600,
-  'demi-bold': 600,
-  bold: 700,
-  'extra-bold': 800,
-  'ultra-bold': 800,
-  black: 900,
-  heavy: 900,
-  'extra-black': 950,
-  'ultra-black': 950
-};
 
 export const fontWeightToNumber = (weight: DTCGFontWeightValue): number =>
   typeof weight === 'number' ? weight : FONT_WEIGHT_KEYWORDS[weight];

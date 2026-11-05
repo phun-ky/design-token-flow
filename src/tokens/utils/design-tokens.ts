@@ -28,9 +28,12 @@ type AnyObject = Record<string, unknown>;
 
 const isObject = (value: unknown): value is AnyObject =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
-const isToken = (value: unknown): value is DTCGToken => isObject(value) && '$value' in value;
+const isToken = (value: unknown): value is DTCGToken =>
+  isObject(value) && '$value' in value;
 const isReference = (value: unknown): value is { $ref: string } =>
-  isObject(value) && typeof value.$ref === 'string' && Object.keys(value).length === 1;
+  isObject(value) &&
+  typeof value.$ref === 'string' &&
+  Object.keys(value).length === 1;
 const childNames = (group: AnyObject): string[] =>
   Object.keys(group).filter((key) => !key.startsWith('$') || key === '$root');
 
@@ -44,7 +47,8 @@ export const parseAlias = (value: unknown): string | undefined =>
  * Splits a JSON Pointer (RFC 6901) into unescaped segments, e.g. `#/my~1group/token` => `['my/group', 'token']`.
  */
 const parsePointer = (pointer: string): string[] => {
-  if (!pointer.startsWith('#/')) throw Error(`Invalid JSON Pointer "${pointer}", must start with "#/"`);
+  if (!pointer.startsWith('#/'))
+    throw Error(`Invalid JSON Pointer "${pointer}", must start with "#/"`);
 
   return pointer
     .slice(2)
@@ -52,27 +56,41 @@ const parsePointer = (pointer: string): string[] => {
     .map((segment) => segment.replace(/~1/g, '/').replace(/~0/g, '~'));
 };
 const getAt = (root: unknown, segments: string[]): unknown =>
-  segments.reduce<unknown>((node, segment) => (node as AnyObject | undefined)?.[segment], root);
+  segments.reduce<unknown>(
+    (node, segment) => (node as AnyObject | undefined)?.[segment],
+    root
+  );
 /**
  * Applies `$extends` recursively: the referenced group's children are inherited, local children win.
  */
-const extendGroup = (doc: DTCGDocument, group: AnyObject, stack: string[]): AnyObject => {
+const extendGroup = (
+  doc: DTCGDocument,
+  group: AnyObject,
+  stack: string[]
+): AnyObject => {
   const $extends = group.$extends;
 
   if ($extends === undefined) return group;
 
   const alias = parseAlias($extends);
-  const segments = alias ? alias.split('.') : isReference($extends) ? parsePointer($extends.$ref) : undefined;
+  const segments = alias
+    ? alias.split('.')
+    : isReference($extends)
+      ? parsePointer($extends.$ref)
+      : undefined;
 
-  if (!segments) throw Error(`Invalid $extends value ${JSON.stringify($extends)}`);
+  if (!segments)
+    throw Error(`Invalid $extends value ${JSON.stringify($extends)}`);
 
   const key = segments.join('.');
 
-  if (stack.includes(key)) throw Error(`Circular $extends: ${[...stack, key].join(' → ')}`);
+  if (stack.includes(key))
+    throw Error(`Circular $extends: ${[...stack, key].join(' → ')}`);
 
   const base = getAt(doc, segments);
 
-  if (!isObject(base) || isToken(base)) throw Error(`$extends must reference a group, "${key}" is not one`);
+  if (!isObject(base) || isToken(base))
+    throw Error(`$extends must reference a group, "${key}" is not one`);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { $extends: _ignored, ...local } = group;
@@ -86,7 +104,11 @@ const mergeGroups = (base: AnyObject, local: AnyObject): AnyObject => {
     const inherited = merged[key];
 
     merged[key] =
-      isObject(inherited) && isObject(value) && !isToken(inherited) && !isToken(value) && !key.startsWith('$')
+      isObject(inherited) &&
+      isObject(value) &&
+      !isToken(inherited) &&
+      !isToken(value) &&
+      !key.startsWith('$')
         ? mergeGroups(inherited, value)
         : value;
   });
@@ -111,30 +133,41 @@ const collect = (
 ): void => {
   const resolved = extendGroup(doc, group, [path.join('.')]);
   const type = (resolved.$type as DTCGType | undefined) ?? groupType;
-  const deprecated = (resolved.$deprecated as boolean | string | undefined) ?? groupDeprecated;
+  const deprecated =
+    (resolved.$deprecated as boolean | string | undefined) ?? groupDeprecated;
 
   childNames(resolved).forEach((name) => {
     const child = resolved[name];
     const childPath = [...path, name];
 
     if (name !== '$root' && FORBIDDEN_NAME_PATTERN.test(name)) {
-      throw Error(`Invalid name "${childPath.join('.')}": names must not contain "{", "}" or "."`);
+      throw Error(
+        `Invalid name "${childPath.join('.')}": names must not contain "{", "}" or "."`
+      );
     }
 
     if (!isObject(child)) return;
 
     if (isToken(child)) {
       if (childNames(child).length) {
-        throw Error(`"${childPath.join('.')}" has a $value and children, which is invalid`);
+        throw Error(
+          `"${childPath.join('.')}" has a $value and children, which is invalid`
+        );
       }
 
-      entries.push({ path: childPath, token: child, groupType: type, groupDeprecated: deprecated });
+      entries.push({
+        path: childPath,
+        token: child,
+        groupType: type,
+        groupDeprecated: deprecated
+      });
     } else {
       collect(doc, child, childPath, type, deprecated, entries);
     }
   });
 };
-const toId = (path: string[]): string => path.filter((segment) => segment !== '$root').join('-');
+const toId = (path: string[]): string =>
+  path.filter((segment) => segment !== '$root').join('-');
 
 /**
  * Flattens a DTCG token document into a list of tokens with resolved types and values.
@@ -170,11 +203,15 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
 
     if (cached) return cached;
 
-    if (stack.includes(name)) throw Error(`Circular reference: ${[...stack, name].join(' → ')}`);
+    if (stack.includes(name))
+      throw Error(`Circular reference: ${[...stack, name].join(' → ')}`);
 
     const entry = byName.get(name);
 
-    if (!entry) throw Error(`Unresolvable reference "{${name}}"${stack.length ? ` in "${stack.at(-1)}"` : ''}`);
+    if (!entry)
+      throw Error(
+        `Unresolvable reference "{${name}}"${stack.length ? ` in "${stack.at(-1)}"` : ''}`
+      );
 
     const nextStack = [...stack, name];
     const ancestors = new Set<string>();
@@ -197,20 +234,26 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
       if (isReference(value)) {
         const segments = parsePointer(value.$ref);
         const valueIndex = segments.indexOf('$value');
-        const tokenSegments = valueIndex === -1 ? segments : segments.slice(0, valueIndex);
+        const tokenSegments =
+          valueIndex === -1 ? segments : segments.slice(0, valueIndex);
         const target = resolveToken(tokenSegments.join('.'), nextStack);
 
         ancestors.add(target.id);
 
-        if (isWholeValue && segments.length === valueIndex + 1) referencedType = target.$type;
+        if (isWholeValue && segments.length === valueIndex + 1)
+          referencedType = target.$type;
 
-        return valueIndex === -1 ? target.value : getAt(target.value, segments.slice(valueIndex + 1));
+        return valueIndex === -1
+          ? target.value
+          : getAt(target.value, segments.slice(valueIndex + 1));
       }
 
       if (Array.isArray(value)) return value.map((item) => resolveValue(item));
 
       if (isObject(value)) {
-        return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveValue(item)]));
+        return Object.fromEntries(
+          Object.entries(value).map(([key, item]) => [key, resolveValue(item)])
+        );
       }
 
       return value;
@@ -219,7 +262,10 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
     const value = resolveValue(token.$value, true);
     const $type = token.$type ?? referencedType ?? groupType;
 
-    if (!$type) throw Error(`"${name}" has no $type: set it on the token or a parent group`);
+    if (!$type)
+      throw Error(
+        `"${name}" has no $type: set it on the token or a parent group`
+      );
 
     const $deprecated = token.$deprecated ?? groupDeprecated;
     const flat: FlatDesignToken = {
@@ -232,8 +278,11 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
       aliasOf: parseAlias(token.$value),
       ancestors: [...ancestors],
       descendants: [],
-      ...(token.$description !== undefined && { $description: token.$description }),
-      ...($deprecated !== undefined && $deprecated !== false && { $deprecated }),
+      ...(token.$description !== undefined && {
+        $description: token.$description
+      }),
+      ...($deprecated !== undefined &&
+        $deprecated !== false && { $deprecated }),
       ...(token.$extensions !== undefined && { $extensions: token.$extensions })
     };
 
@@ -244,7 +293,9 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
   const tokens = entries.map((entry) => resolveToken(entry.path.join('.'), []));
   const byId = new Map(tokens.map((token) => [token.id, token]));
 
-  tokens.forEach((token) => token.ancestors.forEach((id) => byId.get(id)?.descendants.push(token.id)));
+  tokens.forEach((token) =>
+    token.ancestors.forEach((id) => byId.get(id)?.descendants.push(token.id))
+  );
 
   return tokens;
 };
@@ -252,7 +303,9 @@ export const flattenTokens = (doc: DTCGDocument): FlatDesignToken[] => {
 /**
  * Reads this tool's vendor data from a token's `$extensions`.
  */
-export const getExtension = (token: Pick<FlatDesignToken, '$extensions'>): AnyObject =>
+export const getExtension = (
+  token: Pick<FlatDesignToken, '$extensions'>
+): AnyObject =>
   (token.$extensions?.[DTF_EXTENSION_KEY] as AnyObject | undefined) ?? {};
 
 // ---------------------------------------------------------------------------
@@ -264,7 +317,15 @@ const round = (value: number, decimals = 4): number => {
 
   return Math.round(value * factor) / factor;
 };
-const RGB_LIKE_SPACES = new Set(['srgb-linear', 'display-p3', 'a98-rgb', 'prophoto-rgb', 'rec2020', 'xyz-d65', 'xyz-d50']);
+const RGB_LIKE_SPACES = new Set([
+  'srgb-linear',
+  'display-p3',
+  'a98-rgb',
+  'prophoto-rgb',
+  'rec2020',
+  'xyz-d65',
+  'xyz-d50'
+]);
 
 /**
  * Returns the 6 digit hex of an sRGB color: the `hex` fallback if given, else computed from the components.
@@ -272,10 +333,15 @@ const RGB_LIKE_SPACES = new Set(['srgb-linear', 'display-p3', 'a98-rgb', 'propho
 export const colorToHex = (color: DTCGColorValue): string | undefined => {
   if (color.hex) return color.hex.toLowerCase();
 
-  if (color.colorSpace !== 'srgb' || color.components.includes('none')) return undefined;
+  if (color.colorSpace !== 'srgb' || color.components.includes('none'))
+    return undefined;
 
   return `#${(color.components as number[])
-    .map((channel) => Math.round(Math.min(Math.max(channel, 0), 1) * 255).toString(16).padStart(2, '0'))
+    .map((channel) =>
+      Math.round(Math.min(Math.max(channel, 0), 1) * 255)
+        .toString(16)
+        .padStart(2, '0')
+    )
     .join('')}`;
 };
 
@@ -287,7 +353,11 @@ export const colorToCss = (color: DTCGColorValue): string => {
   const hasAlpha = alpha !== undefined && alpha !== 1;
   const alphaPart = hasAlpha ? ` / ${round(alpha)}` : '';
   const channels = (format: (channel: number, index: number) => string) =>
-    components.map((channel, index) => (channel === 'none' ? 'none' : format(channel, index))).join(' ');
+    components
+      .map((channel, index) =>
+        channel === 'none' ? 'none' : format(channel, index)
+      )
+      .join(' ');
 
   switch (colorSpace) {
     case 'srgb': {
@@ -306,13 +376,17 @@ export const colorToCss = (color: DTCGColorValue): string => {
     case 'oklch':
       return `${colorSpace}(${channels((channel) => String(round(channel)))}${alphaPart})`;
     default:
-      if (!RGB_LIKE_SPACES.has(colorSpace)) throw Error(`Unsupported colorSpace "${colorSpace}"`);
+      if (!RGB_LIKE_SPACES.has(colorSpace))
+        throw Error(`Unsupported colorSpace "${colorSpace}"`);
 
       return `color(${colorSpace} ${channels((channel) => String(round(channel)))}${alphaPart})`;
   }
 };
 
-export const dimensionToCss = ({ value, unit }: DTCGDimensionValue | DTCGDurationValue): string => `${value}${unit}`;
+export const dimensionToCss = ({
+  value,
+  unit
+}: DTCGDimensionValue | DTCGDurationValue): string => `${value}${unit}`;
 
 const GENERIC_FONT_FAMILIES = new Set([
   'serif',
@@ -332,7 +406,11 @@ const GENERIC_FONT_FAMILIES = new Set([
 
 export const fontFamilyToCss = (family: DTCGFontFamilyValue): string =>
   (Array.isArray(family) ? family : [family])
-    .map((name) => (GENERIC_FONT_FAMILIES.has(name) ? name : `"${name.replace(/(["\\])/g, '\\$1')}"`))
+    .map((name) =>
+      GENERIC_FONT_FAMILIES.has(name)
+        ? name
+        : `"${name.replace(/(["\\])/g, '\\$1')}"`
+    )
     .join(', ');
 
 const FONT_WEIGHT_KEYWORDS: Record<DTCGFontWeightKeyword, number> = {
@@ -359,7 +437,8 @@ const FONT_WEIGHT_KEYWORDS: Record<DTCGFontWeightKeyword, number> = {
 export const fontWeightToNumber = (weight: DTCGFontWeightValue): number =>
   typeof weight === 'number' ? weight : FONT_WEIGHT_KEYWORDS[weight];
 
-export const cubicBezierToCss = (curve: DTCGCubicBezierValue): string => `cubic-bezier(${curve.join(', ')})`;
+export const cubicBezierToCss = (curve: DTCGCubicBezierValue): string =>
+  `cubic-bezier(${curve.join(', ')})`;
 
 export const strokeStyleToCss = (style: DTCGStrokeStyleValue): string =>
   // CSS has no custom dash arrays for borders, `dashed` is the closest match
@@ -383,7 +462,10 @@ const shadowToCss = (shadow: DTCGShadowObject): string =>
  * @param {Pick<FlatDesignToken, '$type' | 'value'>} token - A flattened token
  * @returns {string} The CSS value, e.g. `#0054f0`, `0.875rem`, `"If Sans", Arial, sans-serif`
  */
-export const toCssValue = ({ $type, value }: Pick<FlatDesignToken, '$type' | 'value'>): string => {
+export const toCssValue = ({
+  $type,
+  value
+}: Pick<FlatDesignToken, '$type' | 'value'>): string => {
   switch ($type) {
     case 'color':
       return colorToCss(value as DTCGColorValue);
@@ -411,13 +493,19 @@ export const toCssValue = ({ $type, value }: Pick<FlatDesignToken, '$type' | 'va
       return `${dimensionToCss(duration as DTCGDurationValue)} ${cubicBezierToCss(timingFunction as DTCGCubicBezierValue)} ${dimensionToCss(delay as DTCGDurationValue)}`;
     }
     case 'shadow':
-      return (Array.isArray(value) ? value : [value]).map((shadow) => shadowToCss(shadow as DTCGShadowObject)).join(', ');
+      return (Array.isArray(value) ? value : [value])
+        .map((shadow) => shadowToCss(shadow as DTCGShadowObject))
+        .join(', ');
     case 'gradient':
       return `linear-gradient(90deg, ${(value as DTCGGradientStop[])
-        .map(({ color, position }) => `${colorToCss(color as DTCGColorValue)} ${round(Math.min(Math.max(position as number, 0), 1) * 100, 2)}%`)
+        .map(
+          ({ color, position }) =>
+            `${colorToCss(color as DTCGColorValue)} ${round(Math.min(Math.max(position as number, 0), 1) * 100, 2)}%`
+        )
         .join(', ')})`;
     case 'typography': {
-      const { fontFamily, fontSize, fontWeight, lineHeight } = value as DTCGTypographyValue;
+      const { fontFamily, fontSize, fontWeight, lineHeight } =
+        value as DTCGTypographyValue;
 
       return `${fontWeightToNumber(fontWeight as DTCGFontWeightValue)} ${dimensionToCss(fontSize as DTCGDimensionValue)}/${lineHeight} ${fontFamilyToCss(fontFamily as DTCGFontFamilyValue)}`;
     }

@@ -6,7 +6,7 @@ type DTFNodeCreateType = {
   id?: string;
   textContent?: string;
   attrs?: {
-    [key: string]: string|null;
+    [key: string]: string | null;
   };
 };
 
@@ -25,7 +25,7 @@ export const create = (props: DTFNodeCreateType) => {
   }
 
   if (attrs) {
-    Object.keys(attrs).forEach(key => {
+    Object.keys(attrs).forEach((key) => {
       if (attrs[key]) {
         el.setAttribute(key, attrs[key] || '');
       }
@@ -35,7 +35,7 @@ export const create = (props: DTFNodeCreateType) => {
   return el;
 };
 
-export const clear = el => {
+export const clear = (el) => {
   const cNode = el.cloneNode(false);
 
   el.parentNode.replaceChild(cNode, el);

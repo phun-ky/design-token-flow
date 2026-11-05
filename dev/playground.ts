@@ -24,7 +24,8 @@ const PRESETS: Record<Exclude<Preset, 'custom'>, unknown> = {
   bundled: bundledTokens
 };
 const STORAGE_KEY = 'dtf-demo';
-const $ = <T extends HTMLElement>(selector: string) => document.querySelector(selector) as T;
+const $ = <T extends HTMLElement>(selector: string) =>
+  document.querySelector(selector) as T;
 const sourceEl = $<HTMLTextAreaElement>('#source');
 const presetEl = $<HTMLSelectElement>('#preset');
 const prefixEl = $<HTMLInputElement>('#prefix');
@@ -36,7 +37,11 @@ const detailsEl = $<HTMLElement>('#details');
 // Arclace adds its SVG overlay to #groups, so the pills are rendered into a list next to it
 const arclace = new Arclace({
   container: groupsEl,
-  defaults: { arrow: 'end', strokeWidth: 1.5, className: 'dtf-line demo-relation' }
+  defaults: {
+    arrow: 'end',
+    strokeWidth: 1.5,
+    className: 'dtf-line demo-relation'
+  }
 });
 const listEl = document.createElement('div');
 
@@ -56,13 +61,17 @@ const storage = {
   },
   write(patch: Record<string, string>) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...storage.read(), ...patch }));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ...storage.read(), ...patch })
+      );
     } catch {
       /* storage unavailable */
     }
   }
 };
-const escape = (value: string) => value.replace(/[&<>"]/g, (char) => `&#${char.charCodeAt(0)};`);
+const escape = (value: string) =>
+  value.replace(/[&<>"]/g, (char) => `&#${char.charCodeAt(0)};`);
 const json = (value: unknown) => escape(JSON.stringify(value, null, 2));
 const showError = (message?: string) => {
   errorEl.hidden = !message;
@@ -83,12 +92,17 @@ const render = () => {
   const query = filterEl.value.trim().toLowerCase();
   const prefix = prefixEl.value;
   const visible = tokens.filter(
-    (token) => !query || token.name.toLowerCase().includes(query) || token.$type.toLowerCase().includes(query)
+    (token) =>
+      !query ||
+      token.name.toLowerCase().includes(query) ||
+      token.$type.toLowerCase().includes(query)
   );
   const groups = new Map<string, FlatDesignToken[]>();
 
   visible.forEach((token) => {
-    const key = token.path.slice(0, Math.min(2, token.path.length - 1)).join(' / ') || '(root)';
+    const key =
+      token.path.slice(0, Math.min(2, token.path.length - 1)).join(' / ') ||
+      '(root)';
 
     groups.set(key, [...(groups.get(key) ?? []), token]);
   });
@@ -129,15 +143,24 @@ const render = () => {
 const byId = (id: string | null) => tokens.find((token) => token.id === id);
 const highlight = (id: string | null) => {
   const token = byId(id);
-  const related = new Set([...(token?.ancestors ?? []), ...(token?.descendants ?? [])]);
+  const related = new Set([
+    ...(token?.ancestors ?? []),
+    ...(token?.descendants ?? [])
+  ]);
 
   listEl.querySelectorAll<HTMLElement>('[data-demo-id]').forEach((pill) => {
     pill.classList.toggle('is-selected', pill.dataset.demoId === id);
-    pill.classList.toggle('is-related', related.has(pill.dataset.demoId as string));
+    pill.classList.toggle(
+      'is-related',
+      related.has(pill.dataset.demoId as string)
+    );
   });
 
   // Arrows point from the referenced token to the token that references it
-  const pillFor = (tokenId: string) => listEl.querySelector<HTMLElement>(`[data-demo-id="${CSS.escape(tokenId)}"]`);
+  const pillFor = (tokenId: string) =>
+    listEl.querySelector<HTMLElement>(
+      `[data-demo-id="${CSS.escape(tokenId)}"]`
+    );
   const pill = token ? pillFor(token.id) : null;
 
   arclace.clear();
@@ -157,7 +180,12 @@ const highlight = (id: string | null) => {
 };
 const relationButtons = (ids: string[]) =>
   ids.length
-    ? ids.map((id) => `<button type="button" class="demo-link" data-select="${escape(id)}">${escape(id)}</button>`).join(' ')
+    ? ids
+        .map(
+          (id) =>
+            `<button type="button" class="demo-link" data-select="${escape(id)}">${escape(id)}</button>`
+        )
+        .join(' ')
     : '<span class="demo-muted">none</span>';
 const select = (id: string | null) => {
   const token = byId(id);
@@ -207,7 +235,9 @@ const loadPreset = (preset: Preset) => {
   const saved = storage.read();
 
   sourceEl.value =
-    preset === 'custom' ? (saved.custom ?? JSON.stringify(PRESETS.showcase, null, 2)) : JSON.stringify(PRESETS[preset], null, 2);
+    preset === 'custom'
+      ? (saved.custom ?? JSON.stringify(PRESETS.showcase, null, 2))
+      : JSON.stringify(PRESETS[preset], null, 2);
   presetEl.value = preset;
   storage.write({ preset });
   parse();
@@ -229,7 +259,9 @@ prefixEl.addEventListener('input', () => {
 filterEl.addEventListener('input', render);
 
 const selectFromEvent = (event: Event) => {
-  const target = (event.target as HTMLElement).closest<HTMLElement>('[data-demo-id], [data-select]');
+  const target = (event.target as HTMLElement).closest<HTMLElement>(
+    '[data-demo-id], [data-select]'
+  );
 
   if (target) select(target.dataset.demoId ?? target.dataset.select ?? null);
 };
@@ -246,7 +278,9 @@ detailsEl.addEventListener('click', selectFromEvent);
 let hoveredId: string | null = null;
 
 groupsEl.addEventListener('mouseover', (event) => {
-  const pill = (event.target as HTMLElement).closest<HTMLElement>('[data-demo-id]');
+  const pill = (event.target as HTMLElement).closest<HTMLElement>(
+    '[data-demo-id]'
+  );
 
   // mouseover also fires for the pill's children, only redraw when the pill changes
   if (!pill || pill.dataset.demoId === hoveredId) return;

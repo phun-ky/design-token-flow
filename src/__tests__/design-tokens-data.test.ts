@@ -6,7 +6,12 @@ import { flattenTokens, toCssValue } from '../tokens';
 
 describe('bundled token file', () => {
   it('parses as DTCG 2025.10 and resolves every token', () => {
-    const doc = JSON.parse(readFileSync(new URL('../assets/data/design-tokens.tokens.json', import.meta.url), 'utf8'));
+    const doc = JSON.parse(
+      readFileSync(
+        new URL('../assets/data/design-tokens.tokens.json', import.meta.url),
+        'utf8'
+      )
+    );
     const tokens = flattenTokens(doc);
     const byId = Object.fromEntries(tokens.map((token) => [token.id, token]));
 
@@ -15,6 +20,8 @@ describe('bundled token file', () => {
     assert.deepEqual(byId['color-cta'].ancestors, ['color-accent-blue']);
     assert.equal(toCssValue(byId['size-breakpoint-min-md']), '75rem');
     assert.equal(byId['font-family-sans'].$type, 'fontFamily');
-    tokens.forEach((token) => assert.doesNotThrow(() => toCssValue(token), token.name));
+    tokens.forEach((token) =>
+      assert.doesNotThrow(() => toCssValue(token), token.name)
+    );
   });
 });

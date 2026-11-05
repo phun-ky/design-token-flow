@@ -8,7 +8,8 @@ export const THEME_STORAGE_KEY = 'dtf-theme';
 
 const LIGHT_CLASS = 'theme--light';
 
-export const getTheme = (): Theme => (document.documentElement.classList.contains(LIGHT_CLASS) ? 'light' : 'dark');
+export const getTheme = (): Theme =>
+  document.documentElement.classList.contains(LIGHT_CLASS) ? 'light' : 'dark';
 
 /**
  * Applies a theme and remembers it for this browser. Dark is the default styling,
@@ -23,5 +24,7 @@ export const setTheme = (theme: Theme): void => {
     // Storage can be unavailable (private mode, blocked site data): the theme still applies
   }
 
-  document.dispatchEvent(new CustomEvent<Theme>('dtf:themechange', { detail: theme }));
+  document.dispatchEvent(
+    new CustomEvent<Theme>('dtf:themechange', { detail: theme })
+  );
 };

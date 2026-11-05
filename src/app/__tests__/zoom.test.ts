@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { fitState, MAX_SCALE, MIN_SCALE, stepScale, wheelFactor, zoomAt } from '../zoom';
+import {
+  fitState,
+  MAX_SCALE,
+  MIN_SCALE,
+  stepScale,
+  wheelFactor,
+  zoomAt
+} from '../zoom';
 
 describe('zoom', () => {
   it('keeps the point under the pointer in place', () => {
@@ -9,16 +16,28 @@ describe('zoom', () => {
     const point = { x: 400, y: 300 };
     const next = zoomAt(state, 2, point);
     // The content point under the pointer, before and after
-    const before = { x: (point.x - state.x) / state.scale, y: (point.y - state.y) / state.scale };
-    const after = { x: (point.x - next.x) / next.scale, y: (point.y - next.y) / next.scale };
+    const before = {
+      x: (point.x - state.x) / state.scale,
+      y: (point.y - state.y) / state.scale
+    };
+    const after = {
+      x: (point.x - next.x) / next.scale,
+      y: (point.y - next.y) / next.scale
+    };
 
     assert.equal(next.scale, 2);
     assert.deepEqual(after, before);
   });
 
   it('clamps the scale', () => {
-    assert.equal(zoomAt({ scale: 1, x: 0, y: 0 }, 100, { x: 0, y: 0 }).scale, MAX_SCALE);
-    assert.equal(zoomAt({ scale: 1, x: 0, y: 0 }, 0, { x: 0, y: 0 }).scale, MIN_SCALE);
+    assert.equal(
+      zoomAt({ scale: 1, x: 0, y: 0 }, 100, { x: 0, y: 0 }).scale,
+      MAX_SCALE
+    );
+    assert.equal(
+      zoomAt({ scale: 1, x: 0, y: 0 }, 0, { x: 0, y: 0 }).scale,
+      MIN_SCALE
+    );
   });
 
   it('steps through the zoom levels', () => {
@@ -38,7 +57,11 @@ describe('zoom', () => {
   });
 
   it('fits and centers the content', () => {
-    const state = fitState({ width: 2000, height: 1000 }, { width: 1064, height: 564 }, 32);
+    const state = fitState(
+      { width: 2000, height: 1000 },
+      { width: 1064, height: 564 },
+      32
+    );
 
     assert.equal(state.scale, 0.5);
     assert.equal(state.x, 32);

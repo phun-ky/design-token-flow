@@ -20,14 +20,21 @@ export const MIN_SCALE = 0.1;
 export const MAX_SCALE = 4;
 
 /** The levels the − and + buttons step through */
-export const ZOOM_STEPS = [0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4];
+export const ZOOM_STEPS = [
+  0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4
+];
 
-export const clampScale = (scale: number): number => Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
+export const clampScale = (scale: number): number =>
+  Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
 
 /**
  * Zooms to `scale`, keeping the content under `point` (viewport coordinates) in place.
  */
-export const zoomAt = (state: ZoomState, scale: number, point: Point): ZoomState => {
+export const zoomAt = (
+  state: ZoomState,
+  scale: number,
+  point: Point
+): ZoomState => {
   const next = clampScale(scale);
   const ratio = next / state.scale;
 
@@ -46,7 +53,8 @@ export const stepScale = (scale: number, direction: 1 | -1): number => {
 
   return direction > 0
     ? (ZOOM_STEPS.find((step) => step > scale + epsilon) ?? MAX_SCALE)
-    : ([...ZOOM_STEPS].reverse().find((step) => step < scale - epsilon) ?? MIN_SCALE);
+    : ([...ZOOM_STEPS].reverse().find((step) => step < scale - epsilon) ??
+        MIN_SCALE);
 };
 
 /**
@@ -62,9 +70,16 @@ export const wheelFactor = (delta: number, deltaMode = 0): number => {
 /**
  * The state that fits `content` inside `viewport` with `padding` on every side, centered.
  */
-export const fitState = (content: Size, viewport: Size, padding = 32): ZoomState => {
+export const fitState = (
+  content: Size,
+  viewport: Size,
+  padding = 32
+): ZoomState => {
   const scale = clampScale(
-    Math.min((viewport.width - padding * 2) / content.width, (viewport.height - padding * 2) / content.height)
+    Math.min(
+      (viewport.width - padding * 2) / content.width,
+      (viewport.height - padding * 2) / content.height
+    )
   );
 
   return {
@@ -105,7 +120,10 @@ export const createZoom = (
     content.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
     onChange?.(state);
   };
-  const center = (): Point => ({ x: viewport.clientWidth / 2, y: viewport.clientHeight / 2 });
+  const center = (): Point => ({
+    x: viewport.clientWidth / 2,
+    y: viewport.clientHeight / 2
+  });
 
   viewport.addEventListener(
     'wheel',
@@ -115,9 +133,13 @@ export const createZoom = (
       // Browsers turn Shift + wheel into horizontal scrolling, so read whichever axis moved
       const delta = event.deltaY || event.deltaX;
       const rect = viewport.getBoundingClientRect();
-      const point = event.shiftKey ? center() : { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      const point = event.shiftKey
+        ? center()
+        : { x: event.clientX - rect.left, y: event.clientY - rect.top };
 
-      apply(zoomAt(state, state.scale * wheelFactor(delta, event.deltaMode), point));
+      apply(
+        zoomAt(state, state.scale * wheelFactor(delta, event.deltaMode), point)
+      );
     },
     { passive: false }
   );
@@ -127,7 +149,11 @@ export const createZoom = (
   viewport.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
 
-    drag = { pointerId: event.pointerId, x: event.clientX - state.x, y: event.clientY - state.y };
+    drag = {
+      pointerId: event.pointerId,
+      x: event.clientX - state.x,
+      y: event.clientY - state.y
+    };
     viewport.setPointerCapture(event.pointerId);
     viewport.classList.add('is-panning');
   });
@@ -205,10 +231,17 @@ export const mountZoomControls = (
     value.textContent = percent;
     value.setAttribute('aria-label', `Zoom level ${percent}, reset to 100%`);
   });
-  const actions = { out: controller.zoomOut, in: controller.zoomIn, reset: controller.reset, fit: controller.fit };
+  const actions = {
+    out: controller.zoomOut,
+    in: controller.zoomIn,
+    reset: controller.reset,
+    fit: controller.fit
+  };
 
   pane.addEventListener('click', (event) => {
-    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-zoom]');
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+      '[data-zoom]'
+    );
 
     if (button) actions[button.dataset.zoom as keyof typeof actions]();
   });

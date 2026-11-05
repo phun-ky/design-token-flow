@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 
 import { fileURLToPath } from 'node:url';
 
-const fromRoot = (path: string) => fileURLToPath(new URL(path, import.meta.url));
+const fromRoot = (path: string) =>
+  fileURLToPath(new URL(path, import.meta.url));
 
 /**
  * Design Token Flow is a site: `npm run dev` serves the pages in ./dev,

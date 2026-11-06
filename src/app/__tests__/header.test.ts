@@ -42,7 +42,8 @@ describe('mountHeader', () => {
       links.map((link) => [link.textContent, link.getAttribute('href')]),
       PAGES.map(({ label, href }) => [label, href])
     );
-    assert.equal(document.body.firstElementChild, header);
+    // After the skip link
+    assert.equal(document.body.children[1], header);
     // No link ends in .html, the title link included
     assert.deepEqual(
       [...header.querySelectorAll('a')]
@@ -67,6 +68,17 @@ describe('mountHeader', () => {
       header.querySelector('[aria-current="page"]')?.textContent,
       getPageId(location.pathname) === 'playground' ? 'Playground' : 'Flow'
     );
+  });
+
+  it('puts a skip link to the content first', () => {
+    mountHeader('/');
+
+    const first = document.body.firstElementChild as HTMLAnchorElement;
+
+    assert.equal(first.className, 'app-skip-link');
+    assert.equal(first.getAttribute('href'), '#content');
+    assert.equal(first.textContent, 'Skip to content');
+    assert.equal(first.nextElementSibling?.className, 'app-header');
   });
 
   it('keeps the theme switch in the menu', () => {

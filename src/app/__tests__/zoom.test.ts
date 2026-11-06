@@ -2,10 +2,13 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import {
+  canvasKeyAction,
   fitState,
   fitWidthState,
   MAX_SCALE,
   MIN_SCALE,
+  PAN_STEP,
+  PAN_STEP_LARGE,
   stepScale,
   wheelFactor,
   zoomAt
@@ -100,5 +103,66 @@ describe('zoom', () => {
     assert.equal(state.scale, 0.5);
     assert.equal(state.x, 32);
     assert.equal(state.y, 32);
+  });
+
+  it('pans with the arrow keys, further with Shift', () => {
+    const key = (k: string, shiftKey = false) =>
+      canvasKeyAction({
+        key: k,
+        shiftKey,
+        ctrlKey: false,
+        metaKey: false,
+        altKey: false
+      });
+
+    // The view moves the arrow's way, so the content moves the other way
+    assert.deepEqual(key('ArrowLeft'), { type: 'pan', x: PAN_STEP, y: 0 });
+    assert.deepEqual(key('ArrowRight'), { type: 'pan', x: -PAN_STEP, y: 0 });
+    assert.deepEqual(key('ArrowUp'), { type: 'pan', x: 0, y: PAN_STEP });
+    assert.deepEqual(key('ArrowDown', true), {
+      type: 'pan',
+      x: 0,
+      y: -PAN_STEP_LARGE
+    });
+  });
+
+  it('zooms with +, = and -, resets with 0 and fits with F', () => {
+    const type = (key: string, shiftKey = false) =>
+      canvasKeyAction({
+        key,
+        shiftKey,
+        ctrlKey: false,
+        metaKey: false,
+        altKey: false
+      })?.type;
+
+    assert.deepEqual(
+      ['+', '=', '-', '0', 'f', 'F'].map((key) => type(key)),
+      ['zoomIn', 'zoomIn', 'zoomOut', 'reset', 'fit', 'fit']
+    );
+    // Shift + = types + on most layouts, which still zooms in
+    assert.equal(type('+', true), 'zoomIn');
+    assert.equal(type('x'), undefined);
+    assert.equal(type('Enter'), undefined);
+    // Not own properties of the key maps
+    assert.equal(type('toString'), undefined);
+    assert.equal(type('constructor'), undefined);
+  });
+
+  it('leaves keys with Ctrl, Cmd or Alt to the browser', () => {
+    const base = {
+      key: '+',
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false
+    };
+
+    assert.equal(canvasKeyAction({ ...base, ctrlKey: true }), null);
+    assert.equal(canvasKeyAction({ ...base, metaKey: true }), null);
+    assert.equal(
+      canvasKeyAction({ ...base, key: 'ArrowLeft', altKey: true }),
+      null
+    );
   });
 });

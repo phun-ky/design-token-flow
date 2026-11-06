@@ -19,53 +19,55 @@
     </script>
   </head>
   <body>
-    <header class="demo-header">
-      <h1>Token pill playground</h1>
-      <label class="demo-field">
-        <span>Tokens</span>
-        <select id="preset">
-          <option value="showcase">Showcase (every $type)</option>
-          <option value="bundled">Bundled design-tokens.tokens.json</option>
-          <option value="custom">Custom (your edits)</option>
-        </select>
-      </label>
-      <label class="demo-field">
-        <span>Prefix</span>
-        <input id="prefix" value="$" size="3" />
-      </label>
-    </header>
+    <main class="demo-main" id="content" tabindex="-1">
+      <div class="demo-header">
+        <h1>Token pill playground</h1>
+        <label class="demo-field">
+          <span>Tokens</span>
+          <select id="preset">
+            <option value="showcase">Showcase (every $type)</option>
+            <option value="bundled">Bundled design-tokens.tokens.json</option>
+            <option value="custom">Custom (your edits)</option>
+          </select>
+        </label>
+        <label class="demo-field">
+          <span>Prefix</span>
+          <input id="prefix" value="$" size="3" />
+        </label>
+      </div>
 
-    <main class="demo-layout">
-      <section class="demo-panel demo-editor">
-        <h2>DTCG 2025.10 JSON</h2>
-        <textarea
-          id="source"
-          spellcheck="false"
-          aria-label="Design tokens JSON"
-        ></textarea>
-        <p id="error" class="demo-error" role="alert" hidden></p>
-      </section>
+      <div class="demo-layout">
+        <section class="demo-panel demo-editor">
+          <h2>DTCG 2025.10 JSON</h2>
+          <textarea
+            id="source"
+            spellcheck="false"
+            aria-label="Design tokens JSON"
+          ></textarea>
+          <p id="error" class="demo-error" role="alert" hidden></p>
+        </section>
 
-      <section class="demo-panel demo-output">
-        <div class="demo-toolbar">
-          <h2>Rendered pills <span id="count" class="demo-muted"></span></h2>
-          <input
-            id="filter"
-            type="search"
-            placeholder="Filter by name or $type"
-            aria-label="Filter tokens"
-          />
-        </div>
-        <div id="groups"></div>
-      </section>
+        <section class="demo-panel demo-output">
+          <div class="demo-toolbar">
+            <h2>Rendered pills <span id="count" class="demo-muted"></span></h2>
+            <input
+              id="filter"
+              type="search"
+              placeholder="Filter by name or $type"
+              aria-label="Filter tokens"
+            />
+          </div>
+          <div id="groups"></div>
+        </section>
 
-      <aside class="demo-panel demo-details" id="details">
-        <h2>Details</h2>
-        <p class="demo-muted">
-          Select a pill to see its token, resolved value, relations and
-          generated HTML.
-        </p>
-      </aside>
+        <aside class="demo-panel demo-details" id="details">
+          <h2>Details</h2>
+          <p class="demo-muted">
+            Select a pill to see its token, resolved value, relations and
+            generated HTML.
+          </p>
+        </aside>
+      </div>
     </main>
 
     <script type="module" src="./playground-main.ts"></script>

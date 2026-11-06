@@ -48,6 +48,17 @@ h3 {
   margin: 1rem 0 0.5rem;
 }
 
+/* Holds the toolbar and the panels, and fills the rest of the window */
+.demo-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.demo-main:focus {
+  outline: none;
+}
+
 .demo-header {
   display: flex;
   flex-wrap: wrap;

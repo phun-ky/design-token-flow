@@ -28,7 +28,8 @@ export default defineConfig([
       'vite.config.ts',
       'eslint.config.js',
       'playwright.config.ts',
-      'e2e/serve.mjs'
+      'e2e/serve.mjs',
+      'scripts/**'
     ],
     languageOptions: {
       globals: {
@@ -52,9 +53,10 @@ export default defineConfig([
     }
   },
   {
-    // The checks report through the console: policy violations from the page,
-    // the measured sizes in the budget log, the test server's address
-    files: ['e2e/**'],
+    // The checks and scripts report through the console: policy violations
+    // from the page, the measured sizes in the budget log, the test server's
+    // address, and the Best Practices check and links
+    files: ['e2e/**', 'scripts/**'],
     rules: {
       'no-console': 'off'
     }

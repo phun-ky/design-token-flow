@@ -167,21 +167,23 @@ npm ci
 npm run dev
 ```
 
-| Command                | What it does                                                                |
-| ---------------------- | --------------------------------------------------------------------------- |
-| `npm run dev`          | Starts the site at <http://localhost:5173>, the playground at `/playground` |
-| `npm run build`        | Builds the site into `dist/`, adding the Content Security Policy            |
-| `npm run preview`      | Serves `dist/`                                                              |
-| `npm run clean`        | Removes `dist/`                                                             |
-| `npm test`             | Runs the unit tests with Node's test runner                                 |
-| `npm run test-ci`      | Runs the unit tests with coverage thresholds, as CI does                    |
-| `npm run test:e2e`     | Builds the site and runs the Playwright checks in Google Chrome             |
-| `npm run typecheck`    | Type-checks the source, the tests and the configuration                     |
-| `npm run lint`         | Lints every file, Markdown included, with ESLint                            |
-| `npm run lint:fix`     | Fixes what ESLint can fix                                                   |
-| `npm run format`       | Formats every file with Prettier                                            |
-| `npm run format:check` | Checks the formatting, as CI does                                           |
-| `npm run commit`       | Writes a conventional commit message with commitizen                        |
+| Command                       | What it does                                                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                 | Starts the site at <http://localhost:5173>, the playground at `/playground`                                                                       |
+| `npm run build`               | Builds the site into `dist/`, adding the Content Security Policy                                                                                  |
+| `npm run preview`             | Serves `dist/`                                                                                                                                    |
+| `npm run clean`               | Removes `dist/`                                                                                                                                   |
+| `npm test`                    | Runs the unit tests with Node's test runner                                                                                                       |
+| `npm run test-ci`             | Runs the unit tests with coverage thresholds, as CI does                                                                                          |
+| `npm run test:e2e`            | Builds the site and runs the Playwright checks in Google Chrome                                                                                   |
+| `npm run typecheck`           | Type-checks the source, the tests and the configuration                                                                                           |
+| `npm run lint`                | Lints every file, Markdown included, with ESLint                                                                                                  |
+| `npm run lint:fix`            | Fixes what ESLint can fix                                                                                                                         |
+| `npm run format`              | Formats every file with Prettier                                                                                                                  |
+| `npm run format:check`        | Checks the formatting, as CI does                                                                                                                 |
+| `npm run commit`              | Writes a conventional commit message with commitizen                                                                                              |
+| `npm run check:bestpractices` | Checks `.bestpractices.json`, and that every file and heading it and `security-insights.yml` link to exists                                       |
+| `npm run bestpractices:url`   | Prints bestpractices.dev links that propose the answers in `.bestpractices.json` the site doesn't have yet, for the maintainer to review and save |
 
 `npm ci` also points Git at `.githooks/`, which signs off your commits (see
 [below](#developer-certificate-of-origin)).

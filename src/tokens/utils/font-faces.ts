@@ -33,6 +33,9 @@ const FORMATS: [extension: string, format: string][] = [
 ];
 const DESCRIPTORS = ['display', 'style', 'weight', 'stretch', 'unicodeRange'];
 
+// The descriptors, also indexable by the names in DESCRIPTORS
+type Descriptors = DesignTokenFontFace['descriptors'] & Record<string, string>;
+
 /**
  * Reads the font faces that `fontFamily` tokens describe. A token describes a
  * face when its extension (`$extensions["net.phun-ky.design-token-flow"]`)
@@ -78,9 +81,7 @@ export const getFontFaces = (
     const value = token.value as string | string[];
     const family = Array.isArray(value) ? value[0] : value;
     const face = (extension['font-face'] ?? {}) as Record<string, unknown>;
-    const descriptors: DesignTokenFontFace['descriptors'] = {
-      display: 'swap'
-    };
+    const descriptors: Descriptors = { display: 'swap' };
 
     DESCRIPTORS.forEach((name) => {
       if (typeof face[name] === 'string') descriptors[name] = face[name];

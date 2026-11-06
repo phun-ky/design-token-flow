@@ -24,20 +24,41 @@ import * as node from './utils/node';
 /** Column heading for an alias depth: 0 is literal values */
 const columnLabel = (depth: number): string =>
   depth === 0 ? 'Values' : `Alias level ${depth}`;
-const DTF = function (this: typeof DTF, raw_tokens: DTCGDocument) {
+
+/** The flow view: lays the tokens out and draws the lines between them */
+interface DTFInstance {
+  _raw_tokens: DTCGDocument;
+  _tokens: DesignToken[];
+  _container_el: HTMLElement;
+  _arclace: Arclace;
+  _init(): void;
+  _setup_tokens(): void;
+  _process_tokens(): void;
+  _align_columns(): void;
+  _connect_tokens(): void;
+  _create_token(token: FlatDesignToken): HTMLElement;
+  _create_group(group: TokenGroup): HTMLElement;
+  _create_flow(lanes: FlowLane[], columnCount: number): HTMLElement;
+  _create_loose(lanes: LooseLane[]): HTMLElement;
+}
+
+const DTF = function (this: DTFInstance, raw_tokens: DTCGDocument) {
   this._raw_tokens = raw_tokens;
   this._tokens = <DesignToken[]>[];
   this._init();
+} as unknown as {
+  new (raw_tokens: DTCGDocument): DTFInstance;
+  prototype: DTFInstance;
 };
 
-DTF.prototype._process_tokens = function (this: typeof DTF) {
+DTF.prototype._process_tokens = function (this: DTFInstance) {
   this._tokens.forEach((token: DesignToken) => {
     token.process();
   });
 };
 
 DTF.prototype._create_token = function (
-  this: typeof DTF,
+  this: DTFInstance,
   token: FlatDesignToken
 ): HTMLElement {
   const _design_token = new DesignToken(token);
@@ -48,7 +69,7 @@ DTF.prototype._create_token = function (
 };
 
 DTF.prototype._create_group = function (
-  this: typeof DTF,
+  this: DTFInstance,
   group: TokenGroup
 ): HTMLElement {
   const _group_el = node.create({ type: 'section', classNames: 'token-group' });
@@ -75,7 +96,7 @@ DTF.prototype._create_group = function (
  * (inheritance tree by tree), so each token sits near the tokens it inherits from.
  */
 DTF.prototype._create_flow = function (
-  this: typeof DTF,
+  this: DTFInstance,
   lanes: FlowLane[],
   columnCount: number
 ): HTMLElement {
@@ -125,7 +146,7 @@ DTF.prototype._create_flow = function (
  * Tokens without any alias relation, in wrapped groups per type.
  */
 DTF.prototype._create_loose = function (
-  this: typeof DTF,
+  this: DTFInstance,
   lanes: LooseLane[]
 ): HTMLElement {
   const _section_el = node.create({ type: 'section', classNames: 'loose' });
@@ -159,7 +180,7 @@ DTF.prototype._create_loose = function (
   return _section_el;
 };
 
-DTF.prototype._setup_tokens = function (this: typeof DTF) {
+DTF.prototype._setup_tokens = function (this: DTFInstance) {
   if (!this._raw_tokens) return;
 
   const { columnCount, flow, loose } = layoutTokens(
@@ -178,7 +199,7 @@ DTF.prototype._setup_tokens = function (this: typeof DTF) {
  * values outwards, so every stack aligns with already placed ancestors, and keeps each
  * stack within the rows the columns share.
  */
-DTF.prototype._align_columns = function (this: typeof DTF) {
+DTF.prototype._align_columns = function (this: DTFInstance) {
   const _row_el = this._container_el.querySelector(
     '.flow-row:not(.flow-header)'
   ) as HTMLElement | null;
@@ -228,7 +249,7 @@ DTF.prototype._align_columns = function (this: typeof DTF) {
  * Draws a line from every rendered token to each rendered token it references.
  * Arclace keeps the lines in sync with resizes, scrolling and DOM changes.
  */
-DTF.prototype._connect_tokens = function (this: typeof DTF) {
+DTF.prototype._connect_tokens = function (this: DTFInstance) {
   const _by_id = new Map<string, DesignToken>(
     this._tokens.map((token: DesignToken) => [token.id, token])
   );
@@ -249,8 +270,12 @@ DTF.prototype._connect_tokens = function (this: typeof DTF) {
   });
 };
 
-DTF.prototype._init = function (this: typeof DTF) {
-  this._container_el = document.querySelector('.container');
+DTF.prototype._init = function (this: DTFInstance) {
+  const container = document.querySelector<HTMLElement>('.container');
+
+  if (!container) throw new Error('The flow view needs a .container element');
+
+  this._container_el = container;
   this._setup_tokens();
   this._align_columns();
   this._arclace = new Arclace({

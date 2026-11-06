@@ -168,6 +168,11 @@ Remove the override once `micromark-extension-math` allows the fixed version.
 
 CodeQL (GitHub's default setup) analyses every pull request and every push to
 `main`, for the TypeScript code and the GitHub Actions workflows.
+[OpenSSF Scorecard](https://scorecard.dev/viewer/?uri=github.com/phun-ky/site-design-token-flow)
+scores the repository's practices weekly and on every push to `main`, and
+publishes the result. The answers to the
+[OpenSSF Best Practices](https://www.bestpractices.dev/projects/16376) criteria
+are kept in [`.bestpractices.json`](.bestpractices.json) and checked in CI.
 
 ## Secrets
 

@@ -1,0 +1,23 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/phun-ky/site-design-token-flow/blob/main/vex.openvex.json",
+  "author": "Alexander Vassbotn Røyne-Helgesen",
+  "role": "Maintainer",
+  "timestamp": "2026-11-06T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "@id": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+        "name": "GHSA-g3hv-75wg-m249"
+      },
+      "timestamp": "2026-11-06T00:00:00Z",
+      "products": [
+        { "@id": "https://github.com/phun-ky/site-design-token-flow" }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "minimatch is a development dependency only (through eslint, typescript-eslint and eslint-plugin-import-x) and is not part of the built site, whose only runtime libraries are @phun-ky/arclace and shiki. In development, it only matches the glob patterns in the repository's own ESLint configuration, never patterns from outside the project."
+    }
+  ]
+}

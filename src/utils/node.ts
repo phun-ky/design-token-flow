@@ -35,14 +35,14 @@ export const create = (props: DTFNodeCreateType) => {
   return el;
 };
 
-export const clear = (el) => {
+export const clear = (el: Element): Node => {
   const cNode = el.cloneNode(false);
 
-  el.parentNode.replaceChild(cNode, el);
+  el.parentNode?.replaceChild(cNode, el);
 
   return cNode;
 };
 
-export const prepend = (el, child) => {
+export const prepend = (el: Node, child: Node): Node => {
   return el.insertBefore(child, el.firstChild);
 };

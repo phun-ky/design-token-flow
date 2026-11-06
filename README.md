@@ -5,6 +5,8 @@
 ![issues](https://img.shields.io/github/issues/phun-ky/site-design-token-flow)
 ![GitHub Repo stars](https://img.shields.io/github/stars/phun-ky/site-design-token-flow)
 [![build](https://github.com/phun-ky/site-design-token-flow/actions/workflows/check.yml/badge.svg)](https://github.com/phun-ky/site-design-token-flow/actions/workflows/check.yml)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16376/badge)](https://www.bestpractices.dev/projects/16376)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/phun-ky/site-design-token-flow/badge)](https://scorecard.dev/viewer/?uri=github.com/phun-ky/site-design-token-flow)
 
 A site that shows design tokens and how they relate: every token is drawn as a "pill", and lines connect each token to the tokens it references.
 

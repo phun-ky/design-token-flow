@@ -19,7 +19,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "check:bestpractices": "node scripts/check-bestpractices.mjs",
+    "bestpractices:url": "node scripts/bestpractices-url.mjs"
   },
   "repository": {
     "type": "git",

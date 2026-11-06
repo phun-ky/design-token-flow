@@ -114,7 +114,7 @@ export const cx = (
 
   if (!cls_obj && isNotString(cls))
     return Object.keys(cls)
-      .filter((classname) => cls[classname])
+      .filter((classname) => (cls as Record<string, boolean>)[classname])
       .join(' ')
       .trim();
 

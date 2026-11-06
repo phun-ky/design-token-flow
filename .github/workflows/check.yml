@@ -37,6 +37,8 @@ jobs:
         run: npm run format:check
       - name: Type-check, tests included
         run: npm run typecheck
+      - name: Check the OpenSSF Best Practices answers # and their links
+        run: npm run check:bestpractices
       - name: Test # With coverage thresholds
         run: npm run test-ci
       - name: Build

@@ -105,7 +105,10 @@ base-uri 'none'; form-action 'none'
   host, and `<base>` and form targets.
 
 The policy is added only to the build. `npm run dev` runs without it, since Vite
-injects styles there.
+injects styles there. The 404 page
+([`site/public/404.html`](site/public/404.html)), which Vite copies as it is,
+carries the same policy written by hand, without a script hash: it has no
+scripts.
 
 ## Dependencies
 

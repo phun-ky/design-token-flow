@@ -22,6 +22,8 @@ export {
 
 export { getFontFaces } from './utils/font-faces';
 
+export { fitWrappedValues, widestLine } from './utils/fit-values';
+
 export {
   FONT_WEIGHT_KEYWORDS,
   validateProperties,

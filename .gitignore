@@ -61,3 +61,7 @@ typings/
 .next
 dts
 dist
+
+# Playwright
+test-results
+playwright-report

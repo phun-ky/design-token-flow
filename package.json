@@ -8,6 +8,7 @@
     "test": "node --import tsx --test --enable-source-maps 'src/**/__tests__/**/*.ts'",
     "pretest-ci": "rm -rf coverage && mkdir -p coverage",
     "test-ci": "node --import tsx --test --enable-source-maps --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/__tests__/**' --test-coverage-exclude='src/**/types/**' --test-coverage-lines=85 --test-coverage-branches=90 --test-coverage-functions=97 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info 'src/**/__tests__/**/*.ts'",
+    "test:e2e": "npm run build && playwright test",
     "typecheck": "tsc -p tsconfig.json",
     "prepare": "git config core.hooksPath .githooks || true",
     "clean": "rm -rf dist",
@@ -57,6 +58,7 @@
   },
   "homepage": "https://github.com/phun-ky/site-design-token-flow#readme",
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@types/node": "^24.19.2",
     "eslint": "^10.13.0",
     "eslint-config-phun-ky": "^2.0.10",

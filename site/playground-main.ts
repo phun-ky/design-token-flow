@@ -278,11 +278,11 @@ const select = (id: string | null) => {
       <dt>Ancestors</dt><dd>${relationButtons(token.ancestors)}</dd>
       <dt>Descendants</dt><dd>${relationButtons(token.descendants)}</dd>
     </dl>
-    <h3>$value</h3>
+    <h3><code>$value</code></h3>
     ${json(token.$value)}
     ${token.aliasOf || token.ancestors.length ? `<h3>Resolved value</h3>${json(token.value)}` : ''}
-    ${token.$extensions ? `<h3>$extensions</h3>${json(token.$extensions)}` : ''}
-    <h3>renderDesignToken() <button type="button" class="demo-link" id="copy">copy</button></h3>
+    ${token.$extensions ? `<h3><code>$extensions</code></h3>${json(token.$extensions)}` : ''}
+    <h3><code>renderDesignToken()</code> <button type="button" class="demo-link" id="copy">copy</button></h3>
     ${codeBlock(formatHtml(html), 'html', 'demo-html')}
   `;
 

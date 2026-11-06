@@ -48,6 +48,13 @@ h3 {
   margin: 1rem 0 0.5rem;
 }
 
+/* Code names in a heading keep their case: $value, renderDesignToken() */
+h3 code {
+  font-family: var(--dtf-font-family-code);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 /* Holds the toolbar and the panels, and fills the rest of the window */
 .demo-main {
   display: flex;

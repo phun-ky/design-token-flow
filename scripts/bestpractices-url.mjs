@@ -1,7 +1,7 @@
 // Print bestpractices.dev links that propose the answers in
 // .bestpractices.json whose status differs from what's saved on the site.
 // Open each link, review the highlighted fields, and save: nothing is written
-// until you do. Saved justifications are kept unless you pass --justifications.
+// until you do. Criteria the file doesn't answer are listed, never proposed. Saved justifications are kept unless you pass --justifications.
 // A level with many changes is split over several links, because the site
 // refuses very long URLs (HTTP 414); save each one in turn.
 // Usage: node scripts/bestpractices-url.mjs [--level silver] [--justifications]
@@ -123,12 +123,28 @@ for (const [key, value] of Object.entries(answers)) {
   });
 }
 
-const note =
-  reworded > 0
-    ? `\n${reworded} more answers match but are worded differently; pass --justifications to propose that wording too.`
+// Criteria of the level that .bestpractices.json doesn't answer yet: there
+// is nothing to propose for them, which is not the same as matching
+const unanswered = [...criteria].filter(
+  (name) => !(`${name}_status` in answers)
+);
+const missing =
+  unanswered.length > 0
+    ? `\n${unanswered.length} of ${criteria.size} ${values.level} criteria have no answer in .bestpractices.json yet: ${unanswered.join(', ')}`
     : '';
+const note =
+  (reworded > 0
+    ? `\n${reworded} more answers match but are worded differently; pass --justifications to propose that wording too.`
+    : '') + missing;
 
 if (changed.length === 0) {
+  if (unanswered.length > 0) {
+    console.error(
+      `Nothing to propose for ${values.level}: its answers are not in .bestpractices.json yet.${missing}`
+    );
+    process.exit(1);
+  }
+
   console.log(`Project ${PROJECT} already matches .bestpractices.json.${note}`);
   process.exit(0);
 }

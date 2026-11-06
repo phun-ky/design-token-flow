@@ -39,6 +39,28 @@ jobs:
         run: npm run typecheck
       - name: Check the OpenSSF Best Practices answers # and their links
         run: npm run check:bestpractices
+      # Pinned releases, checked against the SHA-256 of the linux_amd64
+      # archive. To update, change the version and the hash together, from
+      # the release's checksums (actionlint) or asset digest (cue)
+      - name: Install actionlint and cue
+        env:
+          ACTIONLINT_VERSION: 1.7.12
+          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+          CUE_VERSION: 0.17.1
+          CUE_SHA256: a39b0c97695069d95d276d99be0f5dbabb081d801bfdc9ba49b76efaf94e2369
+        run: |
+          bin="$RUNNER_TEMP/bin"
+          mkdir -p "$bin"
+          cd "$RUNNER_TEMP"
+          curl -fsSLo actionlint.tar.gz "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          echo "${ACTIONLINT_SHA256}  actionlint.tar.gz" | sha256sum --check --strict
+          tar -xzf actionlint.tar.gz -C "$bin" actionlint
+          curl -fsSLo cue.tar.gz "https://github.com/cue-lang/cue/releases/download/v${CUE_VERSION}/cue_v${CUE_VERSION}_linux_amd64.tar.gz"
+          echo "${CUE_SHA256}  cue.tar.gz" | sha256sum --check --strict
+          tar -xzf cue.tar.gz -C "$bin" cue
+          echo "$bin" >> "$GITHUB_PATH"
+      - name: Check the repository configuration # Dependabot, VEX, Security Insights, workflows
+        run: npm run check:repo
       - name: Test # With coverage thresholds
         run: npm run test-ci
       - name: Build

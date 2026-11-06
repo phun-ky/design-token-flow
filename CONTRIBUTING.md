@@ -214,6 +214,11 @@ request that fails them can't be merged.
 - **Performance budgets** are set per page in `e2e/performance.spec.ts`: bytes
   by type, requests and Largest Contentful Paint on a throttled phone. A change
   that needs more raises the budget in the same pull request and says why.
+- **The HTML must be valid.** `e2e/html.spec.ts` validates every page with
+  [html-validate](https://html-validate.org/) (the `html-validate:standard`
+  preset in `.htmlvalidate.json`, which agrees with Prettier): the file as it is
+  served, and the page after its scripts ran, so markup the code adds is
+  checked too. Add a new page or state to `STATES` there.
 
 #### Token Files
 

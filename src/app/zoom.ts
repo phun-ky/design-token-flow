@@ -63,6 +63,45 @@ export const stepScale = (scale: number, direction: 1 | -1): number => {
         MIN_SCALE);
 };
 
+/** How far a line of a line-based wheel delta pans, in pixels */
+const WHEEL_LINE = 16;
+
+/** What a wheel event on the canvas does */
+export type WheelAction =
+  { type: 'pan'; x: number; y: number } | { type: 'zoom'; delta: number };
+
+/**
+ * The canvas action for a wheel event, as in design and map tools: the wheel
+ * and two-finger scrolling pan, Shift and the wheel pan sideways, and Ctrl or
+ * Cmd and the wheel zoom. Browsers send a trackpad pinch as Ctrl and the wheel,
+ * so a pinch zooms too.
+ *
+ * @param {Pick<WheelEvent, 'deltaX' | 'deltaY' | 'deltaMode' | 'shiftKey' | 'ctrlKey' | 'metaKey'>} event The wheel event
+ * @param {number} pageHeight How far a page-based delta pans, in pixels
+ * @returns {WheelAction} A pan by `x` and `y` pixels, or a zoom by `delta`
+ */
+export const wheelAction = (
+  event: Pick<
+    WheelEvent,
+    'deltaX' | 'deltaY' | 'deltaMode' | 'shiftKey' | 'ctrlKey' | 'metaKey'
+  >,
+  pageHeight: number
+): WheelAction => {
+  if (event.ctrlKey || event.metaKey)
+    return { type: 'zoom', delta: event.deltaY || event.deltaX };
+
+  const unit =
+    event.deltaMode === 1 ? WHEEL_LINE : event.deltaMode === 2 ? pageHeight : 1;
+  // Some browsers send Shift and the wheel as vertical: pan sideways anyway
+  const [dx, dy] =
+    event.shiftKey && event.deltaX === 0
+      ? [event.deltaY, 0]
+      : [event.deltaX, event.deltaY];
+
+  // The view moves the way the wheel turns, so the content moves the other way
+  return { type: 'pan', x: -dx * unit, y: -dy * unit };
+};
+
 /**
  * Zoom factor for a wheel event's delta. Pixel, line and page deltas give about the
  * same factor per mouse wheel notch, and trackpads zoom smoothly.
@@ -180,7 +219,8 @@ export interface ZoomController {
  * Makes `content` a zoomable, pannable canvas inside `viewport`:
  *
  * - it starts at 100%: the content fills the viewport's width
- * - wheel zooms around the pointer, with Shift around the center of the viewport
+ * - the wheel pans (with Shift sideways), and Ctrl or Cmd with the wheel, or
+ *   a trackpad pinch, zooms around the pointer; see `wheelAction`
  * - dragging pans
  * - when the viewport has focus, the keys from `canvasKeyAction` pan and zoom
  * - while the view is untouched (as loaded, or reset), it fits the width again
@@ -229,18 +269,22 @@ export const createZoom = (
     (event) => {
       event.preventDefault();
 
-      // Browsers turn Shift + wheel into horizontal scrolling, so read whichever axis moved
-      const delta = event.deltaY || event.deltaX;
+      const action = wheelAction(event, viewport.clientHeight);
+
+      if (action.type === 'pan')
+        return apply({
+          ...state,
+          x: state.x + action.x,
+          y: state.y + action.y
+        });
+
       const rect = viewport.getBoundingClientRect();
-      const point = event.shiftKey
-        ? center()
-        : { x: event.clientX - rect.left, y: event.clientY - rect.top };
 
       apply(
         zoomAt(
           state,
-          state.scale * wheelFactor(delta, event.deltaMode),
-          point,
+          state.scale * wheelFactor(action.delta, event.deltaMode),
+          { x: event.clientX - rect.left, y: event.clientY - rect.top },
           base
         )
       );

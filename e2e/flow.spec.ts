@@ -61,13 +61,28 @@ test('zooms with the buttons, and fits to the screen', async ({ page }) => {
   expect(inside, 'the whole flow is on screen').toBe(true);
 });
 
-test('zooms with the wheel around the pointer', async ({ page }) => {
+test('pans with the wheel', async ({ page }) => {
+  const canvas = await page.locator('.app-viewport').boundingBox();
+  const before = await canvasTransform(page);
+
+  await page.mouse.move(canvas!.x + 500, canvas!.y + 400);
+  await page.mouse.wheel(0, 300);
+  await expect
+    .poll(async () => (await canvasTransform(page)).y)
+    .toBeLessThan(before.y);
+  expect(await zoomLevel(page)).toBe(100);
+  expect((await canvasTransform(page)).x).toBeCloseTo(before.x, 0);
+});
+
+test('zooms with Ctrl and the wheel around the pointer', async ({ page }) => {
   const canvas = await page.locator('.app-viewport').boundingBox();
   const pointer = { x: 500, y: 400 };
   const before = await canvasTransform(page);
 
   await page.mouse.move(canvas!.x + pointer.x, canvas!.y + pointer.y);
+  await page.keyboard.down('Control');
   await page.mouse.wheel(0, -200);
+  await page.keyboard.up('Control');
   await expect.poll(() => zoomLevel(page)).toBeGreaterThan(100);
 
   const after = await canvasTransform(page);

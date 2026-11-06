@@ -10,6 +10,7 @@ import {
   PAN_STEP,
   PAN_STEP_LARGE,
   stepScale,
+  wheelAction,
   wheelFactor,
   zoomAt
 } from '../zoom';
@@ -70,6 +71,56 @@ describe('zoom', () => {
     assert.ok(wheelFactor(100) < 1);
     // A wheel notch in lines (Firefox) zooms about as much as one in pixels
     assert.ok(Math.abs(wheelFactor(3, 1) - wheelFactor(100, 0)) < 0.01);
+  });
+
+  it('pans with the wheel, and zooms with Ctrl or Cmd and the wheel', () => {
+    const wheel = (event: Partial<WheelEvent>) =>
+      wheelAction(
+        {
+          deltaX: 0,
+          deltaY: 0,
+          deltaMode: 0,
+          shiftKey: false,
+          ctrlKey: false,
+          metaKey: false,
+          ...event
+        },
+        800
+      );
+
+    // Scrolling down moves the view down, so the content moves up
+    assert.deepEqual(wheel({ deltaY: 100 }), { type: 'pan', x: -0, y: -100 });
+    assert.deepEqual(wheel({ deltaX: 40, deltaY: -20 }), {
+      type: 'pan',
+      x: -40,
+      y: 20
+    });
+    // Lines and pages in pixels
+    assert.deepEqual(wheel({ deltaY: 3, deltaMode: 1 }), {
+      type: 'pan',
+      x: -0,
+      y: -48
+    });
+    assert.deepEqual(wheel({ deltaY: 1, deltaMode: 2 }), {
+      type: 'pan',
+      x: -0,
+      y: -800
+    });
+    // Shift sent as vertical still pans sideways
+    assert.deepEqual(wheel({ deltaY: 100, shiftKey: true }), {
+      type: 'pan',
+      x: -100,
+      y: -0
+    });
+    // Ctrl (also a trackpad pinch) and Cmd zoom
+    assert.deepEqual(wheel({ deltaY: -100, ctrlKey: true }), {
+      type: 'zoom',
+      delta: -100
+    });
+    assert.deepEqual(wheel({ deltaY: 100, metaKey: true }), {
+      type: 'zoom',
+      delta: 100
+    });
   });
 
   it('fills the width of the viewport at 100%, top aligned', () => {

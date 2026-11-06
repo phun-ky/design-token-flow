@@ -1,7 +1,7 @@
 header:
   schema-version: 2.2.0
-  last-updated: '2026-11-05'
-  last-reviewed: '2026-11-05'
+  last-updated: '2026-11-06'
+  last-reviewed: '2026-11-06'
   url: https://raw.githubusercontent.com/phun-ky/site-design-token-flow/main/security-insights.yml
   comment: |
     Security information for the Design Token Flow website, in the OpenSSF
@@ -10,13 +10,15 @@ header:
 project:
   name: Design Token Flow
   homepage: https://phun-ky.net/site-design-token-flow/
-  roadmap: https://github.com/phun-ky/site-design-token-flow/milestones
+  roadmap: https://github.com/phun-ky/site-design-token-flow/blob/main/ROADMAP.md
   funding: https://github.com/sponsors/phun-ky
   administrators:
     - name: Alexander Vassbotn Røyne-Helgesen
       social: https://github.com/phun-ky
       primary: true
   documentation:
+    detailed-guide: https://github.com/phun-ky/site-design-token-flow/blob/main/CONTRIBUTING.md#architecture
+    code-of-conduct: https://github.com/phun-ky/site-design-token-flow/blob/main/CODE_OF_CONDUCT.md
     support-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md#supported-versions
   repositories:
     - name: site-design-token-flow
@@ -48,6 +50,9 @@ repository:
       social: https://github.com/phun-ky
       primary: true
   documentation:
+    contributing-guide: https://github.com/phun-ky/site-design-token-flow/blob/main/CONTRIBUTING.md
+    governance: https://github.com/phun-ky/site-design-token-flow/blob/main/GOVERNANCE.md
+    review-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/GOVERNANCE.md#reviews
     security-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md
     dependency-management-policy: https://github.com/phun-ky/site-design-token-flow/blob/main/SECURITY.md#dependencies
   license:

@@ -192,7 +192,7 @@ npm run dev
 
 Code follows the project's [ESLint](https://eslint.org/) configuration
 (`eslint-config-phun-ky`), [Prettier](https://prettier.io/) formatting and
-TypeScript with strict null checks. A contribution must pass
+TypeScript in strict mode. A contribution must pass
 `npm run lint -- --max-warnings=0`, `npm run format:check` and
 `npm run typecheck`. All of them run in CI on every pull request, and a pull
 request that fails them can't be merged.

@@ -54,8 +54,8 @@ What you can rely on:
 - **Nothing is loaded from other hosts.** Scripts, styles and the IBM Plex
   Sans font files the font tokens describe come from the site itself; the
   site's own text uses the system's fonts. The Content Security Policy below
-  enforces this in the browser; an automated check in CI is also planned
-  ([#19](https://github.com/phun-ky/site-design-token-flow/issues/19)).
+  enforces this in the browser, and the Website checks in CI fail on any
+  request to another origin ([`e2e/network.spec.ts`](e2e/network.spec.ts)).
 - **No referrer is sent.** Each page has `<meta name="referrer"
 content="no-referrer">`.
 - **Token values can't run code.** Every value rendered into the page is escaped
@@ -150,8 +150,20 @@ Advisory Database:
 Current state: `npm audit --omit=dev` reports nothing, and `npm audit` reports
 only the accepted exception below.
 
-**Accepted exceptions.** Each is also listed under `allow-ghsas` in
-[`dependency-review.yml`](.github/workflows/dependency-review.yml):
+**Before a change is merged.** Dependency review checks every pull request
+against the GitHub Advisory Database and blocks it when it adds a dependency
+with a high or critical advisory, runtime or development, unless the advisory is
+an accepted exception below.
+
+**Before a deploy.** Every deploy is a merge to `main` that passed those checks.
+A deploy is not held back for an advisory published after the merge: holding it
+would leave the previous build live, which has the same dependency. The fix is
+deployed instead, within the times in the table above.
+
+**Accepted exceptions.** Each is listed under `allow-ghsas` in
+[`dependency-review.yml`](.github/workflows/dependency-review.yml), and as a
+`not_affected` statement in the VEX document
+[`vex.openvex.json`](vex.openvex.json):
 
 | Advisory                                                                 | Package                   | Why it is accepted                                                                                                                                                                                                                                                                                                                                        | Remove when                                                                                                       |
 | ------------------------------------------------------------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -167,7 +179,10 @@ Remove the override once `micromark-extension-math` allows the fixed version.
 ## Code Scanning
 
 CodeQL (GitHub's default setup) analyses every pull request and every push to
-`main`, for the TypeScript code and the GitHub Actions workflows.
+`main`, for the TypeScript code and the GitHub Actions workflows. The ruleset on
+`main` blocks merging while CodeQL reports an error, or a security alert of high
+or critical severity. Other alerts are fixed within 90 days, or dismissed in
+GitHub with the reason they can't be exploited.
 [OpenSSF Scorecard](https://scorecard.dev/viewer/?uri=github.com/phun-ky/site-design-token-flow)
 scores the repository's practices weekly and on every push to `main`, and
 publishes the result. The answers to the
@@ -176,7 +191,25 @@ are kept in [`.bestpractices.json`](.bestpractices.json) and checked in CI.
 
 ## Secrets
 
-The only secret is `CODECOV_TOKEN`, which uploads test coverage to Codecov from
-CI. Secret scanning is on; push protection, which blocks commits that contain a
-credential, is not on yet
-([#14](https://github.com/phun-ky/site-design-token-flow/issues/14)).
+The project keeps as few secrets as possible:
+
+| Secret          | Used by     | For                                |
+| --------------- | ----------- | ---------------------------------- |
+| `CODECOV_TOKEN` | `check.yml` | Uploading test coverage to Codecov |
+
+Deploying needs no secret: the Deploy workflow uses the short-lived token
+GitHub gives each run, with `pages: write` and `id-token: write` for that job
+only.
+
+- **Storage:** secrets are kept only as encrypted GitHub Actions secrets, never
+  in the repository. Secret scanning with push protection blocks commits that
+  contain a credential.
+- **Access:** only the maintainer can add or change them, GitHub never shows a
+  saved value again, and they are not available to workflows run from forks.
+- **Rotation:** at least once a year, and at once if one may have been exposed.
+
+## Assurance Case
+
+Why these expectations hold, where they don't hold yet, and the threat model and
+trust boundaries behind them are set out in the
+[assurance case](ASSURANCE.md).

@@ -15,6 +15,23 @@ A site that shows design tokens and how they relate: every token is drawn as a "
 > [!IMPORTANT]
 > The npm package `@phun-ky/design-token-flow` is deprecated and will not be updated. Its only usable feature, creating design token elements, will be published as its own package.
 
+## Using the site
+
+Nothing to install: open the site in a current browser. Both pages work with a keyboard, and the switch in the header changes between the light and dark theme.
+
+**[Token flow](https://phun-ky.net/site-design-token-flow/)** shows every token in the bundled token file as a pill. Base values are on the left, and each alias is joined by a line to the token it references, so you can follow a component token, such as a button background, down to the color it ends at.
+
+- **Move around:** drag the canvas, or focus it (Tab, or the "Skip to content" link) and use the arrow keys; Shift and an arrow key moves further.
+- **Zoom:** the mouse wheel or a trackpad zooms around the pointer, and the zoom buttons in the corner or the `+` and `-` keys zoom in steps. 100% is the flow fitted to the page width: `0` goes back to it, and `F` or "Fit to screen" fits the whole flow on the screen.
+
+**[Playground](https://phun-ky.net/site-design-token-flow/playground)** renders single tokens as pills, so you can try your own.
+
+1. Pick the tokens to start from: a showcase with one token of every `$type`, or the bundled token file.
+2. Edit the [DTCG 2025.10](https://www.designtokens.org/tr/2025.10/) JSON on the left. The pills update as you type; a value that doesn't match its `$type` is refused, with an error naming the token and the field.
+3. Filter the pills by name or `$type`, and select a pill to see its token, resolved value, the tokens it references and the HTML that renders it, which you can copy.
+
+What you type in the playground stays in your browser; the [security policy](SECURITY.md#security-expectations) lists what the site stores and where.
+
 ## Development
 
 ```shell

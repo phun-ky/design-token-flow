@@ -161,29 +161,33 @@ JavaScript, and has no server:
 #### Development
 
 You need Node.js 24 and npm 11, and Google Chrome for `npm run test:e2e`.
+`npm run check:repo` also uses [actionlint](https://github.com/rhysd/actionlint),
+[shellcheck](https://www.shellcheck.net/) and [cue](https://cuelang.org/) when
+they are installed; CI installs pinned versions of them.
 
 ```shell-session
 npm ci
 npm run dev
 ```
 
-| Command                       | What it does                                                                                                                                      |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`                 | Starts the site at <http://localhost:5173>, the playground at `/playground`                                                                       |
-| `npm run build`               | Builds the site into `dist/`, adding the Content Security Policy                                                                                  |
-| `npm run preview`             | Serves `dist/`                                                                                                                                    |
-| `npm run clean`               | Removes `dist/`                                                                                                                                   |
-| `npm test`                    | Runs the unit tests with Node's test runner                                                                                                       |
-| `npm run test-ci`             | Runs the unit tests with coverage thresholds, as CI does                                                                                          |
-| `npm run test:e2e`            | Builds the site and runs the Playwright checks in Google Chrome                                                                                   |
-| `npm run typecheck`           | Type-checks the source, the tests and the configuration                                                                                           |
-| `npm run lint`                | Lints every file, Markdown included, with ESLint                                                                                                  |
-| `npm run lint:fix`            | Fixes what ESLint can fix                                                                                                                         |
-| `npm run format`              | Formats every file with Prettier                                                                                                                  |
-| `npm run format:check`        | Checks the formatting, as CI does                                                                                                                 |
-| `npm run commit`              | Writes a conventional commit message with commitizen                                                                                              |
-| `npm run check:bestpractices` | Checks `.bestpractices.json`, and that every file and heading it and `security-insights.yml` link to exists                                       |
-| `npm run bestpractices:url`   | Prints bestpractices.dev links that propose the answers in `.bestpractices.json` the site doesn't have yet, for the maintainer to review and save |
+| Command                       | What it does                                                                                                                                                                                               |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                 | Starts the site at <http://localhost:5173>, the playground at `/playground`                                                                                                                                |
+| `npm run build`               | Builds the site into `dist/`, adding the Content Security Policy                                                                                                                                           |
+| `npm run preview`             | Serves `dist/`                                                                                                                                                                                             |
+| `npm run clean`               | Removes `dist/`                                                                                                                                                                                            |
+| `npm test`                    | Runs the unit tests with Node's test runner                                                                                                                                                                |
+| `npm run test-ci`             | Runs the unit tests with coverage thresholds, as CI does                                                                                                                                                   |
+| `npm run test:e2e`            | Builds the site and runs the Playwright checks in Google Chrome                                                                                                                                            |
+| `npm run typecheck`           | Type-checks the source, the tests and the configuration                                                                                                                                                    |
+| `npm run lint`                | Lints every file, Markdown included, with ESLint                                                                                                                                                           |
+| `npm run lint:fix`            | Fixes what ESLint can fix                                                                                                                                                                                  |
+| `npm run format`              | Formats every file with Prettier                                                                                                                                                                           |
+| `npm run format:check`        | Checks the formatting, as CI does                                                                                                                                                                          |
+| `npm run commit`              | Writes a conventional commit message with commitizen                                                                                                                                                       |
+| `npm run check:bestpractices` | Checks `.bestpractices.json`, and that every file and heading it and `security-insights.yml` link to exists                                                                                                |
+| `npm run check:repo`          | Validates `.github/dependabot.yml`, `vex.openvex.json` and `security-insights.yml` against their schemas in [`scripts/schemas/`](scripts/schemas/), and lints the workflows with actionlint and shellcheck |
+| `npm run bestpractices:url`   | Prints bestpractices.dev links that propose the answers in `.bestpractices.json` the site doesn't have yet, for the maintainer to review and save                                                          |
 
 `npm ci` also points Git at `.githooks/`, which signs off your commits (see
 [below](#developer-certificate-of-origin)).
@@ -211,6 +215,20 @@ request that fails them can't be merged.
   horizontal scroll at 390, 768 and 1440 px in both themes, every link and file
   resolving, zoom, pan, fit, the theme switch and the playground, and the
   performance budgets. A change in behaviour updates or adds a check there.
+- **Accessibility is checked with axe.** `e2e/accessibility.spec.ts` runs
+  axe-core (WCAG 2.0, 2.1 and 2.2 A and AA, plus best practices) on every page,
+  and on the playground with a pill selected, in both themes; a violation fails
+  it. Checks axe can't decide, such as contrast over the dotted background, are
+  attached to the test result: look at them when a change touches colours or
+  backgrounds. Add a new page or state to `STATES` there. Automated checks find
+  only part of the problems, so also use a change with the keyboard alone.
+- **Security is checked in the built site.** `e2e/security.spec.ts` types
+  markup, script and CSS payloads into the playground's token names, values,
+  descriptions, `$extensions` and prefix, and fails if one adds an element or a
+  CSS declaration, runs, causes a Content Security Policy violation or ends up
+  in a request or the address. It also checks that every page carries the
+  documented policy and that the browser blocks an injected script. A change to
+  the policy updates `SECURITY.md` and this check together.
 - **Performance budgets** are set per page in `e2e/performance.spec.ts`: bytes
   by type, requests and Largest Contentful Paint on a throttled phone. A change
   that needs more raises the budget in the same pull request and says why.

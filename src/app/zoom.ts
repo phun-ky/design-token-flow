@@ -146,6 +146,49 @@ export const fitWidthState = (content: Size, viewport: Size): ZoomState => {
   return { scale, x: (viewport.width - content.width * scale) / 2, y: 0 };
 };
 
+/**
+ * Below this 100% scale, the fitted width makes the text too small to read,
+ * as on a phone, so the canvas opens at `READABLE_SCALE` instead
+ */
+export const READABLE_FIT = 0.5;
+
+/** The scale the canvas opens at when the fitted width is too small to read */
+export const READABLE_SCALE = 1;
+
+/** A rectangle in the content's own (unscaled) coordinates */
+export interface Box {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+/**
+ * Where the canvas opens when the content fitted to the viewport's width would
+ * be too small to read: at `READABLE_SCALE` (at most 400%), with `start` (where the flow
+ * begins) `padding` from the left edge and centered vertically. `null` when
+ * the fitted width is readable, so the canvas opens at 100%.
+ */
+export const readableStartState = (
+  content: Size,
+  viewport: Size,
+  start: Box,
+  padding = 16
+): ZoomState | null => {
+  const base = fitWidthState(content, viewport).scale;
+
+  if (base >= READABLE_FIT) return null;
+
+  // No further in than the zoom allows, 400% of the fitted width
+  const scale = Math.min(READABLE_SCALE, MAX_SCALE * base);
+
+  return {
+    scale,
+    x: padding - start.x * scale,
+    y: viewport.height / 2 - (start.y + start.height / 2) * scale
+  };
+};
+
 /** What a key press on the focused canvas does */
 export type CanvasKeyAction =
   | { type: 'pan'; x: number; y: number }
@@ -218,7 +261,8 @@ export interface ZoomController {
 /**
  * Makes `content` a zoomable, pannable canvas inside `viewport`:
  *
- * - it starts at 100%: the content fills the viewport's width
+ * - it starts at 100%: the content fills the viewport's width; when that is
+ *   too small to read, it starts at a readable scale on `start` instead
  * - the wheel pans (with Shift sideways), and Ctrl or Cmd with the wheel, or
  *   a trackpad pinch, zooms around the pointer; see `wheelAction`
  * - dragging pans
@@ -230,12 +274,15 @@ export interface ZoomController {
  * @param {HTMLElement} viewport - The visible area, clipping the content
  * @param {HTMLElement} content - The element that is scaled and moved
  * @param {(state: ZoomState, level: number) => void} [onChange] - Called after every change
+ * @param {() => Element | null} [start] - Where the flow begins: on a screen too
+ *   narrow to read the fitted width, the canvas opens on it (see `readableStartState`)
  * @returns {ZoomController} Methods for the zoom buttons
  */
 export const createZoom = (
   viewport: HTMLElement,
   content: HTMLElement,
-  onChange?: (state: ZoomState, level: number) => void
+  onChange?: (state: ZoomState, level: number) => void,
+  start?: () => Element | null
 ): ZoomController => {
   let state: ZoomState = { scale: 1, x: 0, y: 0 };
   // The 100% scale, and whether the view is still the fitted width
@@ -253,11 +300,52 @@ export const createZoom = (
       { width: content.offsetWidth, height: content.offsetHeight },
       { width: viewport.clientWidth, height: viewport.clientHeight }
     );
+
+  // What an untouched view shows: the opening view, or 100% after a reset
+  let resting: 'open' | 'width' = 'open';
+
   const fitWidth = () => {
     const next = widthState();
 
     base = next.scale;
+    resting = 'width';
     apply(next, false);
+  };
+  /** The start element's box, in the content's own coordinates */
+  const startBox = (): Box | null => {
+    const element = start?.();
+
+    if (!element) return null;
+
+    const box = element.getBoundingClientRect();
+    const origin = content.getBoundingClientRect();
+
+    return {
+      x: (box.left - origin.left) / state.scale,
+      y: (box.top - origin.top) / state.scale,
+      width: box.width / state.scale,
+      height: box.height / state.scale
+    };
+  };
+  const open = () => {
+    const box = startBox();
+    const readable =
+      box &&
+      readableStartState(
+        { width: content.offsetWidth, height: content.offsetHeight },
+        { width: viewport.clientWidth, height: viewport.clientHeight },
+        box
+      );
+
+    if (!readable) {
+      fitWidth();
+      resting = 'open';
+
+      return;
+    }
+
+    base = widthState().scale;
+    apply(readable, false);
   };
   const center = (): Point => ({
     x: viewport.clientWidth / 2,
@@ -324,7 +412,7 @@ export const createZoom = (
   // Fonts loading change the content's size, and a resized window the
   // viewport's; either changes the scale that fills the width
   const observer = new ResizeObserver(() => {
-    if (untouched) return fitWidth();
+    if (untouched) return resting === 'open' ? open() : fitWidth();
 
     base = widthState().scale;
     onChange?.(state, state.scale / base);
@@ -333,7 +421,7 @@ export const createZoom = (
   observer.observe(content);
   observer.observe(viewport);
 
-  fitWidth();
+  open();
 
   const step = (direction: 1 | -1) =>
     apply(

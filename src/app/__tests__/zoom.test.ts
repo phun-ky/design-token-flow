@@ -10,6 +10,8 @@ import {
   PAN_STEP,
   PAN_STEP_LARGE,
   stepScale,
+  READABLE_SCALE,
+  readableStartState,
   wheelAction,
   wheelFactor,
   zoomAt
@@ -121,6 +123,38 @@ describe('zoom', () => {
       type: 'zoom',
       delta: 100
     });
+  });
+
+  it('opens on the start of the flow when the fitted width is too small to read', () => {
+    const start = { x: 40, y: 600, width: 200, height: 24 };
+
+    // A phone: the fitted width would be 0.25
+    assert.deepEqual(
+      readableStartState(
+        { width: 1560, height: 3000 },
+        { width: 390, height: 700 },
+        start
+      ),
+      { scale: READABLE_SCALE, x: 16 - 40, y: 350 - 612 }
+    );
+    // No further in than 400% of the fitted width (0.15 here)
+    assert.equal(
+      readableStartState(
+        { width: 2600, height: 3000 },
+        { width: 390, height: 700 },
+        start
+      )?.scale,
+      0.6
+    );
+    // Wide enough to read at 100%
+    assert.equal(
+      readableStartState(
+        { width: 1560, height: 3000 },
+        { width: 1440, height: 800 },
+        start
+      ),
+      null
+    );
   });
 
   it('fills the width of the viewport at 100%, top aligned', () => {

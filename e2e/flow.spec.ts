@@ -160,3 +160,24 @@ test('switches the theme, and keeps it on reload and on the playground', async (
   await expect(page).toHaveURL(/\/playground$/);
   expect(await isLight()).toBe(!wasLight);
 });
+
+test('opens on the start of the flow, readable, on a phone', async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('');
+  await page.waitForLoadState('networkidle');
+  await page.evaluate(() => document.fonts.ready);
+
+  const first = page.locator('.flow .flow-column .design-token').first();
+
+  // Zoomed in, at most 400%, and on screen
+  expect(await zoomLevel(page)).toBeGreaterThan(100);
+  expect(await zoomLevel(page)).toBeLessThanOrEqual(400);
+  await expect(first).toBeInViewport();
+
+  // 100% is still the page width
+  await page.locator('.zoom-value').click();
+  expect(await zoomLevel(page)).toBe(100);
+  expect((await canvasTransform(page)).scale).toBeLessThan(0.5);
+});

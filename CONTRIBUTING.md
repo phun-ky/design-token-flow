@@ -218,6 +218,13 @@ request that fails them can't be merged.
   attached to the test result: look at them when a change touches colours or
   backgrounds. Add a new page or state to `STATES` there. Automated checks find
   only part of the problems, so also use a change with the keyboard alone.
+- **Security is checked in the built site.** `e2e/security.spec.ts` types
+  markup, script and CSS payloads into the playground's token names, values,
+  descriptions, `$extensions` and prefix, and fails if one adds an element or a
+  CSS declaration, runs, causes a Content Security Policy violation or ends up
+  in a request or the address. It also checks that every page carries the
+  documented policy and that the browser blocks an injected script. A change to
+  the policy updates `SECURITY.md` and this check together.
 - **Performance budgets** are set per page in `e2e/performance.spec.ts`: bytes
   by type, requests and Largest Contentful Paint on a throttled phone. A change
   that needs more raises the budget in the same pull request and says why.

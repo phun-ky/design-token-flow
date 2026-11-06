@@ -61,7 +61,9 @@ content="no-referrer">`.
 - **Token values can't run code.** Every value rendered into the page is escaped
   for HTML first (see
   [`render-design-token.ts`](src/tokens/utils/render-design-token.ts) and its
-  tests).
+  tests), and the Website checks type script and markup into every field of
+  the playground and fail if any of it runs or is added to the page
+  ([`e2e/security.spec.ts`](e2e/security.spec.ts)).
 - **Token values can't add CSS.** Every value is checked against its `$type`
   when a token file is read, as DTCG 2025.10 defines them: numbers are
   numbers, units are `px` or `rem` (`ms` or `s` for durations), `hex` is a 6
@@ -85,7 +87,8 @@ What you can't rely on yet:
 
 Every built page carries this policy as a `<meta http-equiv>` tag, right after
 `<meta charset>` (added by
-[`src/build/security-meta.ts`](src/build/security-meta.ts)):
+[`src/build/security-meta.ts`](src/build/security-meta.ts), and checked in each
+built page by [`e2e/security.spec.ts`](e2e/security.spec.ts)):
 
 ```text
 default-src 'none'; script-src 'self' 'sha256-…'; style-src 'self';

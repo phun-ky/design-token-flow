@@ -2,6 +2,7 @@
 /* Dark is the default, `:root.theme--light` is the light theme (set by src/app/theme.ts). */
 :root {
   --app-header-height: 64px;
+  --app-page-header-height: 48px;
   --app-bg: #1b1b1f;
   --app-dot: #2e2e35;
   --app-surface: #202127;
@@ -24,7 +25,8 @@
   --app-text-muted: rgba(60, 60, 67, 0.78);
   --app-divider: #e2e2e3;
   --app-border: #c2c2c4;
-  --app-brand: #5669fd;
+  /* Darker than the dark theme's brand: 4.66:1 on white for link text */
+  --app-brand: #5365f3;
   --app-hover: rgba(142, 150, 170, 0.14);
   --app-shadow: 0 2px 10px rgba(104, 108, 123, 0.25);
   --app-switch-bg: rgba(142, 150, 170, 0.14);
@@ -49,6 +51,52 @@ body {
 :focus-visible {
   outline: 2px solid var(--app-brand);
   outline-offset: 2px;
+}
+/* Hidden on screen, read by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* The first Tab stop: shown only while it has focus */
+.app-skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 60;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--app-brand);
+  border-radius: 8px;
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.app-skip-link:focus {
+  transform: none;
+}
+/* The page's title bar under the global header, like the playground's */
+.app-page-header {
+  position: fixed;
+  top: var(--app-header-height);
+  right: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  height: var(--app-page-header-height);
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--app-divider);
+  background-color: var(--app-surface);
+}
+.app-page-header h1 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 /* Global header, after the VitePress style of the Arclace docs */
 .app-header {
@@ -185,16 +233,20 @@ body {
 .app-theme-switch[aria-checked='true'] .app-theme-switch-moon {
   visibility: visible;
 }
-/* Zoomable canvas: everything under the header, panned by dragging */
+/* Zoomable canvas: everything under the title bar, panned by dragging or keys */
 .app-viewport {
   position: fixed;
-  top: var(--app-header-height);
+  top: calc(var(--app-header-height) + var(--app-page-header-height));
   right: 0;
   bottom: 0;
   left: 0;
   overflow: hidden;
   cursor: grab;
   touch-action: none;
+}
+/* Inside the edge, since the canvas fills the window */
+.app-viewport:focus-visible {
+  outline-offset: -2px;
 }
 .app-viewport.is-panning {
   cursor: grabbing;
@@ -249,4 +301,14 @@ body {
   height: 20px;
   margin: 0 4px;
   background-color: var(--app-divider);
+}
+/* No transitions for people who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
 }

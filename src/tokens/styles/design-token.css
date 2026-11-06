@@ -46,7 +46,8 @@
   --dtf-design-token-color-light: #fff;
   --dtf-design-token-color-background-dark: var(--dtf-color-background);
   --dtf-design-token-color-dark: var(--dtf-color-text-accent);
-  --dtf-design-token-code-color: #9fa8ad;
+  /* 4.6:1 on the code background */
+  --dtf-design-token-code-color: #676d70;
   --dtf-design-token-code-color-background: #ecf1f5;
   --dtf-design-token-box-shadow:
     0px 1px 2px rgba(104, 108, 123, 0.06), 0px 2px 8px rgba(104, 108, 123, 0.08);

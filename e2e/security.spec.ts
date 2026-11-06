@@ -188,12 +188,26 @@ for (const { name, path, ...rest } of PAGES) {
       expect(policy).toBe(POLICY(scripts.map(scriptHash)));
     }
 
-    // Before every script, stylesheet and style in the page
-    const policyAt = html.indexOf('http-equiv="Content-Security-Policy"');
-    const firstGoverned = html.search(/<script|<link\b[^>]*stylesheet|<style/);
+    // Before every script, stylesheet and style in the page, as the browser
+    // parsed it
+    const before = await page.evaluate(() => {
+      const meta = document.querySelector(
+        'meta[http-equiv="Content-Security-Policy"]'
+      );
 
-    expect(policyAt).toBeGreaterThan(-1);
-    expect(firstGoverned === -1 || policyAt < firstGoverned).toBe(true);
+      return (
+        meta !== null &&
+        [
+          ...document.querySelectorAll('script, link[rel~="stylesheet"], style')
+        ].every(
+          (element) =>
+            meta.compareDocumentPosition(element) &
+            Node.DOCUMENT_POSITION_FOLLOWING
+        )
+      );
+    });
+
+    expect(before, 'the policy comes before every script and style').toBe(true);
 
     // An inline script added later is blocked and reported
     const result = await page.evaluate(

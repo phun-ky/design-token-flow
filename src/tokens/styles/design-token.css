@@ -40,6 +40,9 @@
   --dtf-design-token-drop-box-shadow: 0px 2px 9px 0px rgba(64, 65, 108, 0.2);
   --dtf-code-color: #dee1e7;
   --dtf-drop-border-color: #e4e4e7;
+  /* Around each swatch, outside its border; the light border already sets
+     swatches apart from the dark pill */
+  --dtf-drop-ring-color: transparent;
 }
 :root.theme--light {
   --dtf-design-token-color-background-light: #181a22;
@@ -58,6 +61,8 @@
   --dtf-legend-color: #dee1e7;
   --dtf-code-color: #6f7582;
   --dtf-drop-border-color: #fff;
+  /* 3.4:1 on the white pill, so light swatches don't disappear into it */
+  --dtf-drop-ring-color: #868b94;
 }
 .design-token {
   transition:
@@ -182,7 +187,9 @@
   border: 1pt solid var(--dtf-drop-border-color);
   background-color: transparent;
   background-clip: padding-box;
-  box-shadow: var(--dtf-design-token-drop-box-shadow);
+  box-shadow:
+    0 0 0 1px var(--dtf-drop-ring-color),
+    var(--dtf-design-token-drop-box-shadow);
   height: 1rem;
   width: 1rem;
   display: block;

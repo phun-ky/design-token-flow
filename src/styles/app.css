@@ -2,7 +2,6 @@
 /* Dark is the default, `:root.theme--light` is the light theme (set by src/app/theme.ts). */
 :root {
   --app-header-height: 64px;
-  --app-page-header-height: 48px;
   --app-bg: #1b1b1f;
   --app-dot: #2e2e35;
   --app-surface: #202127;
@@ -79,17 +78,24 @@ body {
 .app-skip-link:focus {
   transform: none;
 }
-/* The page's title bar under the global header, like the playground's */
-.app-page-header {
+/* The flow view: the title bar and the canvas, as a column under the global
+   header; the canvas takes the height the title bar leaves */
+.app-main {
   position: fixed;
   top: var(--app-header-height);
   right: 0;
+  bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app-page-header {
   z-index: 30;
   display: flex;
-  align-items: center;
-  height: var(--app-page-header-height);
-  padding: 0 1rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--app-divider);
   background-color: var(--app-surface);
 }
@@ -97,6 +103,13 @@ body {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
+}
+.app-page-intro {
+  max-width: 60rem;
+  margin: 0;
+  color: var(--app-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 /* Global header, after the VitePress style of the Arclace docs */
 .app-header {
@@ -235,11 +248,9 @@ body {
 }
 /* Zoomable canvas: everything under the title bar, panned by dragging or keys */
 .app-viewport {
-  position: fixed;
-  top: calc(var(--app-header-height) + var(--app-page-header-height));
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   cursor: grab;
   touch-action: none;

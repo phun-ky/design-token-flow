@@ -292,11 +292,13 @@ new DTF(tokens as DTCGDocument);
 // The fonts the font tokens describe; each downloads when a pill first shows it
 loadFonts(getFontFaces(flattenTokens(tokens as DTCGDocument)));
 
-// The canvas: wheel zooms around the pointer (Shift: around the center), dragging pans
+// The canvas: the wheel and dragging pan, Ctrl or Cmd and the wheel zoom. On a
+// phone it opens on the first token of the inheritance flow, at a readable scale
 mountZoomControls((onChange) =>
   createZoom(
     document.querySelector('.app-viewport') as HTMLElement,
     document.querySelector('.container') as HTMLElement,
-    onChange
+    onChange,
+    () => document.querySelector('.flow .flow-column .design-token')
   )
 );

@@ -10,6 +10,9 @@ import {
   PAN_STEP,
   PAN_STEP_LARGE,
   stepScale,
+  READABLE_SCALE,
+  readableStartState,
+  wheelAction,
   wheelFactor,
   zoomAt
 } from '../zoom';
@@ -70,6 +73,88 @@ describe('zoom', () => {
     assert.ok(wheelFactor(100) < 1);
     // A wheel notch in lines (Firefox) zooms about as much as one in pixels
     assert.ok(Math.abs(wheelFactor(3, 1) - wheelFactor(100, 0)) < 0.01);
+  });
+
+  it('pans with the wheel, and zooms with Ctrl or Cmd and the wheel', () => {
+    const wheel = (event: Partial<WheelEvent>) =>
+      wheelAction(
+        {
+          deltaX: 0,
+          deltaY: 0,
+          deltaMode: 0,
+          shiftKey: false,
+          ctrlKey: false,
+          metaKey: false,
+          ...event
+        },
+        800
+      );
+
+    // Scrolling down moves the view down, so the content moves up
+    assert.deepEqual(wheel({ deltaY: 100 }), { type: 'pan', x: -0, y: -100 });
+    assert.deepEqual(wheel({ deltaX: 40, deltaY: -20 }), {
+      type: 'pan',
+      x: -40,
+      y: 20
+    });
+    // Lines and pages in pixels
+    assert.deepEqual(wheel({ deltaY: 3, deltaMode: 1 }), {
+      type: 'pan',
+      x: -0,
+      y: -48
+    });
+    assert.deepEqual(wheel({ deltaY: 1, deltaMode: 2 }), {
+      type: 'pan',
+      x: -0,
+      y: -800
+    });
+    // Shift sent as vertical still pans sideways
+    assert.deepEqual(wheel({ deltaY: 100, shiftKey: true }), {
+      type: 'pan',
+      x: -100,
+      y: -0
+    });
+    // Ctrl (also a trackpad pinch) and Cmd zoom
+    assert.deepEqual(wheel({ deltaY: -100, ctrlKey: true }), {
+      type: 'zoom',
+      delta: -100
+    });
+    assert.deepEqual(wheel({ deltaY: 100, metaKey: true }), {
+      type: 'zoom',
+      delta: 100
+    });
+  });
+
+  it('opens on the start of the flow when the fitted width is too small to read', () => {
+    const start = { x: 40, y: 600, width: 200, height: 24 };
+
+    // A phone: the fitted width would be 0.25
+    assert.deepEqual(
+      readableStartState(
+        { width: 1560, height: 3000 },
+        { width: 390, height: 700 },
+        start
+      ),
+      { scale: READABLE_SCALE, x: 16 - 40, y: 350 - 612 }
+    );
+    // No further in than 400% of the fitted width (0.15 here)
+    assert.equal(
+      readableStartState(
+        { width: 2600, height: 3000 },
+        { width: 390, height: 700 },
+        start
+      )?.scale,
+      0.6
+    );
+    // Wide enough to read at 100%
+    assert.equal(
+      readableStartState(
+        { width: 1560, height: 3000 },
+        { width: 1440, height: 800 },
+        start
+      ),
+      null
+    );
   });
 
   it('fills the width of the viewport at 100%, top aligned', () => {

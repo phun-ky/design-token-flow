@@ -21,8 +21,8 @@ Nothing to install: open the site in a current browser. Both pages work with a k
 
 **[Token flow](https://phun-ky.net/site-design-token-flow/)** shows every token in the bundled token file as a pill. Base values are on the left, and each alias is joined by a line to the token it references, so you can follow a component token, such as a button background, down to the color it ends at.
 
-- **Move around:** drag the canvas, or focus it (Tab, or the "Skip to content" link) and use the arrow keys; Shift and an arrow key moves further.
-- **Zoom:** the mouse wheel or a trackpad zooms around the pointer, and the zoom buttons in the corner or the `+` and `-` keys zoom in steps. 100% is the flow fitted to the page width: `0` goes back to it, and `F` or "Fit to screen" fits the whole flow on the screen.
+- **Move around:** scroll with the mouse wheel or two fingers on a trackpad (Shift and the wheel moves sideways), or drag the canvas. With the keyboard, focus it (Tab, or the "Skip to content" link) and use the arrow keys; Shift and an arrow key moves further.
+- **Zoom:** Ctrl (Cmd on a Mac) and the mouse wheel, or a pinch on a trackpad, zooms around the pointer, and the zoom buttons in the corner or the `+` and `-` keys zoom in steps. 100% is the flow fitted to the page width: `0` goes back to it, and `F` or "Fit to screen" fits the whole flow on the screen.
 
 **[Playground](https://phun-ky.net/site-design-token-flow/playground)** renders single tokens as pills, so you can try your own.
 

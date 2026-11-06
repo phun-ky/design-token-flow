@@ -88,8 +88,18 @@
         </label>
         <label class="demo-field">
           <span>Prefix</span>
-          <input id="prefix" type="text" value="$" size="3" />
+          <input
+            id="prefix"
+            type="text"
+            value="$"
+            size="3"
+            aria-describedby="prefix-hint"
+          />
         </label>
+        <span id="prefix-hint" class="demo-hint">
+          Shown before each token name, like <code>$</code> in
+          <code>$color-cta</code>
+        </span>
       </div>
 
       <div class="demo-layout">

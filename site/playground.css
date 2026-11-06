@@ -48,6 +48,13 @@ h3 {
   margin: 1rem 0 0.5rem;
 }
 
+/* Code names in a heading keep their case: $value, renderDesignToken() */
+h3 code {
+  font-family: var(--dtf-font-family-code);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 /* Holds the toolbar and the panels, and fills the rest of the window */
 .demo-main {
   display: flex;
@@ -74,6 +81,16 @@ h3 {
   align-items: center;
   gap: 0.5rem;
   color: var(--demo-muted);
+}
+
+/* A field's explanation, next to it and announced with it */
+.demo-hint {
+  color: var(--demo-muted);
+  font-size: 0.75rem;
+}
+
+.demo-hint code {
+  font-family: var(--dtf-font-family-code);
 }
 
 select,
@@ -295,16 +312,41 @@ select:hover {
   letter-spacing: 0;
 }
 
+/* Only in one column, where the details are below the pills */
+.demo-back {
+  display: none;
+}
+
+/* Clear of the fixed header when a selection scrolls to them */
+.demo-details,
+#groups .design-token {
+  scroll-margin-top: calc(var(--app-header-height) + 1rem);
+}
+
+.demo-details h2:focus {
+  outline: none;
+}
+
 @media (max-width: 1100px) {
   body {
     height: auto;
+  }
+
+  .demo-back {
+    display: inline-block;
+    margin-bottom: 0.5rem;
   }
 
   .demo-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* One column: a fixed height that scrolls, so a long file doesn't push the
+     pills thousands of pixels down */
   .demo-source {
+    flex: none;
+    grid-template-rows: minmax(0, 1fr);
+    height: min(60vh, 32rem);
     min-height: 260px;
   }
 

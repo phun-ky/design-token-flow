@@ -266,7 +266,8 @@ const select = (id: string | null) => {
   }
 
   detailsEl.innerHTML = `
-    <h2>${escape(token.name)}</h2>
+    <button type="button" class="demo-link demo-back" data-back>Back to the pill</button>
+    <h2 tabindex="-1">${escape(token.name)}</h2>
     <dl class="demo-dl">
       <dt>id</dt><dd><code>${escape(token.id)}</code></dd>
       <dt>$type</dt><dd><code>${escape(token.$type)}</code></dd>
@@ -277,11 +278,11 @@ const select = (id: string | null) => {
       <dt>Ancestors</dt><dd>${relationButtons(token.ancestors)}</dd>
       <dt>Descendants</dt><dd>${relationButtons(token.descendants)}</dd>
     </dl>
-    <h3>$value</h3>
+    <h3><code>$value</code></h3>
     ${json(token.$value)}
     ${token.aliasOf || token.ancestors.length ? `<h3>Resolved value</h3>${json(token.value)}` : ''}
-    ${token.$extensions ? `<h3>$extensions</h3>${json(token.$extensions)}` : ''}
-    <h3>renderDesignToken() <button type="button" class="demo-link" id="copy">copy</button></h3>
+    ${token.$extensions ? `<h3><code>$extensions</code></h3>${json(token.$extensions)}` : ''}
+    <h3><code>renderDesignToken()</code> <button type="button" class="demo-link" id="copy">copy</button></h3>
     ${codeBlock(formatHtml(html), 'html', 'demo-html')}
   `;
 
@@ -321,12 +322,35 @@ prefixEl.addEventListener('input', () => {
 });
 filterEl.addEventListener('input', render);
 
+// One column (as in playground.css): the details are below every pill, so a
+// selection moves there, and "Back to the pill" returns
+const oneColumn = matchMedia('(max-width: 1100px)');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+/** Moves focus to `element` and scrolls `area` (or it) into view */
+const reveal = (
+  element: HTMLElement,
+  block: 'start' | 'center',
+  area: HTMLElement = element
+) => {
+  element.focus({ preventScroll: true });
+  area.scrollIntoView({
+    block,
+    behavior: reducedMotion.matches ? 'auto' : 'smooth'
+  });
+};
 const selectFromEvent = (event: Event) => {
   const target = (event.target as HTMLElement).closest<HTMLElement>(
     '[data-demo-id], [data-select]'
   );
 
-  if (target) select(target.dataset.demoId ?? target.dataset.select ?? null);
+  if (!target) return;
+
+  select(target.dataset.demoId ?? target.dataset.select ?? null);
+
+  const heading = detailsEl.querySelector<HTMLElement>('h2');
+
+  if (oneColumn.matches && selectedId && heading)
+    reveal(heading, 'start', detailsEl);
 };
 
 groupsEl.addEventListener('click', selectFromEvent);
@@ -337,6 +361,16 @@ groupsEl.addEventListener('keydown', (event) => {
   }
 });
 detailsEl.addEventListener('click', selectFromEvent);
+detailsEl.addEventListener('click', (event) => {
+  if (!(event.target as HTMLElement).closest('[data-back]') || !selectedId)
+    return;
+
+  const pill = listEl.querySelector<HTMLElement>(
+    `[data-demo-id="${CSS.escape(selectedId)}"]`
+  );
+
+  if (pill) reveal(pill, 'center');
+});
 
 let hoveredId: string | null = null;
 

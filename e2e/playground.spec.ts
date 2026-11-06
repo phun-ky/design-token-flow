@@ -85,3 +85,58 @@ test('filters, switches to the bundled tokens and reports invalid JSON', async (
   await expect(page.locator('#error')).toBeHidden();
   await expect(page.locator(pills)).toHaveCount(1);
 });
+
+test('keeps the editor to part of the screen on a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+
+  const layout = await page.evaluate(() => {
+    const editor = document.querySelector('#source') as HTMLTextAreaElement;
+
+    return {
+      editor: editor.getBoundingClientRect().height,
+      scrolls: editor.scrollHeight > editor.clientHeight,
+      firstPill:
+        (
+          document.querySelector('#groups .design-token') as HTMLElement
+        ).getBoundingClientRect().top + window.scrollY
+    };
+  });
+
+  // The showcase is far longer than the editor, which scrolls instead
+  expect(layout.editor).toBeLessThanOrEqual(844 * 0.6);
+  expect(layout.scrolls).toBe(true);
+  expect(layout.firstPill).toBeLessThan(844 * 1.5);
+});
+
+test('shows the details after a selection on a phone, and goes back', async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+
+  const pill = page.locator('[data-demo-id="shadow-raised"]');
+
+  await pill.scrollIntoViewIfNeeded();
+  await pill.click();
+  await expect(page.locator('#details h2')).toBeFocused();
+  await expect(page.locator('#details h2')).toBeInViewport();
+
+  await page.getByRole('button', { name: 'Back to the pill' }).click();
+  await expect(pill).toBeFocused();
+  await expect(pill).toBeInViewport();
+});
+
+test('keeps the details in place next to the pills on a wide screen', async ({
+  page
+}) => {
+  await page.locator('[data-demo-id="shadow-raised"]').click();
+  await expect(page.locator('#details h2')).toHaveText('shadow.raised');
+  await expect(
+    page.getByRole('button', { name: 'Back to the pill' })
+  ).toBeHidden();
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});

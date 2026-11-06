@@ -21,7 +21,10 @@ npm run dev       # http://localhost:5173: flow view, and the pill playground at
 npm test
 npm run build     # the site, in dist/
 npm run preview   # serve dist/
+npm run test:e2e  # build, then check the site in Google Chrome (see below)
 ```
+
+`npm run test:e2e` serves `dist/` like GitHub Pages (`e2e/serve.mjs`, gzipped, under `/site-design-token-flow/`) and runs the Playwright checks in `e2e/` with the installed Google Chrome: requests only to the site's own origin and no console errors, no horizontal scroll at 390, 768 and 1440 px in both themes, every link and referenced file resolves, zoom, pan, fit, the theme switch and the playground work, and each page stays within its performance budget on a throttled phone (`e2e/performance.spec.ts`). CI runs them as "Website checks" and keeps the traces of a failed check.
 
 ## Structure
 

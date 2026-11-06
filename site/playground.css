@@ -304,7 +304,12 @@ select:hover {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* One column: a fixed height that scrolls, so a long file doesn't push the
+     pills thousands of pixels down */
   .demo-source {
+    flex: none;
+    grid-template-rows: minmax(0, 1fr);
+    height: min(60vh, 32rem);
     min-height: 260px;
   }
 

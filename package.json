@@ -20,6 +20,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "commit": "npx git-cz",
+    "check:repo": "node scripts/check-repo.mjs",
     "check:bestpractices": "node scripts/check-bestpractices.mjs",
     "bestpractices:url": "node scripts/bestpractices-url.mjs"
   },
@@ -45,6 +46,8 @@
     "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "^1.64.1",
     "@types/node": "^24.19.2",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^10.13.0",
     "eslint-config-phun-ky": "^2.0.10",
     "git-cz": "^4.9.0",
@@ -54,7 +57,8 @@
     "prettier": "^3.9.10",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "yaml": "^2.9.1"
   },
   "config": {
     "commitizen": {

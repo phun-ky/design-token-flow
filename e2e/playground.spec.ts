@@ -109,3 +109,34 @@ test('keeps the editor to part of the screen on a phone', async ({ page }) => {
   expect(layout.scrolls).toBe(true);
   expect(layout.firstPill).toBeLessThan(844 * 1.5);
 });
+
+test('shows the details after a selection on a phone, and goes back', async ({
+  page
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+
+  const pill = page.locator('[data-demo-id="shadow-raised"]');
+
+  await pill.scrollIntoViewIfNeeded();
+  await pill.click();
+  await expect(page.locator('#details h2')).toBeFocused();
+  await expect(page.locator('#details h2')).toBeInViewport();
+
+  await page.getByRole('button', { name: 'Back to the pill' }).click();
+  await expect(pill).toBeFocused();
+  await expect(pill).toBeInViewport();
+});
+
+test('keeps the details in place next to the pills on a wide screen', async ({
+  page
+}) => {
+  await page.locator('[data-demo-id="shadow-raised"]').click();
+  await expect(page.locator('#details h2')).toHaveText('shadow.raised');
+  await expect(
+    page.getByRole('button', { name: 'Back to the pill' })
+  ).toBeHidden();
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});

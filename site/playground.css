@@ -83,6 +83,16 @@ h3 code {
   color: var(--demo-muted);
 }
 
+/* A field's explanation, next to it and announced with it */
+.demo-hint {
+  color: var(--demo-muted);
+  font-size: 0.75rem;
+}
+
+.demo-hint code {
+  font-family: var(--dtf-font-family-code);
+}
+
 select,
 input,
 textarea {

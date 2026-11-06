@@ -4,7 +4,9 @@ import './playground.css';
 import { Arclace } from '@phun-ky/arclace';
 
 import { loadFonts } from '../src/app/fonts';
+import { formatHtml } from '../src/app/format-html';
 import { mountHeader } from '../src/app/header';
+import type { Colorize } from '../src/app/highlight';
 import bundledTokens from '../src/assets/data/design-tokens.tokens.json';
 import {
   createDesignTokenElement,
@@ -30,6 +32,8 @@ const STORAGE_KEY = 'dtf-demo';
 const $ = <T extends HTMLElement>(selector: string) =>
   document.querySelector(selector) as T;
 const sourceEl = $<HTMLTextAreaElement>('#source');
+const sourceBoxEl = $<HTMLElement>('.demo-source');
+const sourceCodeEl = $<HTMLElement>('.demo-source-code');
 const presetEl = $<HTMLSelectElement>('#preset');
 const prefixEl = $<HTMLInputElement>('#prefix');
 const filterEl = $<HTMLInputElement>('#filter');
@@ -77,7 +81,53 @@ const storage = {
 };
 const escape = (value: string) =>
   value.replace(/[&<>"]/g, (char) => `&#${char.charCodeAt(0)};`);
-const json = (value: unknown) => escape(JSON.stringify(value, null, 2));
+
+// Syntax highlighting, once Shiki has loaded; plain text until then
+let colorize: Colorize | null = null;
+
+/** A code block: highlighted when Shiki has loaded, plain text before */
+const codeBlock = (code: string, lang: 'json' | 'html', className = '') =>
+  colorize
+    ? colorize(code, lang, { className })
+    : `<pre${className ? ` class="${className}"` : ''}>${escape(code)}</pre>`;
+const json = (value: unknown) =>
+  codeBlock(JSON.stringify(value, null, 2), 'json');
+// Above this many lines, highlighting takes long enough to slow typing, so
+// the editor shows plain text while typing and highlights after a pause
+const EDITOR_LINES_HIGHLIGHTED_AT_ONCE = 1000;
+
+let sourceTimer: number | undefined;
+
+const highlightSource = () => {
+  if (!colorize) return;
+
+  // A last empty line needs a character, or the copy ends a line short
+  // Hidden from assistive technology, so not a Tab stop either
+  sourceCodeEl.innerHTML = colorize(`${sourceEl.value}\n`, 'json', {
+    focusable: false
+  });
+  sourceCodeEl.scrollTop = sourceEl.scrollTop;
+  sourceCodeEl.scrollLeft = sourceEl.scrollLeft;
+  sourceBoxEl.classList.add('is-highlighted');
+  sourceBoxEl.classList.remove('is-stale');
+};
+const updateSource = () => {
+  window.clearTimeout(sourceTimer);
+
+  if (!colorize) return;
+
+  if (sourceEl.value.split('\n').length < EDITOR_LINES_HIGHLIGHTED_AT_ONCE)
+    return highlightSource();
+
+  sourceBoxEl.classList.add('is-stale');
+  sourceTimer = window.setTimeout(highlightSource, 300);
+};
+
+sourceEl.addEventListener('scroll', () => {
+  sourceCodeEl.scrollTop = sourceEl.scrollTop;
+  sourceCodeEl.scrollLeft = sourceEl.scrollLeft;
+});
+
 const showError = (message?: string) => {
   errorEl.hidden = !message;
   errorEl.textContent = message ?? '';
@@ -228,13 +278,14 @@ const select = (id: string | null) => {
       <dt>Descendants</dt><dd>${relationButtons(token.descendants)}</dd>
     </dl>
     <h3>$value</h3>
-    <pre>${json(token.$value)}</pre>
-    ${token.aliasOf || token.ancestors.length ? `<h3>Resolved value</h3><pre>${json(token.value)}</pre>` : ''}
-    ${token.$extensions ? `<h3>$extensions</h3><pre>${json(token.$extensions)}</pre>` : ''}
+    ${json(token.$value)}
+    ${token.aliasOf || token.ancestors.length ? `<h3>Resolved value</h3>${json(token.value)}` : ''}
+    ${token.$extensions ? `<h3>$extensions</h3>${json(token.$extensions)}` : ''}
     <h3>renderDesignToken() <button type="button" class="demo-link" id="copy">copy</button></h3>
-    <pre class="demo-html">${escape(html)}</pre>
+    ${codeBlock(formatHtml(html), 'html', 'demo-html')}
   `;
 
+  // The pretty printed HTML is for reading; copy gives it as rendered
   detailsEl.querySelector('#copy')?.addEventListener('click', (event) => {
     navigator.clipboard?.writeText(html).then(() => {
       (event.target as HTMLElement).textContent = 'copied';
@@ -251,11 +302,13 @@ const loadPreset = (preset: Preset) => {
   presetEl.value = preset;
   storage.write({ preset });
   parse();
+  updateSource();
 };
 
 let parseTimer: number | undefined;
 
 sourceEl.addEventListener('input', () => {
+  updateSource();
   presetEl.value = 'custom';
   storage.write({ preset: 'custom', custom: sourceEl.value });
   window.clearTimeout(parseTimer);
@@ -305,3 +358,15 @@ groupsEl.addEventListener('mouseleave', () => {
 
 mountHeader();
 loadPreset(storage.read().preset ?? 'showcase');
+
+// Shiki loads after the page, in its own chunk; the page works without it
+import('../src/app/highlight')
+  .then(({ loadHighlighter }) => loadHighlighter())
+  .then((loaded) => {
+    colorize = loaded;
+    highlightSource();
+    select(selectedId);
+  })
+  .catch(() => {
+    // Plain text stays
+  });

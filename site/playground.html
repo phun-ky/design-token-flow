@@ -39,11 +39,15 @@
       <div class="demo-layout">
         <section class="demo-panel demo-editor">
           <h2>DTCG 2025.10 JSON</h2>
-          <textarea
-            id="source"
-            spellcheck="false"
-            aria-label="Design tokens JSON"
-          ></textarea>
+          <!-- The highlighted copy sits under the textarea, which shows the caret -->
+          <div class="demo-source">
+            <div class="demo-source-code" aria-hidden="true"></div>
+            <textarea
+              id="source"
+              spellcheck="false"
+              aria-label="Design tokens JSON"
+            ></textarea>
+          </div>
           <p id="error" class="demo-error" role="alert" hidden></p>
         </section>
 

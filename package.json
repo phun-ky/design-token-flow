@@ -79,7 +79,8 @@
     "npm": ">=10.8.2"
   },
   "dependencies": {
-    "@phun-ky/arclace": "^1.0.0"
+    "@phun-ky/arclace": "^1.0.0",
+    "shiki": "^4.5.0"
   },
   "overrides": {
     "micromark-extension-math": {

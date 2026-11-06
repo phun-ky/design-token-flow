@@ -211,6 +211,13 @@ request that fails them can't be merged.
   horizontal scroll at 390, 768 and 1440 px in both themes, every link and file
   resolving, zoom, pan, fit, the theme switch and the playground, and the
   performance budgets. A change in behaviour updates or adds a check there.
+- **Accessibility is checked with axe.** `e2e/accessibility.spec.ts` runs
+  axe-core (WCAG 2.0, 2.1 and 2.2 A and AA, plus best practices) on every page,
+  and on the playground with a pill selected, in both themes; a violation fails
+  it. Checks axe can't decide, such as contrast over the dotted background, are
+  attached to the test result: look at them when a change touches colours or
+  backgrounds. Add a new page or state to `STATES` there. Automated checks find
+  only part of the problems, so also use a change with the keyboard alone.
 - **Security is checked in the built site.** `e2e/security.spec.ts` types
   markup, script and CSS payloads into the playground's token names, values,
   descriptions, `$extensions` and prefix, and fails if one adds an element or a

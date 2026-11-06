@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/phun-ky/site-design-token-flow#readme",
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "^1.64.1",
     "@types/node": "^24.19.2",
     "ajv": "^8.20.0",
